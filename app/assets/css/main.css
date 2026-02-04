@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Base mobile-first styles */
+html {
+  @apply text-base antialiased;
+}
+
+body {
+  @apply min-h-screen bg-gray-50 text-gray-900;
+}

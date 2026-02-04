@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250109.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.7.0",
     "wrangler": "^3.103.0"
   }
