@@ -18,6 +18,14 @@
 - USER-01, USER-02, USER-03
 - INFR-01
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Project scaffolding with Nuxt 4, NuxtHub, Tailwind CSS
+- [ ] 01-02-PLAN.md — Database schema with Drizzle ORM (users, sessions, accounts)
+- [ ] 01-03-PLAN.md — Better Auth configuration (email/password + anonymous)
+- [ ] 01-04-PLAN.md — Auth UI and responsive layout with verification
+
 **Success Criteria:**
 1. A new visitor can load the app on a mobile phone, a tablet, and a desktop browser without any layout breakage or horizontal scroll.
 2. A user can create an account with an email and password, close the browser entirely, reopen it, and still be logged in.
