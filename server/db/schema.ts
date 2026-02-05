@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core'
 
 // Better Auth requires these exact table structures
 export const users = sqliteTable('users', {
@@ -47,3 +47,28 @@ export const verifications = sqliteTable('verifications', {
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 })
+
+// Recipe tables for Core Read Path
+export const recipes = sqliteTable('recipes', {
+  id: text('id').primaryKey(),
+  title: text('title').notNull(),
+  description: text('description'),
+  ingredients: text('ingredients').notNull(), // JSON array: [{name, quantity, unit}]
+  instructions: text('instructions').notNull(), // JSON array of strings
+  cuisineTags: text('cuisine_tags').notNull().default('[]'), // JSON array
+  dietaryTags: text('dietary_tags').notNull().default('[]'), // JSON array
+  cookTime: integer('cook_time'), // minutes
+  difficulty: text('difficulty'), // 'easy' | 'medium' | 'hard'
+  imageKey: text('image_key'), // R2 object key, nullable
+  source: text('source').notNull().default('curated'), // 'curated' | 'ai_generated'
+  featured: integer('featured', { mode: 'boolean' }).notNull().default(false),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+})
+
+export const recipeCategories = sqliteTable('recipe_categories', {
+  id: text('id').primaryKey(),
+  recipeId: text('recipe_id').notNull().references(() => recipes.id, { onDelete: 'cascade' }),
+  category: text('category').notNull()
+}, (table) => ({
+  categoryIdx: index('recipe_categories_category_idx').on(table.category)
+}))
