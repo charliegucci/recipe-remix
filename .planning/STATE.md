@@ -4,17 +4,17 @@
 
 - **Milestone:** v1.0
 - **Phase:** 1 of 6 (Foundation)
-- **Plan:** 2 of 4 complete
+- **Plan:** 3 of 4 complete
 - **Status:** In progress
-- **Last activity:** 2026-02-05 - Completed 01-02-PLAN.md
+- **Last activity:** 2026-02-05 - Completed 01-03-PLAN.md
 
-**Progress:** [##..............] 2/4 Phase 1 plans
+**Progress:** [###.............] 3/4 Phase 1 plans
 
 ## Progress
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
-| 1 | Foundation | 2/4 | In Progress |
+| 1 | Foundation | 3/4 | In Progress |
 | 2 | Core Read Path | 0/? | Pending |
 | 3 | Pantry and User Features | 0/? | Pending |
 | 4 | AI Generation Pipeline | 0/? | Pending |
@@ -31,6 +31,9 @@
 | Integer mode:timestamp for dates | SQLite has no native datetime; Drizzle handles conversion | 01-02 |
 | Include verifications table | Prepares for future email verification | 01-02 |
 | Request-scoped DB access pattern | Use useDrizzle(event) within handlers, never at module scope | 01-02 |
+| Lazy auth initialization via getAuth() | D1 bindings only available within request handlers, not at module scope | 01-03 |
+| Auth server in server/lib/, client in app/lib/ | Nuxt 4 separates client (app/) from server (server/) directories | 01-03 |
+| Migrations in server/database/migrations | NuxtHub default path for automatic migration detection | 01-03 |
 
 ## Concerns
 
@@ -38,9 +41,9 @@
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T22:10:00Z
-- **Stopped at:** Completed 01-02-PLAN.md
-- **Resume file:** None - ready for 01-03-PLAN.md
+- **Last session:** 2026-02-05T04:25:00Z
+- **Stopped at:** Completed 01-03-PLAN.md
+- **Resume file:** None - ready for 01-04-PLAN.md
 
 ---
 *Last updated: 2026-02-05*
