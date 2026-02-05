@@ -4,18 +4,18 @@
 
 - **Milestone:** v1.0
 - **Phase:** 2 of 6 (Core Read Path) - IN PROGRESS
-- **Plan:** 1 of 5 complete (02-03)
-- **Status:** Phase 2 started - Recipe card components complete
-- **Last activity:** 2026-02-05 - Completed 02-03-PLAN.md (Recipe Card Components)
+- **Plan:** 1 of 4 complete
+- **Status:** Phase 2 started - Recipe database schema and seed data complete
+- **Last activity:** 2026-02-05 - Completed 02-01-PLAN.md (Recipe Database Schema and Seed Data)
 
-**Progress:** [█████...........] 5/18 total plans (Phase 2: 1/5)
+**Progress:** [█████...........] 5/18 total plans (Phase 2: 1/4)
 
 ## Progress
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
-| 2 | Core Read Path | 1/5 | In Progress |
+| 2 | Core Read Path | 1/4 | In Progress |
 | 3 | Pantry and User Features | 0/? | Pending |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
@@ -40,11 +40,12 @@ All success criteria verified:
 ## Phase 2 Progress
 
 **Completed Plans:**
-- 02-03: Recipe Card Components (RecipeCard + RecipeCardSkeleton)
+- 02-01: Recipe Database Schema and Seed Data (recipes + recipeCategories tables, 27 curated recipes)
 
 **Next Plans:**
-- 02-04: Category Sections (horizontal scrolling containers)
-- 02-05: Browse Page (main recipe discovery interface)
+- 02-02: Recipe API Endpoints
+- 02-03: Home Page with Featured Recipes
+- 02-04: Recipe Detail Page
 
 ## Key Decisions
 
@@ -61,9 +62,10 @@ All success criteria verified:
 | Migrations in server/database/migrations | NuxtHub default path for automatic migration detection | 01-03 |
 | window.location.href for post-auth redirects | navigateTo() doesn't trigger full reload, causing stale session cookie state | 01-04 |
 | NUXT_PUBLIC_AUTH_URL env var for baseURL | Clean production configuration without hardcoded URLs | 01-04 |
-| Native <img loading="lazy"> over NuxtImg | NuxtImg broken on Cloudflare Pages per research | 02-03 |
-| Desktop-only hover overlays | Hover states don't work well on mobile touch devices | 02-03 |
-| Tailwind animate-pulse for skeletons | Simpler than custom keyframes, recommended in research | 02-03 |
+| JSON structure for ingredients | Enables future pantry matching while maintaining queryability | 02-01 |
+| Server API route for seeding | hubDatabase() only available in request handlers, not module scope | 02-01 |
+| RecipeCategories junction table | Efficient WHERE queries with indexed category column | 02-01 |
+| Stable UUIDs for recipe IDs | Recipe URLs remain stable across re-seeds and deployments | 02-01 |
 
 ## Patterns Established
 
@@ -74,8 +76,8 @@ All success criteria verified:
 | Nuxt 4 directory structure | Client code in app/, server code in server/ | 01-03 |
 | Post-auth redirect | Use window.location.href not navigateTo() for session cookies | 01-04 |
 | Mobile-first responsive | Unprefixed Tailwind classes for mobile, sm:/md:/lg: for larger screens | 01-04 |
-| Image-forward card design | Pinterest/Instagram style with large hero images | 02-03 |
-| Skeleton loading states | Match component dimensions exactly to prevent layout shift | 02-03 |
+| Server API route for DB operations | Use request handlers for hubDatabase() access, not standalone scripts | 02-01 |
+| JSON fields for structured data | Store ingredients/instructions as JSON for flexibility and queryability | 02-01 |
 
 ## Concerns
 
@@ -83,8 +85,8 @@ All success criteria verified:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T21:10:31Z
-- **Stopped at:** Completed 02-03-PLAN.md - Recipe Card Components
+- **Last session:** 2026-02-05T21:11:52Z
+- **Stopped at:** Completed 02-01-PLAN.md - Recipe Database Schema and Seed Data
 - **Resume file:** None
 
 ---
