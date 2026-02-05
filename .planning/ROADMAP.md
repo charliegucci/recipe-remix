@@ -41,7 +41,7 @@ Plans:
 
 **Requirements:**
 - DISP-01, DISP-02, DISP-03, DISP-04, DISP-05
-- GEN-03, GEN-06
+- GEN-06
 
 **Plans:** 6 plans
 
@@ -67,12 +67,14 @@ Plans:
 **Requirements:**
 - INGR-01, INGR-02, INGR-03, INGR-04, INGR-05
 - USER-04, USER-05, USER-06, USER-07
+- GEN-03
 
 **Success Criteria:**
 1. A user types a partial ingredient name and sees a ranked autocomplete dropdown within 150 ms; selecting an item adds it to the pantry instantly, and removing it requires one tap.
 2. A user sets dietary restrictions (e.g., gluten-free), closes the app, reopens it days later, and finds the same restrictions still active without re-entering them.
 3. A logged-in user can star a recipe, navigate away, return later, and find it in a dedicated Favorites list; they can also view every recipe they have previously generated in chronological order.
 4. A logged-in user can leave a star rating and a written note on any recipe, and both persist across sessions.
+5. The system can match pantry ingredients to the existing recipe database and surface relevant recipes.
 
 ---
 
@@ -135,7 +137,7 @@ Plans:
 | INGR-05 | 3 | Dietary restrictions persist across sessions |
 | GEN-01 | 4 | User can generate AI fusion recipes from pantry ingredients |
 | GEN-02 | 4 | User can select cuisine preferences for fusion direction |
-| GEN-03 | 2 | System matches pantry to existing recipe database |
+| GEN-03 | 3 | System matches pantry to existing recipe database |
 | GEN-04 | 5 | Generated recipes include "why this works" explanation |
 | GEN-05 | 5 | User can request ingredient substitution after generation |
 | GEN-06 | 2 | Generated recipes are persisted with stable IDs |
