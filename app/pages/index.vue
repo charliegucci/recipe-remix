@@ -1,98 +1,73 @@
 <script setup lang="ts">
-import { authClient, signIn } from '~/lib/auth-client'
+// SSR data fetching for featured recipes and category sections
+const { data } = await useAsyncData('home', () =>
+  Promise.all([
+    $fetch('/api/recipes/featured'),
+    $fetch('/api/recipes?category=italian&page=1'),
+    $fetch('/api/recipes?category=mexican&page=1'),
+    $fetch('/api/recipes?category=asian&page=1'),
+    $fetch('/api/recipes?category=american&page=1'),
+    $fetch('/api/recipes?category=mediterranean&page=1'),
+  ])
+)
 
-const { data: session } = await authClient.useSession(useFetch)
-const loading = ref(false)
+const [
+  featuredRecipes,
+  italianRecipes,
+  mexicanRecipes,
+  asianRecipes,
+  americanRecipes,
+  mediterraneanRecipes,
+] = data.value || [[], [], [], [], [], []]
 
-async function continueAsGuest() {
-  loading.value = true
-  try {
-    await signIn.anonymous()
-    // Full page reload to ensure session is set
-    window.location.href = '/'
-  } catch (e) {
-    console.error('Failed to create guest session:', e)
-  } finally {
-    loading.value = false
-  }
-}
+// SEO
+useHead({
+  title: 'Recipe Remix - Discover Delicious Recipes',
+})
 </script>
 
 <template>
-  <div class="min-h-[80vh] flex items-center justify-center px-4">
-    <div class="text-center max-w-lg">
-      <h1 class="text-3xl font-bold mb-4 md:text-4xl lg:text-5xl">
-        Recipe Remix
-      </h1>
-      <p class="text-gray-600 mb-8 text-lg">
-        AI-powered fusion cuisine from your pantry ingredients
-      </p>
+  <div class="space-y-8 md:space-y-12 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-6 md:py-8">
+    <!-- Featured Carousel -->
+    <FeaturedCarousel
+      v-if="featuredRecipes && featuredRecipes.length > 0"
+      :recipes="featuredRecipes"
+    />
 
-      <!-- Authenticated user -->
-      <div v-if="session?.user && !session.user.isAnonymous" class="space-y-4">
-        <p class="text-gray-700">
-          Welcome back, {{ session.user.name || session.user.email }}!
-        </p>
-        <p class="text-sm text-gray-500">
-          Ready to create some delicious recipes?
-        </p>
-        <!-- Pantry button added in Phase 3 -->
-      </div>
+    <!-- Category Sections -->
+    <RecipeCategorySection
+      v-if="italianRecipes && italianRecipes.length > 0"
+      category="italian"
+      category-label="Italian Cuisine"
+      :initial-recipes="italianRecipes"
+    />
 
-      <!-- Guest user -->
-      <div v-else-if="session?.user?.isAnonymous" class="space-y-4">
-        <p class="text-gray-700">
-          You're browsing as a guest.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <NuxtLink
-            to="/register"
-            class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700"
-          >
-            Create Account
-          </NuxtLink>
-          <NuxtLink
-            to="/login"
-            class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50"
-          >
-            Sign In
-          </NuxtLink>
-        </div>
-        <p class="text-xs text-gray-500 mt-4">
-          Creating an account saves your recipes and preferences.
-        </p>
-      </div>
+    <RecipeCategorySection
+      v-if="mexicanRecipes && mexicanRecipes.length > 0"
+      category="mexican"
+      category-label="Mexican Cuisine"
+      :initial-recipes="mexicanRecipes"
+    />
 
-      <!-- Not logged in -->
-      <div v-else class="space-y-4">
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <NuxtLink
-            to="/register"
-            class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700"
-          >
-            Get Started
-          </NuxtLink>
-          <NuxtLink
-            to="/login"
-            class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50"
-          >
-            Sign In
-          </NuxtLink>
-        </div>
+    <RecipeCategorySection
+      v-if="asianRecipes && asianRecipes.length > 0"
+      category="asian"
+      category-label="Asian Cuisine"
+      :initial-recipes="asianRecipes"
+    />
 
-        <div class="mt-6">
-          <button
-            @click="continueAsGuest"
-            :disabled="loading"
-            class="text-gray-600 hover:text-gray-900 text-sm underline"
-          >
-            {{ loading ? 'Setting up...' : 'Continue as Guest' }}
-          </button>
-          <p class="text-xs text-gray-500 mt-2">
-            No account required. You can upgrade later without losing data.
-          </p>
-        </div>
-      </div>
-    </div>
+    <RecipeCategorySection
+      v-if="americanRecipes && americanRecipes.length > 0"
+      category="american"
+      category-label="American Cuisine"
+      :initial-recipes="americanRecipes"
+    />
+
+    <RecipeCategorySection
+      v-if="mediterraneanRecipes && mediterraneanRecipes.length > 0"
+      category="mediterranean"
+      category-label="Mediterranean Cuisine"
+      :initial-recipes="mediterraneanRecipes"
+    />
   </div>
 </template>
