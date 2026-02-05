@@ -3,19 +3,19 @@
 ## Current Position
 
 - **Milestone:** v1.0
-- **Phase:** 1 of 6 (Foundation) - COMPLETE
-- **Plan:** 4 of 4 complete
-- **Status:** Phase 1 complete, ready for Phase 2
-- **Last activity:** 2026-02-05 - Completed 01-04-PLAN.md (Auth UI and Responsive Layout)
+- **Phase:** 2 of 6 (Core Read Path) - IN PROGRESS
+- **Plan:** 1 of 5 complete (02-03)
+- **Status:** Phase 2 started - Recipe card components complete
+- **Last activity:** 2026-02-05 - Completed 02-03-PLAN.md (Recipe Card Components)
 
-**Progress:** [####............] 4/4 Phase 1 plans (Phase complete)
+**Progress:** [█████...........] 5/18 total plans (Phase 2: 1/5)
 
 ## Progress
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
-| 2 | Core Read Path | 0/? | Ready |
+| 2 | Core Read Path | 1/5 | In Progress |
 | 3 | Pantry and User Features | 0/? | Pending |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
@@ -37,6 +37,15 @@ All success criteria verified:
 - USER-03: Guest access without blocking
 - INFR-01: Responsive layout, no horizontal scroll at 320px
 
+## Phase 2 Progress
+
+**Completed Plans:**
+- 02-03: Recipe Card Components (RecipeCard + RecipeCardSkeleton)
+
+**Next Plans:**
+- 02-04: Category Sections (horizontal scrolling containers)
+- 02-05: Browse Page (main recipe discovery interface)
+
 ## Key Decisions
 
 | Decision | Rationale | Phase |
@@ -52,6 +61,9 @@ All success criteria verified:
 | Migrations in server/database/migrations | NuxtHub default path for automatic migration detection | 01-03 |
 | window.location.href for post-auth redirects | navigateTo() doesn't trigger full reload, causing stale session cookie state | 01-04 |
 | NUXT_PUBLIC_AUTH_URL env var for baseURL | Clean production configuration without hardcoded URLs | 01-04 |
+| Native <img loading="lazy"> over NuxtImg | NuxtImg broken on Cloudflare Pages per research | 02-03 |
+| Desktop-only hover overlays | Hover states don't work well on mobile touch devices | 02-03 |
+| Tailwind animate-pulse for skeletons | Simpler than custom keyframes, recommended in research | 02-03 |
 
 ## Patterns Established
 
@@ -62,6 +74,8 @@ All success criteria verified:
 | Nuxt 4 directory structure | Client code in app/, server code in server/ | 01-03 |
 | Post-auth redirect | Use window.location.href not navigateTo() for session cookies | 01-04 |
 | Mobile-first responsive | Unprefixed Tailwind classes for mobile, sm:/md:/lg: for larger screens | 01-04 |
+| Image-forward card design | Pinterest/Instagram style with large hero images | 02-03 |
+| Skeleton loading states | Match component dimensions exactly to prevent layout shift | 02-03 |
 
 ## Concerns
 
@@ -69,9 +83,9 @@ All success criteria verified:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T14:30:00Z
-- **Stopped at:** Completed 01-04-PLAN.md - Phase 1 Foundation complete
-- **Resume file:** None - ready for Phase 2 planning
+- **Last session:** 2026-02-05T21:10:31Z
+- **Stopped at:** Completed 02-03-PLAN.md - Recipe Card Components
+- **Resume file:** None
 
 ---
 *Last updated: 2026-02-05*
