@@ -8,7 +8,10 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@nuxthub/core": "^0.8.0",
@@ -19,6 +22,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250109.0",
     "@tailwindcss/vite": "^4.1.18",
+    "@types/node": "^25.2.0",
     "drizzle-kit": "^0.31.8",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.7.0",
