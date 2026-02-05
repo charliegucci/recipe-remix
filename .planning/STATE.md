@@ -4,18 +4,18 @@
 
 - **Milestone:** v1.0
 - **Phase:** 2 of 6 (Core Read Path) - IN PROGRESS
-- **Plan:** 4 of 5 complete (02-04)
-- **Status:** Phase 2 progressing - Interactive components complete
-- **Last activity:** 2026-02-05 - Completed 02-04-PLAN.md (Interactive Components)
+- **Plan:** 4 of 6 complete (02-04)
+- **Status:** Phase 2 progressing - Recipe API complete
+- **Last activity:** 2026-02-05 - Completed 02-02-PLAN.md (Recipe API Routes)
 
-**Progress:** [████████........] 8/18 total plans (Phase 2: 4/5)
+**Progress:** [████████........] 8/18 total plans (Phase 2: 4/6)
 
 ## Progress
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
-| 2 | Core Read Path | 4/5 | In Progress |
+| 2 | Core Read Path | 4/6 | In Progress |
 | 3 | Pantry and User Features | 0/? | Pending |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
@@ -47,6 +47,7 @@ All success criteria verified:
 
 **Next Plans:**
 - 02-05: Recipe Detail Page (main recipe viewing interface)
+- 02-06: Recipe Browse Page (category browsing and infinite scroll)
 
 ## Key Decisions
 
@@ -69,6 +70,9 @@ All success criteria verified:
 | localStorage keys scoped by recipe ID | Independent recipe state for multi-recipe workflows | 02-04 |
 | SSR-safe localStorage pattern | ref({}) initialization, localStorage read in onMounted() | 02-04 |
 | Entire StepCard tappable | Better mobile UX than checkbox-only interaction | 02-04 |
+| Relative imports for server modules | Use ../../ instead of ~/ for server-side imports | 02-02 |
+| Server-side JSON parsing | Parse SQLite JSON fields before returning from API | 02-02 |
+| Tiered KV caching strategy | Different TTLs based on update frequency (5min/1hr/24hr) | 02-02 |
 
 ## Patterns Established
 
@@ -84,6 +88,7 @@ All success criteria verified:
 | SSR-safe localStorage | Initialize reactive state as empty, populate from localStorage only in onMounted() hook | 02-04 |
 | Recipe-scoped state keys | Use pattern `recipe:${recipeId}:${feature}` for localStorage keys | 02-04 |
 | Touch-friendly components | min-h-12 tap targets, entire card clickable, visual feedback on interaction | 02-04 |
+| KV read-through cache | Check KV first, query D1 on miss, cache result with TTL | 02-02 |
 
 ## Concerns
 
@@ -91,8 +96,8 @@ All success criteria verified:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T21:10:57Z
-- **Stopped at:** Completed 02-04-PLAN.md - Interactive Components
+- **Last session:** 2026-02-05T21:22:31Z
+- **Stopped at:** Completed 02-02-PLAN.md - Recipe API Routes
 - **Resume file:** None
 
 ---
