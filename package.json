@@ -11,7 +11,8 @@
     "postinstall": "nuxt prepare",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "curl -X POST http://localhost:3000/api/_seed"
   },
   "dependencies": {
     "@nuxthub/core": "^0.8.0",
