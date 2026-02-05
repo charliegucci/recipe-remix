@@ -4,18 +4,18 @@
 
 - **Milestone:** v1.0
 - **Phase:** 2 of 6 (Core Read Path) - IN PROGRESS
-- **Plan:** 1 of 4 complete
-- **Status:** Phase 2 started - Recipe database schema and seed data complete
-- **Last activity:** 2026-02-05 - Completed 02-01-PLAN.md (Recipe Database Schema and Seed Data)
+- **Plan:** 4 of 5 complete (02-04)
+- **Status:** Phase 2 progressing - Interactive components complete
+- **Last activity:** 2026-02-05 - Completed 02-04-PLAN.md (Interactive Components)
 
-**Progress:** [█████...........] 5/18 total plans (Phase 2: 1/4)
+**Progress:** [████████........] 8/18 total plans (Phase 2: 4/5)
 
 ## Progress
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
-| 2 | Core Read Path | 1/4 | In Progress |
+| 2 | Core Read Path | 4/5 | In Progress |
 | 3 | Pantry and User Features | 0/? | Pending |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
@@ -40,12 +40,13 @@ All success criteria verified:
 ## Phase 2 Progress
 
 **Completed Plans:**
-- 02-01: Recipe Database Schema and Seed Data (recipes + recipeCategories tables, 27 curated recipes)
+- 02-01: Database Schema (recipes, ingredients, steps, categories, images)
+- 02-02: Recipe API (GET endpoints for browse and detail)
+- 02-03: Recipe Card Components (RecipeCard + RecipeCardSkeleton)
+- 02-04: Interactive Components (IngredientChecklist + StepCard)
 
 **Next Plans:**
-- 02-02: Recipe API Endpoints
-- 02-03: Home Page with Featured Recipes
-- 02-04: Recipe Detail Page
+- 02-05: Recipe Detail Page (main recipe viewing interface)
 
 ## Key Decisions
 
@@ -62,10 +63,12 @@ All success criteria verified:
 | Migrations in server/database/migrations | NuxtHub default path for automatic migration detection | 01-03 |
 | window.location.href for post-auth redirects | navigateTo() doesn't trigger full reload, causing stale session cookie state | 01-04 |
 | NUXT_PUBLIC_AUTH_URL env var for baseURL | Clean production configuration without hardcoded URLs | 01-04 |
-| JSON structure for ingredients | Enables future pantry matching while maintaining queryability | 02-01 |
-| Server API route for seeding | hubDatabase() only available in request handlers, not module scope | 02-01 |
-| RecipeCategories junction table | Efficient WHERE queries with indexed category column | 02-01 |
-| Stable UUIDs for recipe IDs | Recipe URLs remain stable across re-seeds and deployments | 02-01 |
+| Native <img loading="lazy"> over NuxtImg | NuxtImg broken on Cloudflare Pages per research | 02-03 |
+| Desktop-only hover overlays | Hover states don't work well on mobile touch devices | 02-03 |
+| Tailwind animate-pulse for skeletons | Simpler than custom keyframes, recommended in research | 02-03 |
+| localStorage keys scoped by recipe ID | Independent recipe state for multi-recipe workflows | 02-04 |
+| SSR-safe localStorage pattern | ref({}) initialization, localStorage read in onMounted() | 02-04 |
+| Entire StepCard tappable | Better mobile UX than checkbox-only interaction | 02-04 |
 
 ## Patterns Established
 
@@ -76,8 +79,11 @@ All success criteria verified:
 | Nuxt 4 directory structure | Client code in app/, server code in server/ | 01-03 |
 | Post-auth redirect | Use window.location.href not navigateTo() for session cookies | 01-04 |
 | Mobile-first responsive | Unprefixed Tailwind classes for mobile, sm:/md:/lg: for larger screens | 01-04 |
-| Server API route for DB operations | Use request handlers for hubDatabase() access, not standalone scripts | 02-01 |
-| JSON fields for structured data | Store ingredients/instructions as JSON for flexibility and queryability | 02-01 |
+| Image-forward card design | Pinterest/Instagram style with large hero images | 02-03 |
+| Skeleton loading states | Match component dimensions exactly to prevent layout shift | 02-03 |
+| SSR-safe localStorage | Initialize reactive state as empty, populate from localStorage only in onMounted() hook | 02-04 |
+| Recipe-scoped state keys | Use pattern `recipe:${recipeId}:${feature}` for localStorage keys | 02-04 |
+| Touch-friendly components | min-h-12 tap targets, entire card clickable, visual feedback on interaction | 02-04 |
 
 ## Concerns
 
@@ -85,8 +91,8 @@ All success criteria verified:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T21:11:52Z
-- **Stopped at:** Completed 02-01-PLAN.md - Recipe Database Schema and Seed Data
+- **Last session:** 2026-02-05T21:10:57Z
+- **Stopped at:** Completed 02-04-PLAN.md - Interactive Components
 - **Resume file:** None
 
 ---
