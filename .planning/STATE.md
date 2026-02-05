@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.0
 - **Phase:** 2 of 6 (Core Read Path) - IN PROGRESS
-- **Plan:** 4 of 6 complete (02-04)
-- **Status:** Phase 2 progressing - Recipe API complete
-- **Last activity:** 2026-02-05 - Completed 02-02-PLAN.md (Recipe API Routes)
+- **Plan:** 5 of 6 complete (02-05)
+- **Status:** Phase 2 progressing - Home page with featured carousel complete
+- **Last activity:** 2026-02-05 - Completed 02-05-PLAN.md (Home Page)
 
-**Progress:** [████████........] 8/18 total plans (Phase 2: 4/6)
+**Progress:** [█████████.......] 9/18 total plans (Phase 2: 5/6)
 
 ## Progress
 
@@ -44,10 +44,10 @@ All success criteria verified:
 - 02-02: Recipe API (GET endpoints for browse and detail)
 - 02-03: Recipe Card Components (RecipeCard + RecipeCardSkeleton)
 - 02-04: Interactive Components (IngredientChecklist + StepCard)
+- 02-05: Home Page (FeaturedCarousel + category sections with infinite scroll)
 
 **Next Plans:**
-- 02-05: Recipe Detail Page (main recipe viewing interface)
-- 02-06: Recipe Browse Page (category browsing and infinite scroll)
+- 02-06: Recipe Detail Page (main recipe viewing interface)
 
 ## Key Decisions
 
@@ -73,6 +73,9 @@ All success criteria verified:
 | Relative imports for server modules | Use ../../ instead of ~/ for server-side imports | 02-02 |
 | Server-side JSON parsing | Parse SQLite JSON fields before returning from API | 02-02 |
 | Tiered KV caching strategy | Different TTLs based on update frequency (5min/1hr/24hr) | 02-02 |
+| Hand-rolled carousel | Custom carousel implementation without external library | 02-05 |
+| Window scroll target | Use window as infinite scroll target for stacked sections | 02-05 |
+| Auto-advance carousel | Auto-advance every 5 seconds with manual reset | 02-05 |
 
 ## Patterns Established
 
@@ -89,6 +92,8 @@ All success criteria verified:
 | Recipe-scoped state keys | Use pattern `recipe:${recipeId}:${feature}` for localStorage keys | 02-04 |
 | Touch-friendly components | min-h-12 tap targets, entire card clickable, visual feedback on interaction | 02-04 |
 | KV read-through cache | Check KV first, query D1 on miss, cache result with TTL | 02-02 |
+| Infinite scroll pattern | @vueuse/core useInfiniteScroll with window target and canLoadMore guard | 02-05 |
+| SSR parallel fetching | Promise.all for concurrent data fetching in useAsyncData | 02-05 |
 
 ## Concerns
 
@@ -96,8 +101,8 @@ All success criteria verified:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T21:22:31Z
-- **Stopped at:** Completed 02-02-PLAN.md - Recipe API Routes
+- **Last session:** 2026-02-05T21:27:19Z
+- **Stopped at:** Completed 02-05-PLAN.md - Home Page
 - **Resume file:** None
 
 ---
