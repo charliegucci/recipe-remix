@@ -43,6 +43,16 @@ Plans:
 - DISP-01, DISP-02, DISP-03, DISP-04, DISP-05
 - GEN-03, GEN-06
 
+**Plans:** 6 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Recipe database schema and seed data
+- [ ] 02-02-PLAN.md — Recipe API routes with KV caching
+- [ ] 02-03-PLAN.md — RecipeCard and skeleton components
+- [ ] 02-04-PLAN.md — Interactive ingredient and step components
+- [ ] 02-05-PLAN.md — Home page with carousel and category sections
+- [ ] 02-06-PLAN.md — Recipe detail page with verification
+
 **Success Criteria:**
 1. A user can open a recipe detail page and see the title, description, a full ingredient list with quantities and units, ordered step-by-step instructions, estimated cooking time, and difficulty level — all rendered on first paint with no loading spinner for the text content.
 2. A user can navigate to any recipe by its URL at any time in the future and see the exact same recipe they saw before (stable identity via persistent IDs).
