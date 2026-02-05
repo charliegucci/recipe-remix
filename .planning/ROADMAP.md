@@ -10,7 +10,9 @@
 
 ---
 
-### Phase 1: Foundation
+### Phase 1: Foundation ✓
+
+**Status:** Complete (2026-02-05)
 
 **Goal:** A logged-in (or anonymous) user can reach the app on any device and the backend data layer, auth, and image storage are fully operational underneath them.
 
@@ -18,15 +20,15 @@
 - USER-01, USER-02, USER-03
 - INFR-01
 
-**Plans:** 4 plans
+**Plans:** 4 plans (all complete)
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffolding with Nuxt 4, NuxtHub, Tailwind CSS
-- [ ] 01-02-PLAN.md — Database schema with Drizzle ORM (users, sessions, accounts)
-- [ ] 01-03-PLAN.md — Better Auth configuration (email/password + anonymous)
-- [ ] 01-04-PLAN.md — Auth UI and responsive layout with verification
+- [x] 01-01-PLAN.md — Project scaffolding with Nuxt 4, NuxtHub, Tailwind CSS
+- [x] 01-02-PLAN.md — Database schema with Drizzle ORM (users, sessions, accounts)
+- [x] 01-03-PLAN.md — Better Auth configuration (email/password + anonymous)
+- [x] 01-04-PLAN.md — Auth UI and responsive layout with verification
 
-**Success Criteria:**
+**Success Criteria:** All verified ✓
 1. A new visitor can load the app on a mobile phone, a tablet, and a desktop browser without any layout breakage or horizontal scroll.
 2. A user can create an account with an email and password, close the browser entirely, reopen it, and still be logged in.
 3. A user can browse and use the core app without ever creating an account; account-gated features are clearly indicated but do not block the experience.
