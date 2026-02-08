@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import { useDrizzle, schema } from '../../utils/drizzle'
 
 export default defineEventHandler(async (event) => {
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   const cacheKey = `recipe:${id}`
 
-  // Check KV cache first
+  // Check KV cache first (shorter TTL for review data freshness)
   const kv = hubKV()
   const cached = await kv.getItem(cacheKey)
   if (cached) {
@@ -35,17 +35,32 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // Get aggregate rating data
+  const aggregateResult = await db
+    .select({
+      avgRating: sql<number>`AVG(${schema.userRecipeReviews.rating})`,
+      totalReviews: sql<number>`COUNT(*)`
+    })
+    .from(schema.userRecipeReviews)
+    .where(eq(schema.userRecipeReviews.recipeId, id))
+    .get()
+
+  const avgRating = aggregateResult?.avgRating || null
+  const totalReviews = aggregateResult?.totalReviews || 0
+
   // Parse JSON fields
   const recipe = {
     ...result,
     ingredients: JSON.parse(result.ingredients),
     instructions: JSON.parse(result.instructions),
     cuisineTags: JSON.parse(result.cuisineTags),
-    dietaryTags: JSON.parse(result.dietaryTags)
+    dietaryTags: JSON.parse(result.dietaryTags),
+    avgRating: avgRating ? parseFloat(avgRating.toFixed(1)) : null,
+    totalReviews
   }
 
-  // Cache in KV with 1 hour TTL
-  await kv.setItem(cacheKey, recipe, { ttl: 3600 })
+  // Cache in KV with 5 minute TTL (shorter for review data freshness)
+  await kv.setItem(cacheKey, recipe, { ttl: 300 })
 
   return recipe
 })
