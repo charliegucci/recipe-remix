@@ -33,7 +33,7 @@
     <div class="border-t border-gray-200 my-8"></div>
 
     <!-- Dietary Preferences -->
-    <div>
+    <div class="mb-12">
       <div class="mb-4">
         <h2 class="text-xl font-semibold text-gray-900 mb-2">
           Dietary Preferences
@@ -47,6 +47,26 @@
         :options="pantryState.dietaryOptions"
         :active-restrictions="pantryState.dietaryRestrictions.value"
         @toggle="handleToggleRestriction"
+      />
+    </div>
+
+    <!-- Recipes You Can Make (only show when pantry has items) -->
+    <div v-if="pantryState.pantry.value.length > 0">
+      <!-- Divider -->
+      <div class="border-t border-gray-200 my-8"></div>
+
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          Recipes You Can Make
+        </h2>
+        <p class="text-gray-600">
+          Based on your pantry ingredients and dietary preferences
+        </p>
+      </div>
+
+      <PantryMatches
+        :ingredients="pantryState.pantry.value"
+        :restrictions="pantryState.dietaryRestrictions.value"
       />
     </div>
 
