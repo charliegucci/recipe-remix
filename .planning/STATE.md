@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.0
 - **Phase:** 3 of 6 (Pantry and User Features) - COMPLETE
-- **Plan:** 4 of 4 complete (03-01, 03-02, 03-03, 03-04)
-- **Status:** Phase 3 complete - Favorites and history with optimistic UI
-- **Last activity:** 2026-02-08 - Completed 03-03-PLAN.md (Favorites and Ratings UI)
+- **Plan:** 5 of 5 complete (03-01, 03-02, 03-03, 03-04, 03-05)
+- **Status:** Phase 3 complete - Pantry matching and guest migration
+- **Last activity:** 2026-02-08 - Completed 03-05-PLAN.md (Pantry Matching and Guest Migration)
 
-**Progress:** [█████████████...] 13/18 total plans (Phase 3: 4/4)
+**Progress:** [██████████████..] 15/18 total plans (Phase 3: 5/5)
 
 ## Progress
 
@@ -16,7 +16,7 @@
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
-| 3 | Pantry and User Features | 4/4 | Complete |
+| 3 | Pantry and User Features | 5/5 | Complete |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
@@ -60,12 +60,15 @@ Phase 3 complete with:
 - Recipe ratings and reviews (1-5 stars with text reviews)
 - FavoriteButton integrated into RecipeCard
 - Favorites and History pages with auth gates
+- Pantry-to-recipe matching with >= 50% match threshold
+- Automatic guest data migration on account creation
 
 **Completed Plans:**
 - 03-01: Database Schema Extension
 - 03-02: Pantry UI
 - 03-03: Favorites and Ratings UI
 - 03-04: Recipe Ratings and Reviews System
+- 03-05: Pantry Matching and Guest Migration
 
 ## Key Decisions
 
@@ -109,6 +112,12 @@ Phase 3 complete with:
 | Client-only FavoriteButton rendering | Avoid SSR hydration mismatch with reactive state | 03-03 |
 | Fire-and-forget history recording | View tracking is non-critical, shouldn't block navigation | 03-03 |
 | Favorites use Set for O(1) lookup | isFavorite check called frequently in recipe lists | 03-03 |
+| In-memory filtering for recipe matching | < 10k recipes fits in memory, simpler than complex SQL | 03-05 |
+| Substring matching both directions | Handles ingredient variations (chicken vs chicken breast) | 03-05 |
+| >= 50% match threshold | Balance between showing matches and filtering low-quality results | 03-05 |
+| Client-side migration trigger | watchEffect detects anonymous -> authenticated transition | 03-05 |
+| 500ms debounce for match fetching | Reduces API calls while user adds multiple ingredients | 03-05 |
+| Match cache key via MD5 hash | Hash of ingredients+restrictions for efficient KV lookup | 03-05 |
 
 ## Patterns Established
 
@@ -137,6 +146,10 @@ Phase 3 complete with:
 | Optimistic UI pattern | Immediate state update, API call, revert on error | 03-03 |
 | Client-only component guards | Use mounted ref to prevent SSR hydration mismatch | 03-03 |
 | Set-based state management | O(1) lookups for frequently-checked state (isFavorite) | 03-03 |
+| In-memory recipe filtering | Fetch all records and filter in JS for < 10k rows | 03-05 |
+| Session transition detection | watchEffect on session.user.isAnonymous for state changes | 03-05 |
+| Automatic data migration | Client detects auth transition, calls migration endpoint, clears localStorage | 03-05 |
+| Match caching with hash keys | MD5 hash of query params for deterministic cache keys | 03-05 |
 
 ## Concerns
 
@@ -144,8 +157,8 @@ Phase 3 complete with:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-08T05:21:18Z
-- **Stopped at:** Completed 03-03-PLAN.md - Favorites and Ratings UI (Phase 3 complete)
+- **Last session:** 2026-02-08T05:26:22Z
+- **Stopped at:** Completed 03-05-PLAN.md - Pantry Matching and Guest Migration (Phase 3 complete)
 - **Resume file:** None
 
 ---
