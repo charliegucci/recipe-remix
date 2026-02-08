@@ -15,6 +15,13 @@
       "when": 1770325669495,
       "tag": "0001_fantastic_newton_destine",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1770527066664,
+      "tag": "0002_classy_blur",
+      "breakpoints": true
     }
   ]
 }
