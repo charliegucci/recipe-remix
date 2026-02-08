@@ -3,20 +3,20 @@
 ## Current Position
 
 - **Milestone:** v1.0
-- **Phase:** 2 of 6 (Core Read Path) - IN PROGRESS
-- **Plan:** 5 of 6 complete (02-05)
-- **Status:** Phase 2 progressing - Home page with featured carousel complete
-- **Last activity:** 2026-02-05 - Completed 02-05-PLAN.md (Home Page)
+- **Phase:** 3 of 6 (Pantry and User Features) - IN PROGRESS
+- **Plan:** 1 of 4 complete (03-01)
+- **Status:** Phase 3 started - Database schema extended with 6 new tables
+- **Last activity:** 2026-02-08 - Completed 03-01-PLAN.md (Database Schema Extension)
 
-**Progress:** [█████████.......] 9/18 total plans (Phase 2: 5/6)
+**Progress:** [██████████......] 10/18 total plans (Phase 3: 1/4)
 
 ## Progress
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
-| 2 | Core Read Path | 4/6 | In Progress |
-| 3 | Pantry and User Features | 0/? | Pending |
+| 2 | Core Read Path | 6/6 | Complete |
+| 3 | Pantry and User Features | 1/4 | In Progress |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
@@ -37,17 +37,25 @@ All success criteria verified:
 - USER-03: Guest access without blocking
 - INFR-01: Responsive layout, no horizontal scroll at 320px
 
-## Phase 2 Progress
+## Phase 2 Deliverables
+
+Core Read Path complete with:
+- Database schema for recipes, ingredients, steps, categories
+- Recipe API with browse and detail endpoints
+- RecipeCard and RecipeCardSkeleton components
+- IngredientChecklist and StepCard interactive components
+- Home page with FeaturedCarousel and infinite scroll category sections
+- Recipe detail page with SSR data fetching
+
+## Phase 3 Progress
 
 **Completed Plans:**
-- 02-01: Database Schema (recipes, ingredients, steps, categories, images)
-- 02-02: Recipe API (GET endpoints for browse and detail)
-- 02-03: Recipe Card Components (RecipeCard + RecipeCardSkeleton)
-- 02-04: Interactive Components (IngredientChecklist + StepCard)
-- 02-05: Home Page (FeaturedCarousel + category sections with infinite scroll)
+- 03-01: Database Schema Extension (6 new tables: ingredients, pantryItems, userDietaryRestrictions, userFavorites, userRecipeHistory, userRecipeReviews + migration + ingredient seed)
 
 **Next Plans:**
-- 02-06: Recipe Detail Page (main recipe viewing interface)
+- 03-02: Pantry UI (ingredient autocomplete, pantry management)
+- 03-03: Favorites and Ratings UI
+- 03-04: Recipe Matching (pantry-to-recipe matching)
 
 ## Key Decisions
 
@@ -76,6 +84,10 @@ All success criteria verified:
 | Hand-rolled carousel | Custom carousel implementation without external library | 02-05 |
 | Window scroll target | Use window as infinite scroll target for stacked sections | 02-05 |
 | Auto-advance carousel | Auto-advance every 5 seconds with manual reset | 02-05 |
+| Composite PK for junction tables | Natural composite key (userId, recipeId) with separate indexes | 03-01 |
+| Curated ingredient list | ~305 items vs external API for faster autocomplete, no rate limits | 03-01 |
+| Batch inserts for D1 | 50 items per batch to respect D1 row limits per statement | 03-01 |
+| JSON for commonNames | TEXT field with default '[]' for ingredient search aliases | 03-01 |
 
 ## Patterns Established
 
@@ -94,6 +106,8 @@ All success criteria verified:
 | KV read-through cache | Check KV first, query D1 on miss, cache result with TTL | 02-02 |
 | Infinite scroll pattern | @vueuse/core useInfiniteScroll with window target and canLoadMore guard | 02-05 |
 | SSR parallel fetching | Promise.all for concurrent data fetching in useAsyncData | 02-05 |
+| Junction table pattern | Composite PK + separate indexes on frequently-queried columns | 03-01 |
+| Seed endpoint pattern | Check existing count, skip if seeded, batch inserts, return stats | 03-01 |
 
 ## Concerns
 
@@ -101,9 +115,9 @@ All success criteria verified:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-05T21:27:19Z
-- **Stopped at:** Completed 02-05-PLAN.md - Home Page
+- **Last session:** 2026-02-08T05:40:18Z
+- **Stopped at:** Completed 03-01-PLAN.md - Database Schema Extension
 - **Resume file:** None
 
 ---
-*Last updated: 2026-02-05*
+*Last updated: 2026-02-08*
