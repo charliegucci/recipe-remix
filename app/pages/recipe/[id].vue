@@ -19,6 +19,8 @@ interface Recipe {
   source: string
   featured: boolean
   createdAt: Date
+  avgRating: number | null
+  totalReviews: number
 }
 
 const route = useRoute()
@@ -72,6 +74,33 @@ function getDifficultyColor(difficulty: string | null): string {
       return 'bg-gray-100 text-gray-700 border-gray-200'
   }
 }
+
+// Get current user's existing review for this recipe
+const { useSession } = await import('~/lib/auth-client')
+const { data: session } = await useSession(useFetch)
+const userId = computed(() => session.value?.user?.id)
+
+const { data: existingReview, refresh: refreshExistingReview } = await useFetch<{ rating: number; review: string | null } | null>(
+  () => userId.value ? `/api/user/reviews/${recipeId}` : null,
+  {
+    key: `user-review-${recipeId}`,
+    transform: (data: any) => {
+      // Find the current user's review from the list
+      const userReview = data.reviews?.find((r: any) => r.userId === userId.value)
+      return userReview ? { rating: userReview.rating, review: userReview.review } : null
+    }
+  }
+)
+
+// Review list component ref for refreshing
+const reviewListRef = ref<{ refresh: () => void } | null>(null)
+
+// Handle review submission
+async function handleReviewSubmitted() {
+  // Refresh both the user's review and the review list
+  await refreshExistingReview()
+  await reviewListRef.value?.refresh()
+}
 </script>
 
 <template>
@@ -81,7 +110,7 @@ function getDifficultyColor(difficulty: string | null): string {
       <!-- Image if available -->
       <img
         v-if="recipe.imageKey"
-        :src="`/api/images/${recipe.imageKey}`"
+        :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `/api/images/${recipe.imageKey}`"
         :alt="recipe.title"
         class="w-full h-full object-cover"
         loading="eager"
@@ -115,45 +144,63 @@ function getDifficultyColor(difficulty: string | null): string {
         </NuxtLink>
       </div>
 
-      <!-- Metadata Bar -->
+      <!-- Metadata Bar with Rating -->
       <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <div class="flex flex-wrap gap-3">
-          <!-- Cook Time -->
-          <div
-            v-if="recipe.cookTime"
-            class="inline-flex items-center px-4 py-2 bg-gray-50 rounded-lg"
-          >
-            <svg class="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span class="text-sm font-medium text-gray-900">{{ formatCookTime(recipe.cookTime) }}</span>
+        <div class="flex flex-col gap-4">
+          <!-- Rating section -->
+          <div v-if="recipe.avgRating || recipe.totalReviews > 0" class="flex items-center gap-3 pb-4 border-b border-gray-200">
+            <StarRating
+              :model-value="recipe.avgRating || 0"
+              :readonly="true"
+              size="md"
+            />
+            <span v-if="recipe.avgRating" class="text-lg font-semibold text-gray-900">
+              {{ recipe.avgRating.toFixed(1) }}
+            </span>
+            <span class="text-sm text-gray-600">
+              ({{ recipe.totalReviews }} {{ recipe.totalReviews === 1 ? 'review' : 'reviews' }})
+            </span>
           </div>
 
-          <!-- Difficulty -->
-          <div
-            v-if="recipe.difficulty"
-            class="inline-flex items-center px-4 py-2 rounded-lg border-2"
-            :class="getDifficultyColor(recipe.difficulty)"
-          >
-            <span class="text-sm font-semibold capitalize">{{ recipe.difficulty }}</span>
-          </div>
+          <!-- Metadata badges -->
+          <div class="flex flex-wrap gap-3">
+            <!-- Cook Time -->
+            <div
+              v-if="recipe.cookTime"
+              class="inline-flex items-center px-4 py-2 bg-gray-50 rounded-lg"
+            >
+              <svg class="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="text-sm font-medium text-gray-900">{{ formatCookTime(recipe.cookTime) }}</span>
+            </div>
 
-          <!-- Cuisine Tags -->
-          <div
-            v-for="tag in recipe.cuisineTags"
-            :key="tag"
-            class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg border-2 border-blue-200"
-          >
-            <span class="text-sm font-medium">{{ tag }}</span>
-          </div>
+            <!-- Difficulty -->
+            <div
+              v-if="recipe.difficulty"
+              class="inline-flex items-center px-4 py-2 rounded-lg border-2"
+              :class="getDifficultyColor(recipe.difficulty)"
+            >
+              <span class="text-sm font-semibold capitalize">{{ recipe.difficulty }}</span>
+            </div>
 
-          <!-- Dietary Tags -->
-          <div
-            v-for="tag in recipe.dietaryTags"
-            :key="tag"
-            class="inline-flex items-center px-4 py-2 bg-purple-50 text-purple-700 rounded-lg border-2 border-purple-200"
-          >
-            <span class="text-sm font-medium">{{ tag }}</span>
+            <!-- Cuisine Tags -->
+            <div
+              v-for="tag in recipe.cuisineTags"
+              :key="tag"
+              class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg border-2 border-blue-200"
+            >
+              <span class="text-sm font-medium">{{ tag }}</span>
+            </div>
+
+            <!-- Dietary Tags -->
+            <div
+              v-for="tag in recipe.dietaryTags"
+              :key="tag"
+              class="inline-flex items-center px-4 py-2 bg-purple-50 text-purple-700 rounded-lg border-2 border-purple-200"
+            >
+              <span class="text-sm font-medium">{{ tag }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -172,7 +219,7 @@ function getDifficultyColor(difficulty: string | null): string {
       </div>
 
       <!-- Instructions Section -->
-      <div class="space-y-4">
+      <div class="space-y-4 mb-8">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Instructions</h3>
         <StepCard
           v-for="(instruction, index) in recipe.instructions"
@@ -182,6 +229,28 @@ function getDifficultyColor(difficulty: string | null): string {
           :total-steps="recipe.instructions.length"
           :instruction="instruction"
         />
+      </div>
+
+      <!-- Reviews Section -->
+      <div class="border-t border-gray-300 pt-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Reviews</h2>
+
+        <!-- Review Form -->
+        <div class="mb-8">
+          <ReviewForm
+            :recipe-id="recipeId"
+            :existing-review="existingReview || undefined"
+            @submitted="handleReviewSubmitted"
+          />
+        </div>
+
+        <!-- Review List -->
+        <div>
+          <ReviewList
+            ref="reviewListRef"
+            :recipe-id="recipeId"
+          />
+        </div>
       </div>
     </div>
   </div>
