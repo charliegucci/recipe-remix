@@ -35,7 +35,9 @@ Plans:
 
 ---
 
-### Phase 2: Core Read Path
+### Phase 2: Core Read Path ✓
+
+**Status:** Complete (2026-02-06)
 
 **Goal:** A user can browse and read fully structured recipes sourced from the curated database, with images, served quickly from the edge.
 
@@ -43,24 +45,26 @@ Plans:
 - DISP-01, DISP-02, DISP-03, DISP-04, DISP-05
 - GEN-06
 
-**Plans:** 6 plans
+**Plans:** 6 plans (all complete)
 
 Plans:
-- [ ] 02-01-PLAN.md — Recipe database schema and seed data
-- [ ] 02-02-PLAN.md — Recipe API routes with KV caching
-- [ ] 02-03-PLAN.md — RecipeCard and skeleton components
-- [ ] 02-04-PLAN.md — Interactive ingredient and step components
-- [ ] 02-05-PLAN.md — Home page with carousel and category sections
-- [ ] 02-06-PLAN.md — Recipe detail page with verification
+- [x] 02-01-PLAN.md — Recipe database schema and seed data
+- [x] 02-02-PLAN.md — Recipe API routes with KV caching
+- [x] 02-03-PLAN.md — RecipeCard and skeleton components
+- [x] 02-04-PLAN.md — Interactive ingredient and step components
+- [x] 02-05-PLAN.md — Home page with carousel and category sections
+- [x] 02-06-PLAN.md — Recipe detail page with verification
 
-**Success Criteria:**
+**Success Criteria:** All verified ✓
 1. A user can open a recipe detail page and see the title, description, a full ingredient list with quantities and units, ordered step-by-step instructions, estimated cooking time, and difficulty level — all rendered on first paint with no loading spinner for the text content.
 2. A user can navigate to any recipe by its URL at any time in the future and see the exact same recipe they saw before (stable identity via persistent IDs).
 3. Repeat visits to the same recipe page complete in under 200 ms at the edge because the KV read-through cache is serving the response.
 
 ---
 
-### Phase 3: Pantry and User Features
+### Phase 3: Pantry and User Features ✓
+
+**Status:** Complete (2026-02-08)
 
 **Goal:** A user can build and maintain a personal pantry of ingredients with dietary guardrails, and an authenticated user can save, track, and annotate recipes they enjoy.
 
@@ -69,16 +73,16 @@ Plans:
 - USER-04, USER-05, USER-06, USER-07
 - GEN-03
 
-**Plans:** 5 plans
+**Plans:** 5 plans (all complete)
 
 Plans:
-- [ ] 03-01-PLAN.md — Database schema extensions, migration, and ingredient seed data
-- [ ] 03-02-PLAN.md — Pantry management with autocomplete and dietary restrictions
-- [ ] 03-03-PLAN.md — Favorites and cooking history with optimistic UI
-- [ ] 03-04-PLAN.md — Recipe ratings and reviews system
-- [ ] 03-05-PLAN.md — Pantry-to-recipe matching and guest data migration
+- [x] 03-01-PLAN.md — Database schema extensions, migration, and ingredient seed data
+- [x] 03-02-PLAN.md — Pantry management with autocomplete and dietary restrictions
+- [x] 03-03-PLAN.md — Favorites and cooking history with optimistic UI
+- [x] 03-04-PLAN.md — Recipe ratings and reviews system
+- [x] 03-05-PLAN.md — Pantry-to-recipe matching and guest data migration
 
-**Success Criteria:**
+**Success Criteria:** All verified ✓
 1. A user types a partial ingredient name and sees a ranked autocomplete dropdown within 150 ms; selecting an item adds it to the pantry instantly, and removing it requires one tap.
 2. A user sets dietary restrictions (e.g., gluten-free), closes the app, reopens it days later, and finds the same restrictions still active without re-entering them.
 3. A logged-in user can star a recipe, navigate away, return later, and find it in a dedicated Favorites list; they can also view every recipe they have previously generated in chronological order.
