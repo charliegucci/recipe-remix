@@ -14,6 +14,8 @@ const props = defineProps<{
 const runtimeConfig = useRuntimeConfig()
 const imageUrl = computed(() => {
   if (!props.recipe.imageKey) return null
+  // Direct URLs (e.g. placeholder images) are used as-is
+  if (props.recipe.imageKey.startsWith('http')) return props.recipe.imageKey
   // R2 public bucket URL - will be configured via env var in production
   const baseUrl = runtimeConfig.public.r2PublicUrl || 'https://pub-placeholder.r2.dev'
   return `${baseUrl}/${props.recipe.imageKey}`
@@ -26,6 +28,12 @@ const difficultyColor = computed(() => {
     case 'hard': return 'text-red-600'
     default: return 'text-gray-600'
   }
+})
+
+// Only show FavoriteButton on client to avoid SSR hydration mismatch
+const mounted = ref(false)
+onMounted(() => {
+  mounted.value = true
 })
 </script>
 
@@ -48,6 +56,11 @@ const difficultyColor = computed(() => {
         class="w-full h-full bg-gray-200 flex items-center justify-center"
       >
         <span class="text-gray-400 text-sm">No image</span>
+      </div>
+
+      <!-- Favorite Button (client-side only) -->
+      <div v-if="mounted" class="absolute top-2 right-2 z-10">
+        <FavoriteButton :recipe-id="recipe.id" />
       </div>
 
       <!-- Desktop Hover Overlay -->

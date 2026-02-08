@@ -101,6 +101,12 @@ async function handleReviewSubmitted() {
   await refreshExistingReview()
   await reviewListRef.value?.refresh()
 }
+
+// Record view in history (client-side only)
+const { recordView } = useHistory()
+onMounted(() => {
+  recordView(recipeId)
+})
 </script>
 
 <template>
