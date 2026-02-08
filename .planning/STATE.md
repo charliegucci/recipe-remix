@@ -3,12 +3,12 @@
 ## Current Position
 
 - **Milestone:** v1.0
-- **Phase:** 3 of 6 (Pantry and User Features) - IN PROGRESS
-- **Plan:** 3 of 4 complete (03-01, 03-02, 03-04)
-- **Status:** Phase 3 in progress - Pantry UI with hybrid storage complete
-- **Last activity:** 2026-02-08 - Completed 03-02-PLAN.md (Pantry UI)
+- **Phase:** 3 of 6 (Pantry and User Features) - COMPLETE
+- **Plan:** 4 of 4 complete (03-01, 03-02, 03-03, 03-04)
+- **Status:** Phase 3 complete - Favorites and history with optimistic UI
+- **Last activity:** 2026-02-08 - Completed 03-03-PLAN.md (Favorites and Ratings UI)
 
-**Progress:** [████████████....] 12/18 total plans (Phase 3: 3/4)
+**Progress:** [█████████████...] 13/18 total plans (Phase 3: 4/4)
 
 ## Progress
 
@@ -16,7 +16,7 @@
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
-| 3 | Pantry and User Features | 3/4 | In Progress |
+| 3 | Pantry and User Features | 4/4 | Complete |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
@@ -47,15 +47,25 @@ Core Read Path complete with:
 - Home page with FeaturedCarousel and infinite scroll category sections
 - Recipe detail page with SSR data fetching
 
-## Phase 3 Progress
+## Phase 3 Deliverables
+
+Phase 3 complete with:
+- Database schema extension (6 new tables for pantry and user features)
+- Curated ingredient master list (~305 items with categories)
+- Ingredient autocomplete with 300ms debounce
+- Pantry management with hybrid storage (localStorage for guests, API for authenticated)
+- Dietary restrictions toggle interface
+- Favorites CRUD with optimistic UI and heart toggle button
+- History tracking with fire-and-forget recording
+- Recipe ratings and reviews (1-5 stars with text reviews)
+- FavoriteButton integrated into RecipeCard
+- Favorites and History pages with auth gates
 
 **Completed Plans:**
-- 03-01: Database Schema Extension (6 new tables: ingredients, pantryItems, userDietaryRestrictions, userFavorites, userRecipeHistory, userRecipeReviews + migration + ingredient seed)
-- 03-02: Pantry UI (ingredient autocomplete with 300ms debounce, pantry CRUD with hybrid localStorage/API storage, dietary restriction toggles)
-- 03-04: Recipe Ratings and Reviews System (star ratings, text reviews, aggregate display, upsert behavior, StarRating/ReviewForm/ReviewList components)
-
-**Next Plans:**
+- 03-01: Database Schema Extension
+- 03-02: Pantry UI
 - 03-03: Favorites and Ratings UI
+- 03-04: Recipe Ratings and Reviews System
 
 ## Key Decisions
 
@@ -95,6 +105,10 @@ Core Read Path complete with:
 | Half-star display for average ratings | Visual precision (4.3 shows as 4.5) using CSS clip-path | 03-04 |
 | Public review list endpoint | Anyone can read reviews, only authenticated users can write | 03-04 |
 | Reduced KV cache TTL for recipe detail | 5min instead of 1hr for review data freshness | 03-04 |
+| Optimistic UI for favorite toggle | Instant feedback improves perceived performance | 03-03 |
+| Client-only FavoriteButton rendering | Avoid SSR hydration mismatch with reactive state | 03-03 |
+| Fire-and-forget history recording | View tracking is non-critical, shouldn't block navigation | 03-03 |
+| Favorites use Set for O(1) lookup | isFavorite check called frequently in recipe lists | 03-03 |
 
 ## Patterns Established
 
@@ -120,6 +134,9 @@ Core Read Path complete with:
 | Readonly vs interactive component modes | Components support both display-only and editable modes via props | 03-04 |
 | Component ref exposure | Use defineExpose to expose methods (refresh) to parent components | 03-04 |
 | Aggregate queries in single call | Combine AVG and COUNT in one query for efficiency | 03-04 |
+| Optimistic UI pattern | Immediate state update, API call, revert on error | 03-03 |
+| Client-only component guards | Use mounted ref to prevent SSR hydration mismatch | 03-03 |
+| Set-based state management | O(1) lookups for frequently-checked state (isFavorite) | 03-03 |
 
 ## Concerns
 
@@ -127,8 +144,8 @@ Core Read Path complete with:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-08T05:18:25Z
-- **Stopped at:** Completed 03-02-PLAN.md - Pantry UI
+- **Last session:** 2026-02-08T05:21:18Z
+- **Stopped at:** Completed 03-03-PLAN.md - Favorites and Ratings UI (Phase 3 complete)
 - **Resume file:** None
 
 ---
