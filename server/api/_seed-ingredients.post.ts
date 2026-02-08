@@ -353,23 +353,18 @@ export default defineEventHandler(async (event) => {
   addIngredient('flax seeds', 'nuts_seeds', ['flaxseed', 'linseed'])
   addIngredient('hemp seeds', 'nuts_seeds', ['hemp hearts'])
 
-  // Insert in batches of 50 (D1 row limits per statement)
-  const batchSize = 50
+  // Insert one by one (batch inserts fail in local D1)
   let insertedCount = 0
 
-  for (let i = 0; i < ingredientData.length; i += batchSize) {
-    const batch = ingredientData.slice(i, i + batchSize)
-
-    const insertData = batch.map(item => ({
+  for (const item of ingredientData) {
+    await db.insert(ingredients).values({
       id: item.id,
       name: item.name,
       category: item.category,
       commonNames: JSON.stringify(item.commonNames),
       createdAt: new Date()
-    }))
-
-    await db.insert(ingredients).values(insertData)
-    insertedCount += insertData.length
+    })
+    insertedCount++
   }
 
   return {
