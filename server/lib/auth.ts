@@ -47,9 +47,10 @@ export function getAuth() {
         anonymous({
           onLinkAccount: async ({ anonymousUser, newUser }) => {
             // When a guest creates an account, transfer their data
-            // This will be expanded in Phase 3 for pantry items
+            // Note: Client-side migration handles the actual data transfer
+            // The client detects anonymous -> authenticated transition and calls
+            // /api/user/migrate-guest-data with localStorage data
             console.log(`Linking anonymous user ${anonymousUser.id} to ${newUser.id}`)
-            // TODO (Phase 3): Transfer pantry items, favorites, etc.
           }
         })
       ],

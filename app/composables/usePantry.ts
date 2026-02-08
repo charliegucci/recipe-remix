@@ -59,6 +59,54 @@ export function usePantry() {
     }
   })
 
+  // Guest-to-auth migration: watch for session changes
+  // When user transitions from anonymous to authenticated, migrate localStorage data
+  const previousIsAnonymous = ref<boolean | null>(null)
+
+  watchEffect(async () => {
+    const currentUser = session.value?.user
+    const currentIsAnonymous = currentUser?.isAnonymous ?? null
+
+    // Detect transition from anonymous to authenticated
+    if (previousIsAnonymous.value === true && currentIsAnonymous === false) {
+      // User just linked their account - migrate guest data
+      const guestPantryData = guestPantry.value
+      const guestDietaryData = guestDietary.value
+
+      // Only migrate if there's data to migrate
+      if (guestPantryData.length > 0 || guestDietaryData.length > 0) {
+        try {
+          const result = await $fetch('/api/user/migrate-guest-data', {
+            method: 'POST',
+            body: {
+              pantryItems: guestPantryData.map(item => ({
+                ingredientId: item.ingredientId || item.id,
+                ingredientName: item.name
+              })),
+              dietaryRestrictions: guestDietaryData
+            }
+          })
+
+          console.log(`Migration complete: ${result.migratedPantryCount} pantry items, ${result.migratedRestrictionCount} restrictions`)
+
+          // Clear localStorage after successful migration
+          guestPantry.value = []
+          guestDietary.value = []
+
+          // Refresh auth data to show migrated items
+          await refreshPantry()
+          await refreshDietary()
+        } catch (error) {
+          console.error('Error migrating guest data:', error)
+          // Don't clear localStorage if migration failed
+        }
+      }
+    }
+
+    // Update tracking state
+    previousIsAnonymous.value = currentIsAnonymous
+  })
+
   // Determine if user is authenticated
   const isAuthenticated = computed(() => {
     return session.value?.user && !session.value.user.isAnonymous
