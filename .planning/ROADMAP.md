@@ -69,6 +69,15 @@ Plans:
 - USER-04, USER-05, USER-06, USER-07
 - GEN-03
 
+**Plans:** 5 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Database schema extensions, migration, and ingredient seed data
+- [ ] 03-02-PLAN.md — Pantry management with autocomplete and dietary restrictions
+- [ ] 03-03-PLAN.md — Favorites and cooking history with optimistic UI
+- [ ] 03-04-PLAN.md — Recipe ratings and reviews system
+- [ ] 03-05-PLAN.md — Pantry-to-recipe matching and guest data migration
+
 **Success Criteria:**
 1. A user types a partial ingredient name and sees a ranked autocomplete dropdown within 150 ms; selecting an item adds it to the pantry instantly, and removing it requires one tap.
 2. A user sets dietary restrictions (e.g., gluten-free), closes the app, reopens it days later, and finds the same restrictions still active without re-entering them.
