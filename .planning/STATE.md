@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.0
 - **Phase:** 3 of 6 (Pantry and User Features) - IN PROGRESS
-- **Plan:** 2 of 4 complete (03-01, 03-04)
-- **Status:** Phase 3 in progress - Recipe ratings and reviews system complete
-- **Last activity:** 2026-02-08 - Completed 03-04-PLAN.md (Recipe Ratings and Reviews System)
+- **Plan:** 3 of 4 complete (03-01, 03-02, 03-04)
+- **Status:** Phase 3 in progress - Pantry UI with hybrid storage complete
+- **Last activity:** 2026-02-08 - Completed 03-02-PLAN.md (Pantry UI)
 
-**Progress:** [███████████.....] 11/18 total plans (Phase 3: 2/4)
+**Progress:** [████████████....] 12/18 total plans (Phase 3: 3/4)
 
 ## Progress
 
@@ -16,7 +16,7 @@
 |-------|------|-------|--------|
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
-| 3 | Pantry and User Features | 2/4 | In Progress |
+| 3 | Pantry and User Features | 3/4 | In Progress |
 | 4 | AI Generation Pipeline | 0/? | Pending |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
@@ -51,10 +51,10 @@ Core Read Path complete with:
 
 **Completed Plans:**
 - 03-01: Database Schema Extension (6 new tables: ingredients, pantryItems, userDietaryRestrictions, userFavorites, userRecipeHistory, userRecipeReviews + migration + ingredient seed)
+- 03-02: Pantry UI (ingredient autocomplete with 300ms debounce, pantry CRUD with hybrid localStorage/API storage, dietary restriction toggles)
 - 03-04: Recipe Ratings and Reviews System (star ratings, text reviews, aggregate display, upsert behavior, StarRating/ReviewForm/ReviewList components)
 
 **Next Plans:**
-- 03-02: Pantry UI (ingredient autocomplete, pantry management)
 - 03-03: Favorites and Ratings UI
 
 ## Key Decisions
@@ -88,6 +88,9 @@ Core Read Path complete with:
 | Curated ingredient list | ~305 items vs external API for faster autocomplete, no rate limits | 03-01 |
 | Batch inserts for D1 | 50 items per batch to respect D1 row limits per statement | 03-01 |
 | JSON for commonNames | TEXT field with default '[]' for ingredient search aliases | 03-01 |
+| Hybrid storage for pantry/dietary | Guest users use localStorage, authenticated users use D1 via API | 03-02 |
+| 300ms debounce for autocomplete | Reduces API calls while maintaining perceived responsiveness | 03-02 |
+| Individual inserts for local D1 seed | Batch inserts fail in local D1 development environment | 03-02 |
 | Upsert via check-then-insert/update | Drizzle onConflictDoUpdate requires unique constraint, we have index only | 03-04 |
 | Half-star display for average ratings | Visual precision (4.3 shows as 4.5) using CSS clip-path | 03-04 |
 | Public review list endpoint | Anyone can read reviews, only authenticated users can write | 03-04 |
@@ -112,6 +115,8 @@ Core Read Path complete with:
 | SSR parallel fetching | Promise.all for concurrent data fetching in useAsyncData | 02-05 |
 | Junction table pattern | Composite PK + separate indexes on frequently-queried columns | 03-01 |
 | Seed endpoint pattern | Check existing count, skip if seeded, batch inserts, return stats | 03-01 |
+| Hybrid storage pattern | Guest/localStorage, auth/API - unified interface via composable | 03-02 |
+| Debounced autocomplete | VueUse refDebounced with loading state for query ahead of debounce | 03-02 |
 | Readonly vs interactive component modes | Components support both display-only and editable modes via props | 03-04 |
 | Component ref exposure | Use defineExpose to expose methods (refresh) to parent components | 03-04 |
 | Aggregate queries in single call | Combine AVG and COUNT in one query for efficiency | 03-04 |
@@ -122,8 +127,8 @@ Core Read Path complete with:
 
 ## Session Continuity
 
-- **Last session:** 2026-02-08T05:16:17Z
-- **Stopped at:** Completed 03-04-PLAN.md - Recipe Ratings and Reviews System
+- **Last session:** 2026-02-08T05:18:25Z
+- **Stopped at:** Completed 03-02-PLAN.md - Pantry UI
 - **Resume file:** None
 
 ---
