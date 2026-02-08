@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer, index, primaryKey } from 'drizzle-orm/sqlite-core'
 
 // Better Auth requires these exact table structures
 export const users = sqliteTable('users', {
@@ -71,4 +71,76 @@ export const recipeCategories = sqliteTable('recipe_categories', {
   category: text('category').notNull()
 }, (table) => ({
   categoryIdx: index('recipe_categories_category_idx').on(table.category)
+}))
+
+// Phase 3: Pantry and User Features
+
+// Curated ingredient master list (seeded, not user-generated)
+export const ingredients = sqliteTable('ingredients', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  category: text('category').notNull(), // 'produce', 'protein', 'dairy', 'grains', 'spices', 'condiments', 'baking', 'canned', 'nuts_seeds'
+  commonNames: text('common_names').notNull().default('[]'), // JSON array for search aliases
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  nameIdx: index('ingredients_name_idx').on(table.name)
+}))
+
+// User's pantry ingredients (authenticated users only)
+export const pantryItems = sqliteTable('pantry_items', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  ingredientId: text('ingredient_id').notNull(),
+  ingredientName: text('ingredient_name').notNull(),
+  addedAt: integer('added_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  userIdx: index('pantry_items_user_idx').on(table.userId),
+  ingredientIdx: index('pantry_items_ingredient_idx').on(table.ingredientId)
+}))
+
+// User's dietary restrictions (authenticated users only)
+export const userDietaryRestrictions = sqliteTable('user_dietary_restrictions', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  restriction: text('restriction').notNull(), // 'vegetarian' | 'vegan' | 'gluten-free' | 'dairy-free' | 'nut-free'
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  userIdx: index('user_dietary_restrictions_user_idx').on(table.userId),
+  uniqueUserRestriction: index('user_dietary_restrictions_unique').on(table.userId, table.restriction)
+}))
+
+// User favorites (junction table with composite primary key)
+export const userFavorites = sqliteTable('user_favorites', {
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  recipeId: text('recipe_id').notNull().references(() => recipes.id, { onDelete: 'cascade' }),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  pk: primaryKey({ columns: [table.userId, table.recipeId] }),
+  userIdx: index('user_favorites_user_idx').on(table.userId),
+  recipeIdx: index('user_favorites_recipe_idx').on(table.recipeId)
+}))
+
+// User's recipe viewing/generation history
+export const userRecipeHistory = sqliteTable('user_recipe_history', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  recipeId: text('recipe_id').notNull().references(() => recipes.id, { onDelete: 'cascade' }),
+  viewedAt: integer('viewed_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  userIdx: index('user_recipe_history_user_idx').on(table.userId),
+  viewedAtIdx: index('user_recipe_history_viewed_at_idx').on(table.viewedAt)
+}))
+
+// User ratings and reviews
+export const userRecipeReviews = sqliteTable('user_recipe_reviews', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  recipeId: text('recipe_id').notNull().references(() => recipes.id, { onDelete: 'cascade' }),
+  rating: integer('rating').notNull(), // 1-5 stars
+  review: text('review'), // Optional text review
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  uniqueUserRecipe: index('user_recipe_reviews_unique').on(table.userId, table.recipeId),
+  recipeIdx: index('user_recipe_reviews_recipe_idx').on(table.recipeId)
 }))
