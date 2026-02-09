@@ -9,6 +9,7 @@
         class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
         @focus="showDropdown = true"
         @blur="handleBlur"
+        @keydown.enter.prevent="selectFirst"
       />
 
       <!-- Loading indicator -->
@@ -90,8 +91,8 @@ const showDropdown = ref(false)
 // Debounced query for API calls (300ms delay)
 const debouncedQuery = refDebounced(searchQuery, 300)
 
-// Fetch results with debounced query
-const { data: results, pending } = await useFetch<Ingredient[]>('/api/ingredients/search', {
+// Fetch results with debounced query (no await - immediate:false means no SSR fetch)
+const { data: results, pending } = useFetch<Ingredient[]>('/api/ingredients/search', {
   query: {
     q: debouncedQuery
   },
@@ -108,6 +109,13 @@ function selectIngredient(ingredient: Ingredient) {
   emit('select', ingredient)
   searchQuery.value = ''
   showDropdown.value = false
+}
+
+// Select the first result when Enter is pressed
+function selectFirst() {
+  if (results.value && results.value.length > 0) {
+    selectIngredient(results.value[0])
+  }
 }
 
 function handleBlur() {
