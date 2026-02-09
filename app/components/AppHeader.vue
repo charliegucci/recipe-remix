@@ -28,6 +28,9 @@ async function handleSignOut() {
           <NuxtLink to="/pantry" class="text-gray-600 hover:text-gray-900">
             My Pantry
           </NuxtLink>
+          <NuxtLink to="/generate" class="text-gray-600 hover:text-gray-900">
+            Generate
+          </NuxtLink>
           <NuxtLink to="/favorites" class="text-gray-600 hover:text-gray-900">
             Favorites
           </NuxtLink>
