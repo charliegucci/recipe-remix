@@ -39,18 +39,25 @@ export interface AnalyticsEventInput {
  */
 export function logAnalyticsEvent(db: Database, input: AnalyticsEventInput): void {
   // Fire-and-forget: Start the promise but don't return it
-  // Swallow all errors to ensure analytics failures never propagate
-  db.insert(schema.analyticsEvents)
-    .values({
-      id: crypto.randomUUID(),
-      eventType: input.eventType,
-      userId: input.userId ?? null,
-      recipeId: input.recipeId ?? null,
-      metadata: JSON.stringify(input.metadata ?? {}),
-      createdAt: new Date()
-    })
-    .catch(() => {
-      // Silently swallow all analytics errors
-      // Analytics should never crash the application
-    })
+  // Swallow all errors (both sync and async) to ensure analytics failures never propagate
+  try {
+    // Fire-and-forget: Use void operator to explicitly ignore the promise result
+    // The promise starts executing immediately, but the caller doesn't wait for it
+    void db.insert(schema.analyticsEvents)
+      .values({
+        id: crypto.randomUUID(),
+        eventType: input.eventType,
+        userId: input.userId ?? null,
+        recipeId: input.recipeId ?? null,
+        metadata: JSON.stringify(input.metadata ?? {}),
+        createdAt: new Date()
+      })
+      .catch(() => {
+        // Silently swallow all async errors
+        // Analytics should never crash the application
+      })
+  } catch (error) {
+    // Silently swallow all sync errors
+    // Analytics should never crash the application
+  }
 }
