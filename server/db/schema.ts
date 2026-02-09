@@ -144,3 +144,34 @@ export const userRecipeReviews = sqliteTable('user_recipe_reviews', {
   uniqueUserRecipe: index('user_recipe_reviews_unique').on(table.userId, table.recipeId),
   recipeIdx: index('user_recipe_reviews_recipe_idx').on(table.recipeId)
 }))
+
+// Phase 4: AI Generation Pipeline
+
+// Analytics events for tracking user interactions and generation metrics
+export const analyticsEvents = sqliteTable('analytics_events', {
+  id: text('id').primaryKey(),
+  eventType: text('event_type').notNull(), // 'recipe_generated', 'recipe_generation_failed', 'recipe_viewed', 'recipe_favorited'
+  userId: text('user_id').references(() => users.id),
+  recipeId: text('recipe_id').references(() => recipes.id),
+  metadata: text('metadata').notNull().default('{}'), // JSON object for extra data
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
+}, (table) => ({
+  eventTypeIdx: index('analytics_events_event_type_idx').on(table.eventType),
+  createdAtIdx: index('analytics_events_created_at_idx').on(table.createdAt)
+}))
+
+// AI recipe generation history and status tracking
+export const generationHistory = sqliteTable('generation_history', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  recipeId: text('recipe_id').references(() => recipes.id),
+  inputIngredients: text('input_ingredients').notNull(), // JSON array of ingredient names
+  cuisinePreferences: text('cuisine_preferences').notNull().default('[]'), // JSON array of selected cuisines
+  status: text('status').notNull().default('pending'), // 'pending' | 'generating' | 'validating' | 'completed' | 'failed'
+  errorMessage: text('error_message'),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+  completedAt: integer('completed_at', { mode: 'timestamp' })
+}, (table) => ({
+  userCreatedAtIdx: index('generation_history_user_created_at_idx').on(table.userId, table.createdAt),
+  statusIdx: index('generation_history_status_idx').on(table.status)
+}))
