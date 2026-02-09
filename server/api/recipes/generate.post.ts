@@ -1,10 +1,13 @@
 import { useDrizzle, schema } from '../../utils/drizzle'
+import { drizzle } from 'drizzle-orm/d1'
 import { getAuth } from '../../lib/auth'
 import { buildRecipePrompt } from '../../utils/ai-prompt'
 import { parseRecipeResponse } from '../../utils/recipe-parser'
 import { validateIngredients } from '../../utils/ingredient-validation'
 import { checkDietaryRestrictions } from '../../utils/dietary-check'
 import { injectSafetyTemps } from '../../utils/food-safety'
+import { generateAndStoreImage } from '../../utils/image-generation'
+import { eq } from 'drizzle-orm'
 import crypto from 'node:crypto'
 
 /**
@@ -241,6 +244,21 @@ export default defineEventHandler(async (event) => {
             completedAt: new Date()
           })
           .where(schema.generationHistory.id.eq(generationId))
+
+        // === 12.5. Best-effort fire-and-forget image generation ===
+        // IMPORTANT: In Cloudflare Workers, fire-and-forget promises may not complete
+        // after the response is sent. This is best-effort only. The frontend MUST call
+        // POST /api/recipes/:id/image as the primary reliable path for image generation.
+        generateAndStoreImage(recipeId, recipe.title, recipe.description, recipe.cuisineTags)
+          .then(async (result) => {
+            if (result.success && result.imageKey) {
+              const db = hubDatabase()
+              await drizzle(db, { schema }).update(schema.recipes)
+                .set({ imageKey: result.imageKey })
+                .where(eq(schema.recipes.id, recipeId))
+            }
+          })
+          .catch(() => {}) // Swallow errors - image is non-critical
 
         // === 13. Invalidate KV cache ===
         // Clear recipe listing caches (they may now be stale)
