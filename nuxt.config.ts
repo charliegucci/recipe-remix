@@ -13,7 +13,8 @@ export default defineNuxtConfig({
   hub: {
     database: true,
     kv: true,
-    blob: true
+    blob: true,
+    ai: true
   },
 
   css: ['~/assets/css/main.css'],
