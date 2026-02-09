@@ -271,7 +271,7 @@ const canGenerate = computed(() => {
     pantryState.isAuthenticated.value &&
     pantryState.pantry.value.length >= 2 &&
     selectedCuisines.value.length >= 1 &&
-    status.value === 'idle'
+    (status.value === 'idle' || status.value === 'error')
   )
 })
 
