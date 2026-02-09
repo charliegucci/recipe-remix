@@ -101,6 +101,16 @@ Plans:
 - DISP-06, DISP-08
 - INFR-02, INFR-03
 
+**Plans:** 6 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Database schema extension + safety validation utilities
+- [ ] 04-02-PLAN.md — AI recipe generation pipeline API endpoint
+- [ ] 04-03-PLAN.md — Image generation with Workers AI and R2 storage
+- [ ] 04-04-PLAN.md — Analytics event logging and dashboard
+- [ ] 04-05-PLAN.md — Generation UI with cuisine picker and progress indicator
+- [ ] 04-06-PLAN.md — AI badge, image display, and analytics integration
+
 **Success Criteria:**
 1. A user with a populated pantry taps "Generate Recipe," sees a live status indicator, and a fully rendered recipe — including an image — appears on screen without a page reload; the entire pipeline completes reliably even if the user navigates away and returns.
 2. Every ingredient in every AI-generated recipe resolves against the canonical ingredient database; any recipe containing an unresolvable ingredient is automatically rejected and the user is informed, never shown a hallucinated ingredient.
