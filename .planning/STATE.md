@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.0
 - **Phase:** 4 of 6 (AI Generation Pipeline) - In Progress
-- **Plan:** 2 of 6 complete (04-02)
-- **Status:** Executing Phase 4 - Core AI generation endpoint complete
-- **Last activity:** 2026-02-09 - Completed 04-02-PLAN.md (AI Recipe Generation Endpoint)
+- **Plan:** 3 of 6 complete (04-03)
+- **Status:** Executing Phase 4 - Image generation endpoint complete
+- **Last activity:** 2026-02-09 - Completed 04-03-PLAN.md (Image Generation Endpoint)
 
-**Progress:** [█████████████████.] 17/21 total plans (Phase 4: 2/6)
+**Progress:** [█████████████████.] 18/21 total plans (Phase 4: 3/6)
 
 ## Progress
 
@@ -17,7 +17,7 @@
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
 | 3 | Pantry and User Features | 5/5 | Complete |
-| 4 | AI Generation Pipeline | 2/6 | In Progress |
+| 4 | AI Generation Pipeline | 3/6 | In Progress |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
 
@@ -72,7 +72,7 @@ Phase 3 complete with:
 
 ## Phase 4 Deliverables
 
-Phase 4 in progress (2/6 plans complete):
+Phase 4 in progress (3/6 plans complete):
 - Database schema extension (2 new tables: analytics_events, generation_history)
 - Ingredient validation utility with 3-tier matching (exact, substring, commonNames)
 - USDA food safety temperature injection for protein ingredients
@@ -83,10 +83,15 @@ Phase 4 in progress (2/6 plans complete):
 - Structured LLM prompting with JSON schema enforcement
 - Multi-layer validation pipeline (ingredients, dietary, safety)
 - Generation history tracking with status updates
+- Image generation utility using flux-1-schnell text-to-image model
+- Standalone image generation endpoint (POST /api/recipes/:id/image)
+- Best-effort fire-and-forget image generation in generate pipeline
+- R2 blob storage for AI-generated images
 
 **Completed Plans:**
 - 04-01: Database Schema and Safety Utilities
 - 04-02: AI Recipe Generation Endpoint
+- 04-03: Image Generation Endpoint
 
 ## Key Decisions
 
@@ -144,6 +149,10 @@ Phase 4 in progress (2/6 plans complete):
 | Llama 3.1 70B model selection | Good balance of capability and cost for structured recipe generation (2048 token limit) | 04-02 |
 | Single retry on parsing failure | Balance user wait time vs success rate (~90% success with stricter second prompt) | 04-02 |
 | 'surprise' cuisine random selection | Server-side picks 2 random cuisines for user delight and exploration | 04-02 |
+| Standalone endpoint as primary path for image generation | Cloudflare Workers fire-and-forget promises may not complete after response sent | 04-03 |
+| Best-effort fire-and-forget in generate pipeline | Attempt automatic image generation, but don't rely on it - frontend uses standalone endpoint as fallback | 04-03 |
+| No regeneration if imageKey exists | Images are expensive to generate - avoid duplicates | 04-03 |
+| flux-1-schnell model for image generation | Fast high-quality food photography generation | 04-03 |
 
 ## Patterns Established
 
@@ -184,7 +193,7 @@ Phase 4 in progress (2/6 plans complete):
 ## Session Continuity
 
 - **Last session:** 2026-02-09
-- **Stopped at:** Completed 04-02-PLAN.md (AI Recipe Generation Endpoint)
+- **Stopped at:** Completed 04-03-PLAN.md (Image Generation Endpoint)
 - **Resume file:** None
 
 ---
