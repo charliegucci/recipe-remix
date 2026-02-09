@@ -1,5 +1,5 @@
 import { useLocalStorage } from '@vueuse/core'
-import { useSession } from '~/lib/auth-client'
+import { authClient } from '~/lib/auth-client'
 
 interface PantryItem {
   id: string
@@ -27,10 +27,8 @@ const DIETARY_OPTIONS: DietaryRestriction[] = [
  * - Authenticated users: API + D1
  */
 export function usePantry() {
-  // useSession() without useFetch returns a raw shallowRef (the session store)
-  const sessionStore = useSession()
-  // Wrap to provide a consistent .value?.user interface
-  const session = computed(() => sessionStore.value)
+  // Session state - populated client-side only
+  const session = ref<any>(null)
 
   // Guest storage (SSR-safe with initOnMounted)
   const guestPantry = useLocalStorage<PantryItem[]>('guest_pantry', [], {
@@ -41,24 +39,36 @@ export function usePantry() {
   })
 
   // Authenticated storage
-  const { data: authPantry, refresh: refreshPantry } = useFetch<PantryItem[]>('/api/user/pantry', {
-    immediate: false,
-    // Only fetch if user is authenticated and not anonymous
-    watch: [() => session.value?.user?.id],
-    lazy: true
-  })
+  const authPantry = ref<PantryItem[] | null>(null)
+  const authDietary = ref<string[] | null>(null)
 
-  const { data: authDietary, refresh: refreshDietary } = useFetch<string[]>('/api/user/dietary-restrictions', {
-    immediate: false,
-    watch: [() => session.value?.user?.id],
-    lazy: true
-  })
+  async function refreshPantry() {
+    try {
+      authPantry.value = await $fetch<PantryItem[]>('/api/user/pantry')
+    } catch {
+      authPantry.value = null
+    }
+  }
 
-  // Initialize auth data if user is logged in
-  onMounted(() => {
+  async function refreshDietary() {
+    try {
+      authDietary.value = await $fetch<string[]>('/api/user/dietary-restrictions')
+    } catch {
+      authDietary.value = null
+    }
+  }
+
+  // Initialize session and auth data client-side
+  onMounted(async () => {
+    try {
+      const sessionResult = await authClient.getSession()
+      session.value = sessionResult?.data || sessionResult
+    } catch {
+      session.value = null
+    }
+
     if (session.value?.user && !session.value.user.isAnonymous) {
-      refreshPantry()
-      refreshDietary()
+      await Promise.all([refreshPantry(), refreshDietary()])
     }
   })
 
