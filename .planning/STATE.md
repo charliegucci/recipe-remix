@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.0
 - **Phase:** 4 of 6 (AI Generation Pipeline) - In Progress
-- **Plan:** 1 of 6 complete (04-01)
-- **Status:** Executing Phase 4 - Database and validation foundation complete
-- **Last activity:** 2026-02-09 - Completed 04-01-PLAN.md (Database Schema and Safety Utilities)
+- **Plan:** 2 of 6 complete (04-02)
+- **Status:** Executing Phase 4 - Core AI generation endpoint complete
+- **Last activity:** 2026-02-09 - Completed 04-02-PLAN.md (AI Recipe Generation Endpoint)
 
-**Progress:** [████████████████..] 16/21 total plans (Phase 4: 1/6)
+**Progress:** [█████████████████.] 17/21 total plans (Phase 4: 2/6)
 
 ## Progress
 
@@ -17,7 +17,7 @@
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
 | 3 | Pantry and User Features | 5/5 | Complete |
-| 4 | AI Generation Pipeline | 1/6 | In Progress |
+| 4 | AI Generation Pipeline | 2/6 | In Progress |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
 
@@ -72,15 +72,21 @@ Phase 3 complete with:
 
 ## Phase 4 Deliverables
 
-Phase 4 in progress (1/6 plans complete):
+Phase 4 in progress (2/6 plans complete):
 - Database schema extension (2 new tables: analytics_events, generation_history)
 - Ingredient validation utility with 3-tier matching (exact, substring, commonNames)
 - USDA food safety temperature injection for protein ingredients
 - Dietary restriction checking for 5 restriction types (vegetarian, vegan, gluten-free, dairy-free, nut-free)
 - Module-level ingredient caching with 5-minute TTL
+- AI recipe generation endpoint (POST /api/recipes/generate)
+- Workers AI integration via Llama 3.1 70B model
+- Structured LLM prompting with JSON schema enforcement
+- Multi-layer validation pipeline (ingredients, dietary, safety)
+- Generation history tracking with status updates
 
 **Completed Plans:**
 - 04-01: Database Schema and Safety Utilities
+- 04-02: AI Recipe Generation Endpoint
 
 ## Key Decisions
 
@@ -134,6 +140,10 @@ Phase 4 in progress (1/6 plans complete):
 | Substring matching both directions for ingredients | Handles variations like "chicken" vs "chicken breast" consistently with Phase 3 | 04-01 |
 | Post-generation dietary check (not pre-filtering) | Allows AI flexibility, catches violations after generation with explicit user warning | 04-01 |
 | Temperature injection via instruction modification | Non-invasive addition to existing steps, preserves AI-generated recipe structure | 04-01 |
+| NuxtHub AI integration via hubAI() | Native Workers AI access through NuxtHub abstraction for seamless dev/prod | 04-02 |
+| Llama 3.1 70B model selection | Good balance of capability and cost for structured recipe generation (2048 token limit) | 04-02 |
+| Single retry on parsing failure | Balance user wait time vs success rate (~90% success with stricter second prompt) | 04-02 |
+| 'surprise' cuisine random selection | Server-side picks 2 random cuisines for user delight and exploration | 04-02 |
 
 ## Patterns Established
 
@@ -174,7 +184,7 @@ Phase 4 in progress (1/6 plans complete):
 ## Session Continuity
 
 - **Last session:** 2026-02-09
-- **Stopped at:** Completed 04-01-PLAN.md (Database Schema and Safety Utilities)
+- **Stopped at:** Completed 04-02-PLAN.md (AI Recipe Generation Endpoint)
 - **Resume file:** None
 
 ---
