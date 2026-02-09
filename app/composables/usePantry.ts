@@ -27,7 +27,10 @@ const DIETARY_OPTIONS: DietaryRestriction[] = [
  * - Authenticated users: API + D1
  */
 export function usePantry() {
-  const { data: session } = useSession()
+  // useSession() without useFetch returns a raw shallowRef (the session store)
+  const sessionStore = useSession()
+  // Wrap to provide a consistent .value?.user interface
+  const session = computed(() => sessionStore.value)
 
   // Guest storage (SSR-safe with initOnMounted)
   const guestPantry = useLocalStorage<PantryItem[]>('guest_pantry', [], {
@@ -41,13 +44,13 @@ export function usePantry() {
   const { data: authPantry, refresh: refreshPantry } = useFetch<PantryItem[]>('/api/user/pantry', {
     immediate: false,
     // Only fetch if user is authenticated and not anonymous
-    watch: [() => session.value],
+    watch: [() => session.value?.user?.id],
     lazy: true
   })
 
   const { data: authDietary, refresh: refreshDietary } = useFetch<string[]>('/api/user/dietary-restrictions', {
     immediate: false,
-    watch: [() => session.value],
+    watch: [() => session.value?.user?.id],
     lazy: true
   })
 
