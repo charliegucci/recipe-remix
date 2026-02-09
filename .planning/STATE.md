@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.0
 - **Phase:** 4 of 6 (AI Generation Pipeline) - In Progress
-- **Plan:** 3 of 6 complete (04-03)
-- **Status:** Executing Phase 4 - Image generation endpoint complete
-- **Last activity:** 2026-02-09 - Completed 04-03-PLAN.md (Image Generation Endpoint)
+- **Plan:** 4 of 6 complete (04-04)
+- **Status:** Executing Phase 4 - Analytics event logging complete
+- **Last activity:** 2026-02-09 - Completed 04-04-PLAN.md (Analytics Event Logging)
 
-**Progress:** [█████████████████.] 18/21 total plans (Phase 4: 3/6)
+**Progress:** [█████████████████.] 19/21 total plans (Phase 4: 4/6)
 
 ## Progress
 
@@ -17,7 +17,7 @@
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
 | 3 | Pantry and User Features | 5/5 | Complete |
-| 4 | AI Generation Pipeline | 3/6 | In Progress |
+| 4 | AI Generation Pipeline | 4/6 | In Progress |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
 
@@ -72,7 +72,7 @@ Phase 3 complete with:
 
 ## Phase 4 Deliverables
 
-Phase 4 in progress (3/6 plans complete):
+Phase 4 in progress (4/6 plans complete):
 - Database schema extension (2 new tables: analytics_events, generation_history)
 - Ingredient validation utility with 3-tier matching (exact, substring, commonNames)
 - USDA food safety temperature injection for protein ingredients
@@ -87,11 +87,16 @@ Phase 4 in progress (3/6 plans complete):
 - Standalone image generation endpoint (POST /api/recipes/:id/image)
 - Best-effort fire-and-forget image generation in generate pipeline
 - R2 blob storage for AI-generated images
+- Fire-and-forget analytics event logging utility
+- Client-side event ingestion endpoint (POST /api/analytics/events)
+- Analytics dashboard with generation and interaction metrics (GET /api/analytics/dashboard)
+- KV-cached dashboard data with 5-minute TTL
 
 **Completed Plans:**
 - 04-01: Database Schema and Safety Utilities
 - 04-02: AI Recipe Generation Endpoint
 - 04-03: Image Generation Endpoint
+- 04-04: Analytics Event Logging
 
 ## Key Decisions
 
@@ -153,6 +158,11 @@ Phase 4 in progress (3/6 plans complete):
 | Best-effort fire-and-forget in generate pipeline | Attempt automatic image generation, but don't rely on it - frontend uses standalone endpoint as fallback | 04-03 |
 | No regeneration if imageKey exists | Images are expensive to generate - avoid duplicates | 04-03 |
 | flux-1-schnell model for image generation | Fast high-quality food photography generation | 04-03 |
+| Fire-and-forget with void operator | Analytics must never block user-facing operations; use void to explicitly mark promise as intentionally ignored | 04-04 |
+| Client event type whitelist | Only allow safe events from browser (viewed/favorited); server-side events (generated/failed) use direct utility calls | 04-04 |
+| Try-catch wraps sync errors | Drizzle query builder construction can throw sync errors before promise chain starts; catch both sync and async failures | 04-04 |
+| Dashboard requires auth but views don't | Anyone can log views (including guests), but only authenticated users should see aggregated analytics | 04-04 |
+| 5-minute dashboard cache TTL | Dashboard data doesn't need real-time updates; 5 min balances freshness and performance | 04-04 |
 
 ## Patterns Established
 
@@ -193,7 +203,7 @@ Phase 4 in progress (3/6 plans complete):
 ## Session Continuity
 
 - **Last session:** 2026-02-09
-- **Stopped at:** Completed 04-03-PLAN.md (Image Generation Endpoint)
+- **Stopped at:** Completed 04-04-PLAN.md (Analytics Event Logging)
 - **Resume file:** None
 
 ---
