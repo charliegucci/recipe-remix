@@ -15,6 +15,8 @@ interface Recipe {
   dietaryTags: string[]
   cookTime: number | null
   difficulty: 'easy' | 'medium' | 'hard' | null
+  explanation: string | null
+  servings: number
   imageKey: string | null
   source: string
   featured: boolean
@@ -118,6 +120,12 @@ function splitSafetyNote(instruction: string): { before: string; safetyNote: str
 }
 
 const isAiGenerated = computed(() => recipe.value?.source === 'ai_generated')
+
+// Serving size scaling
+const { currentServings, scaledIngredients } = useServingScale(
+  recipe.value?.servings ?? 4,
+  computed(() => recipe.value?.ingredients ?? [])
+)
 
 // Image generation button state
 const generatingImage = ref(false)
@@ -276,11 +284,24 @@ onMounted(() => {
         <p class="text-gray-700 leading-relaxed">{{ recipe.description }}</p>
       </div>
 
+      <!-- Why This Fusion Works (AI recipes only) -->
+      <WhyThisWorks
+        v-if="isAiGenerated && recipe.explanation"
+        :explanation="recipe.explanation"
+        class="mb-6"
+      />
+
       <!-- Ingredients Section -->
       <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <ServingScaler
+            v-model="currentServings"
+            :base-servings="recipe.servings ?? 4"
+          />
+        </div>
         <IngredientChecklist
           :recipe-id="recipeId"
-          :ingredients="recipe.ingredients"
+          :ingredients="scaledIngredients"
         />
       </div>
 
