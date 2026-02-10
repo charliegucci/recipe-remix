@@ -228,6 +228,8 @@ export default defineEventHandler(async (event) => {
             dietaryTags: JSON.stringify(recipe.dietaryTags),
             cookTime: recipe.cookTime,
             difficulty: recipe.difficulty,
+            servings: recipe.servings,
+            explanation: recipe.whyThisWorks || null,
             imageKey: null, // Image generation happens async in Plan 03
             source: 'ai_generated',
             featured: false,
@@ -315,6 +317,7 @@ export default defineEventHandler(async (event) => {
             cookTime: recipe.cookTime,
             difficulty: recipe.difficulty,
             servings: recipe.servings,
+            explanation: recipe.whyThisWorks || null,
             imageKey: null,
             source: 'ai_generated',
             featured: false,

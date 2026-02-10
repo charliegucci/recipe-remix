@@ -55,6 +55,8 @@ export default defineEventHandler(async (event) => {
     instructions: JSON.parse(result.instructions),
     cuisineTags: JSON.parse(result.cuisineTags),
     dietaryTags: JSON.parse(result.dietaryTags),
+    servings: result.servings ?? 4,
+    explanation: result.explanation ?? null,
     avgRating: avgRating ? parseFloat(avgRating.toFixed(1)) : null,
     totalReviews
   }

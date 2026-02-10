@@ -62,6 +62,8 @@ export const recipes = sqliteTable('recipes', {
   imageKey: text('image_key'), // R2 object key, nullable
   source: text('source').notNull().default('curated'), // 'curated' | 'ai_generated'
   featured: integer('featured', { mode: 'boolean' }).notNull().default(false),
+  servings: integer('servings').default(4),
+  explanation: text('explanation'), // "Why this fusion works" — AI-generated explanation
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
 })
 

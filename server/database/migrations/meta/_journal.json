@@ -29,6 +29,13 @@
       "when": 1770599498174,
       "tag": "0004_ai_generation_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1770700000000,
+      "tag": "0005_fusion_intelligence",
+      "breakpoints": true
     }
   ]
 }
