@@ -21,6 +21,7 @@ export interface ParsedRecipe {
   cookTime: number
   difficulty: 'easy' | 'medium' | 'hard'
   servings: number
+  whyThisWorks: string
 }
 
 interface ParseResult {
@@ -157,6 +158,15 @@ export function parseRecipeResponse(raw: string): ParseResult {
     }
   }
 
+  // whyThisWorks: optional string, graceful degradation
+  let whyThisWorks = ''
+  if (parsed.whyThisWorks !== undefined) {
+    if (typeof parsed.whyThisWorks === 'string' && parsed.whyThisWorks.trim().length >= 20) {
+      whyThisWorks = parsed.whyThisWorks.trim()
+    }
+    // If present but too short or wrong type, silently default to empty string
+  }
+
   // If any errors, return failure
   if (errors.length > 0) {
     return {
@@ -177,7 +187,8 @@ export function parseRecipeResponse(raw: string): ParseResult {
       dietaryTags,
       cookTime: parsed.cookTime,
       difficulty: parsed.difficulty,
-      servings
+      servings,
+      whyThisWorks
     }
   }
 }
