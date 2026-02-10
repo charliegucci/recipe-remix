@@ -3,12 +3,12 @@
 ## Current Position
 
 - **Milestone:** v1.0
-- **Phase:** 4 of 6 (AI Generation Pipeline) - Complete
-- **Plan:** 6 of 6 complete (04-06)
-- **Status:** Phase 4 Complete — Next: Phase 5 (Fusion Intelligence and Polish)
-- **Last activity:** 2026-02-10 - Completed 04-06-PLAN.md (AI Badge, Image Display, Analytics Integration)
+- **Phase:** 5 of 6 (Fusion Intelligence and Polish) - In Progress
+- **Plan:** 2 of ? complete (05-02)
+- **Status:** Phase 5 In Progress — Completed "Why This Works" Explanation
+- **Last activity:** 2026-02-11 - Completed 05-02-PLAN.md ("Why This Works" Explanation)
 
-**Progress:** [████████████████████] 21/21 total plans (Phase 4: 6/6)
+**Progress:** [████████████████████] 23/? total plans (Phase 5: 2/?)
 
 ## Progress
 
@@ -18,7 +18,7 @@
 | 2 | Core Read Path | 6/6 | Complete |
 | 3 | Pantry and User Features | 5/5 | Complete |
 | 4 | AI Generation Pipeline | 6/6 | Complete |
-| 5 | Fusion Intelligence and Polish | 0/? | Pending |
+| 5 | Fusion Intelligence and Polish | 2/? | In Progress |
 | 6 | Observability and Hardening | 0/? | Pending |
 
 ## Phase 1 Deliverables
@@ -175,6 +175,8 @@ Additional Phase 4 deliverables (04-05, 04-06):
 | Try-catch wraps sync errors | Drizzle query builder construction can throw sync errors before promise chain starts; catch both sync and async failures | 04-04 |
 | Dashboard requires auth but views don't | Anyone can log views (including guests), but only authenticated users should see aggregated analytics | 04-04 |
 | 5-minute dashboard cache TTL | Dashboard data doesn't need real-time updates; 5 min balances freshness and performance | 04-04 |
+| Graceful degradation for whyThisWorks | Defaults to empty string if missing or under 20 chars — no hard errors | 05-02 |
+| Conditional AI content display | WhyThisWorks only shown for AI-generated recipes with non-null explanation | 05-02 |
 
 ## Patterns Established
 
@@ -207,6 +209,7 @@ Additional Phase 4 deliverables (04-05, 04-06):
 | Session transition detection | watchEffect on session.user.isAnonymous for state changes | 03-05 |
 | Automatic data migration | Client detects auth transition, calls migration endpoint, clears localStorage | 03-05 |
 | Match caching with hash keys | MD5 hash of query params for deterministic cache keys | 03-05 |
+| Graceful parser degradation | Optional LLM fields default to safe values instead of erroring | 05-02 |
 
 ## Concerns
 
@@ -214,9 +217,9 @@ Additional Phase 4 deliverables (04-05, 04-06):
 
 ## Session Continuity
 
-- **Last session:** 2026-02-10
-- **Stopped at:** Completed Phase 4 (AI Generation Pipeline) — all 6 plans done
+- **Last session:** 2026-02-11
+- **Stopped at:** Completed 05-02-PLAN.md ("Why This Works" Explanation)
 - **Resume file:** None
 
 ---
-*Last updated: 2026-02-10*
+*Last updated: 2026-02-11*
