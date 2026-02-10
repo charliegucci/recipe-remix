@@ -121,11 +121,60 @@ function splitSafetyNote(instruction: string): { before: string; safetyNote: str
 
 const isAiGenerated = computed(() => recipe.value?.source === 'ai_generated')
 
-// Serving size scaling
+// === Substitution overrides (session-local, not persisted) ===
+const substitutedIngredients = ref<Ingredient[] | null>(null)
+const substitutedInstructions = ref<string[] | null>(null)
+const substitutedExplanation = ref<string | null>(null)
+
+// Active data: prefer substitution overrides, then original
+const activeIngredients = computed(() => substitutedIngredients.value ?? recipe.value?.ingredients ?? [])
+const activeInstructions = computed(() => substitutedInstructions.value ?? recipe.value?.instructions ?? [])
+const activeExplanation = computed(() => substitutedExplanation.value ?? recipe.value?.explanation ?? null)
+
+// Serving size scaling — chains after substitution
 const { currentServings, scaledIngredients } = useServingScale(
   recipe.value?.servings ?? 4,
-  computed(() => recipe.value?.ingredients ?? [])
+  activeIngredients
 )
+
+// Substitution dialog state
+const substitutionTarget = ref<string | null>(null)
+
+function openSubstitution(ingredientName: string) {
+  substitutionTarget.value = ingredientName
+}
+
+function handleSubstitutionAccepted(result: {
+  substitute: { name: string; quantity: string; unit: string }
+  updatedInstructions: string[]
+  updatedExplanation: string
+  substitutionNote: string
+}) {
+  if (!substitutionTarget.value) return
+
+  // Replace ingredient in active list
+  const current = activeIngredients.value.map(ing => {
+    if (ing.name.toLowerCase() === substitutionTarget.value!.toLowerCase()) {
+      return {
+        name: result.substitute.name,
+        quantity: result.substitute.quantity,
+        unit: result.substitute.unit
+      }
+    }
+    return ing
+  })
+  substitutedIngredients.value = current
+
+  // Update instructions and explanation
+  if (result.updatedInstructions.length > 0) {
+    substitutedInstructions.value = result.updatedInstructions
+  }
+  if (result.updatedExplanation) {
+    substitutedExplanation.value = result.updatedExplanation
+  }
+
+  substitutionTarget.value = null
+}
 
 // Image generation button state
 const generatingImage = ref(false)
@@ -286,8 +335,8 @@ onMounted(() => {
 
       <!-- Why This Fusion Works (AI recipes only) -->
       <WhyThisWorks
-        v-if="isAiGenerated && recipe.explanation"
-        :explanation="recipe.explanation"
+        v-if="isAiGenerated && activeExplanation"
+        :explanation="activeExplanation"
         class="mb-6"
       />
 
@@ -302,20 +351,22 @@ onMounted(() => {
         <IngredientChecklist
           :recipe-id="recipeId"
           :ingredients="scaledIngredients"
+          :is-ai-generated="isAiGenerated"
+          @substitute="openSubstitution"
         />
       </div>
 
       <!-- Instructions Section -->
       <div class="space-y-4 mb-8">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Instructions</h3>
-        <template v-for="(instruction, index) in recipe.instructions" :key="index">
+        <template v-for="(instruction, index) in activeInstructions" :key="index">
           <!-- Safety Note callout (SAFE-03) -->
           <div v-if="isSafetyNote(instruction) && splitSafetyNote(instruction)" class="space-y-2">
             <StepCard
               v-if="splitSafetyNote(instruction)!.before"
               :recipe-id="recipeId"
               :step-number="index + 1"
-              :total-steps="recipe.instructions.length"
+              :total-steps="activeInstructions.length"
               :instruction="splitSafetyNote(instruction)!.before"
             />
             <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg flex items-start gap-2">
@@ -330,7 +381,7 @@ onMounted(() => {
             v-else
             :recipe-id="recipeId"
             :step-number="index + 1"
-            :total-steps="recipe.instructions.length"
+            :total-steps="activeInstructions.length"
             :instruction="instruction"
           />
         </template>
@@ -358,6 +409,15 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <!-- Substitution Dialog -->
+    <SubstitutionDialog
+      v-if="substitutionTarget"
+      :recipe-id="recipeId"
+      :ingredient-name="substitutionTarget"
+      @close="substitutionTarget = null"
+      @accept="handleSubstitutionAccepted"
+    />
   </div>
 </template>
 

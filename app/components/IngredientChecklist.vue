@@ -7,9 +7,16 @@ interface Ingredient {
   unit: string
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   recipeId: string
   ingredients: Ingredient[]
+  isAiGenerated?: boolean
+}>(), {
+  isAiGenerated: false
+})
+
+const emit = defineEmits<{
+  substitute: [ingredientName: string]
 }>()
 
 // Initialize as empty object, hydrate from localStorage on client mount
@@ -121,6 +128,18 @@ function clearAll() {
           </span>
           <span>{{ ingredient.name }}</span>
         </div>
+
+        <!-- Swap icon for AI recipes -->
+        <button
+          v-if="isAiGenerated"
+          @click.stop="emit('substitute', ingredient.name)"
+          class="flex-shrink-0 ml-2 p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors"
+          title="Find substitute"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+        </button>
       </li>
     </ul>
   </div>
