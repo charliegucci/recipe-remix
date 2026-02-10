@@ -102,10 +102,48 @@ async function handleReviewSubmitted() {
   await reviewListRef.value?.refresh()
 }
 
+// Helper: check if instruction contains a safety note
+function isSafetyNote(instruction: string): boolean {
+  return instruction.includes('Safety Note:')
+}
+
+// Helper: split instruction into parts before/after "Safety Note:"
+function splitSafetyNote(instruction: string): { before: string; safetyNote: string } | null {
+  const idx = instruction.indexOf('Safety Note:')
+  if (idx === -1) return null
+  return {
+    before: instruction.substring(0, idx).trim(),
+    safetyNote: instruction.substring(idx).trim()
+  }
+}
+
+const isAiGenerated = computed(() => recipe.value?.source === 'ai_generated')
+
+// Image generation button state
+const generatingImage = ref(false)
+async function generateImage() {
+  if (!recipe.value) return
+  generatingImage.value = true
+  try {
+    await $fetch(`/api/recipes/${recipeId}/image`, { method: 'POST' })
+    // Refresh recipe data to get new imageKey
+    await refreshNuxtData()
+  } catch {
+    // Silently fail — user can retry
+  } finally {
+    generatingImage.value = false
+  }
+}
+
 // Record view in history (client-side only)
 const { recordView } = useHistory()
 onMounted(() => {
   recordView(recipeId)
+  // Fire-and-forget view analytics
+  $fetch('/api/analytics/events', {
+    method: 'POST',
+    body: { eventType: 'recipe_viewed', recipeId }
+  }).catch(() => {})
 })
 </script>
 
@@ -121,9 +159,21 @@ onMounted(() => {
         class="w-full h-full object-cover"
         loading="eager"
       />
+      <!-- No image: placeholder with generate button for AI recipes -->
+      <div v-else class="w-full h-full flex flex-col items-center justify-center text-white/80">
+        <span v-if="isAiGenerated" class="text-lg mb-3">Image not yet generated</span>
+        <button
+          v-if="isAiGenerated"
+          :disabled="generatingImage"
+          class="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+          @click.prevent="generateImage"
+        >
+          {{ generatingImage ? 'Generating...' : 'Generate Image' }}
+        </button>
+      </div>
 
       <!-- Gradient overlay -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
       <!-- Title overlay -->
       <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
@@ -131,6 +181,16 @@ onMounted(() => {
           <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
             {{ recipe.title }}
           </h1>
+          <!-- AI-Generated Badge -->
+          <span
+            v-if="isAiGenerated"
+            class="inline-flex items-center gap-1 bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z" />
+            </svg>
+            AI-Generated Recipe
+          </span>
         </div>
       </div>
     </div>
@@ -227,14 +287,32 @@ onMounted(() => {
       <!-- Instructions Section -->
       <div class="space-y-4 mb-8">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Instructions</h3>
-        <StepCard
-          v-for="(instruction, index) in recipe.instructions"
-          :key="index"
-          :recipe-id="recipeId"
-          :step-number="index + 1"
-          :total-steps="recipe.instructions.length"
-          :instruction="instruction"
-        />
+        <template v-for="(instruction, index) in recipe.instructions" :key="index">
+          <!-- Safety Note callout (SAFE-03) -->
+          <div v-if="isSafetyNote(instruction) && splitSafetyNote(instruction)" class="space-y-2">
+            <StepCard
+              v-if="splitSafetyNote(instruction)!.before"
+              :recipe-id="recipeId"
+              :step-number="index + 1"
+              :total-steps="recipe.instructions.length"
+              :instruction="splitSafetyNote(instruction)!.before"
+            />
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg flex items-start gap-2">
+              <svg class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              <span class="text-sm text-amber-900">{{ splitSafetyNote(instruction)!.safetyNote }}</span>
+            </div>
+          </div>
+          <!-- Regular instruction -->
+          <StepCard
+            v-else
+            :recipe-id="recipeId"
+            :step-number="index + 1"
+            :total-steps="recipe.instructions.length"
+            :instruction="instruction"
+          />
+        </template>
       </div>
 
       <!-- Reviews Section -->

@@ -8,8 +8,11 @@ const props = defineProps<{
     difficulty: 'easy' | 'medium' | 'hard'
     cuisineTags: string[]
     imageKey: string | null
+    source?: string
   }
 }>()
+
+const isAiGenerated = computed(() => props.recipe.source === 'ai_generated')
 
 const runtimeConfig = useRuntimeConfig()
 const imageUrl = computed(() => {
@@ -55,7 +58,18 @@ onMounted(() => {
         v-else
         class="w-full h-full bg-gray-200 flex items-center justify-center"
       >
-        <span class="text-gray-400 text-sm">No image</span>
+        <span v-if="isAiGenerated" class="text-gray-400 text-sm">Image generating...</span>
+        <span v-else class="text-gray-400 text-sm">No image</span>
+      </div>
+
+      <!-- AI Badge -->
+      <div v-if="isAiGenerated" class="absolute top-2 left-2 z-10">
+        <span class="inline-flex items-center gap-1 bg-purple-600 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z" />
+          </svg>
+          AI
+        </span>
       </div>
 
       <!-- Favorite Button (client-side only) -->

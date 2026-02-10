@@ -7,6 +7,7 @@ import { validateIngredients } from '../../utils/ingredient-validation'
 import { checkDietaryRestrictions } from '../../utils/dietary-check'
 import { injectSafetyTemps } from '../../utils/food-safety'
 import { generateAndStoreImage } from '../../utils/image-generation'
+import { logAnalyticsEvent } from '../../utils/analytics'
 import { eq } from 'drizzle-orm'
 import crypto from 'node:crypto'
 
@@ -169,6 +170,12 @@ export default defineEventHandler(async (event) => {
             })
             .where(schema.generationHistory.id.eq(generationId))
 
+          logAnalyticsEvent(db, {
+            eventType: 'recipe_generation_failed',
+            userId,
+            metadata: { error: 'unverified_ingredients', unresolved: validationResult.unresolved, cuisines: selectedCuisines }
+          })
+
           throw createError({
             statusCode: 422,
             statusMessage: 'Recipe contains unverified ingredients',
@@ -189,6 +196,12 @@ export default defineEventHandler(async (event) => {
                 completedAt: new Date()
               })
               .where(schema.generationHistory.id.eq(generationId))
+
+            logAnalyticsEvent(db, {
+              eventType: 'recipe_generation_failed',
+              userId,
+              metadata: { error: 'dietary_violations', violations: dietaryCheck.violations, cuisines: selectedCuisines }
+            })
 
             throw createError({
               statusCode: 422,
@@ -230,6 +243,12 @@ export default defineEventHandler(async (event) => {
             })
             .where(schema.generationHistory.id.eq(generationId))
 
+          logAnalyticsEvent(db, {
+            eventType: 'recipe_generation_failed',
+            userId,
+            metadata: { error: 'db_save_failed', cuisines: selectedCuisines }
+          })
+
           throw createError({
             statusCode: 500,
             statusMessage: 'Failed to save recipe. Please try again.'
@@ -245,20 +264,32 @@ export default defineEventHandler(async (event) => {
           })
           .where(schema.generationHistory.id.eq(generationId))
 
-        // === 12.5. Best-effort fire-and-forget image generation ===
+        // === 12.5. Log analytics event ===
+        logAnalyticsEvent(db, {
+          eventType: 'recipe_generated',
+          userId,
+          recipeId,
+          metadata: { cuisines: selectedCuisines, ingredientCount: ingredients.length }
+        })
+
+        // === 12.6. Best-effort fire-and-forget image generation ===
         // IMPORTANT: In Cloudflare Workers, fire-and-forget promises may not complete
         // after the response is sent. This is best-effort only. The frontend MUST call
         // POST /api/recipes/:id/image as the primary reliable path for image generation.
         generateAndStoreImage(recipeId, recipe.title, recipe.description, recipe.cuisineTags)
           .then(async (result) => {
             if (result.success && result.imageKey) {
-              const db = hubDatabase()
-              await drizzle(db, { schema }).update(schema.recipes)
+              const imgDb = hubDatabase()
+              const imgDrizzle = drizzle(imgDb, { schema })
+              await imgDrizzle.update(schema.recipes)
                 .set({ imageKey: result.imageKey })
                 .where(eq(schema.recipes.id, recipeId))
+              logAnalyticsEvent(db, { eventType: 'image_generated', userId, recipeId })
             }
           })
-          .catch(() => {}) // Swallow errors - image is non-critical
+          .catch(() => {
+            logAnalyticsEvent(db, { eventType: 'image_generation_failed', userId, recipeId })
+          })
 
         // === 13. Invalidate KV cache ===
         // Clear recipe listing caches (they may now be stale)
@@ -307,6 +338,12 @@ export default defineEventHandler(async (event) => {
             })
             .where(schema.generationHistory.id.eq(generationId))
 
+          logAnalyticsEvent(db, {
+            eventType: 'recipe_generation_failed',
+            userId,
+            metadata: { error: 'parse_failed', parseError: parseResult.error, cuisines: selectedCuisines }
+          })
+
           throw createError({
             statusCode: 422,
             statusMessage: 'Could not generate a valid recipe. Please try again.',
@@ -329,6 +366,12 @@ export default defineEventHandler(async (event) => {
           completedAt: new Date()
         })
         .where(schema.generationHistory.id.eq(generationId))
+
+      logAnalyticsEvent(db, {
+        eventType: 'recipe_generation_failed',
+        userId,
+        metadata: { error: error instanceof Error ? error.message : 'Unknown AI error', cuisines: selectedCuisines }
+      })
 
       throw createError({
         statusCode: 500,
