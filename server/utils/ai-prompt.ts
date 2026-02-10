@@ -47,7 +47,7 @@ ${restrictionsText}
 
 Your recipe should creatively combine cooking techniques and flavor profiles from the specified cuisines to create an exciting fusion dish.
 
-Please explain any "bridge ingredients" you add that help connect the different culinary traditions (this helps users understand why certain ingredients work together).
+Include a "whyThisWorks" field in your JSON response explaining the bridge ingredients and techniques that connect the different culinary traditions.
 
 Return your response as a JSON object with EXACTLY this structure:
 {
@@ -68,7 +68,8 @@ Return your response as a JSON object with EXACTLY this structure:
   "dietaryTags": ["tag1", "tag2"] (optional, use for vegetarian, vegan, gluten-free, dairy-free, nut-free),
   "cookTime": 30 (total cooking time in minutes, number),
   "difficulty": "easy" (one of: "easy", "medium", "hard"),
-  "servings": 4 (number of servings, number)
+  "servings": 4 (number of servings, number),
+  "whyThisWorks": "2-3 sentences explaining the bridge ingredients and techniques connecting these cuisines (string, required)"
 }
 
 Requirements:
@@ -77,6 +78,7 @@ Requirements:
 - Include cooking times and temperatures where relevant
 - Title should be appealing and describe the fusion concept
 - Use the provided ingredients as the base of the recipe
+- whyThisWorks must explain what bridge ingredients or techniques connect the cuisines
 
 Return ONLY valid JSON. No markdown, no code blocks, no extra text.`
 
