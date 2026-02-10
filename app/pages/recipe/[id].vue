@@ -160,7 +160,7 @@ onMounted(() => {
         loading="eager"
       />
       <!-- No image: placeholder with generate button for AI recipes -->
-      <div v-else class="w-full h-full flex flex-col items-center justify-center text-white/80">
+      <div v-else class="w-full h-full flex flex-col items-center justify-center text-white/80 relative z-10">
         <span v-if="isAiGenerated" class="text-lg mb-3">Image not yet generated</span>
         <button
           v-if="isAiGenerated"
@@ -176,7 +176,7 @@ onMounted(() => {
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
       <!-- Title overlay -->
-      <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+      <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 pointer-events-none">
         <div class="max-w-4xl mx-auto">
           <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
             {{ recipe.title }}

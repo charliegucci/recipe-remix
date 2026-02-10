@@ -15,8 +15,8 @@ import { getAuth } from '../../../lib/auth'
 
 export default defineEventHandler(async (event) => {
   // Require authentication
-  const { user } = await getAuth().api.getSession({ headers: event.headers })
-  if (!user) {
+  const session = await getAuth().api.getSession({ headers: event.headers })
+  if (!session?.user) {
     throw createError({
       statusCode: 401,
       message: 'Authentication required'

@@ -91,13 +91,25 @@ const showDropdown = ref(false)
 // Debounced query for API calls (300ms delay)
 const debouncedQuery = refDebounced(searchQuery, 300)
 
-// Fetch results with debounced query (no await - immediate:false means no SSR fetch)
-const { data: results, pending } = useFetch<Ingredient[]>('/api/ingredients/search', {
-  query: {
-    q: debouncedQuery
-  },
-  immediate: false,
-  watch: [debouncedQuery]
+// Fetch results with debounced query
+const results = ref<Ingredient[]>([])
+const pending = ref(false)
+
+watch(debouncedQuery, async (q) => {
+  if (!q || q.length < 2) {
+    results.value = []
+    return
+  }
+  pending.value = true
+  try {
+    results.value = await $fetch<Ingredient[]>('/api/ingredients/search', {
+      query: { q }
+    })
+  } catch {
+    results.value = []
+  } finally {
+    pending.value = false
+  }
 })
 
 // Show loading indicator when query is ahead of debounced query
