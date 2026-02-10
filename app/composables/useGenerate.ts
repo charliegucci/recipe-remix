@@ -15,6 +15,7 @@ interface GeneratedRecipe {
   cookTime: number
   difficulty: string
   servings: number
+  explanation: string | null
   imageKey: string | null
   source: string
   featured: boolean
