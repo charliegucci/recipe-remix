@@ -3,12 +3,12 @@
 ## Current Position
 
 - **Milestone:** v1.0
-- **Phase:** 4 of 6 (AI Generation Pipeline) - In Progress
-- **Plan:** 4 of 6 complete (04-04)
-- **Status:** Executing Phase 4 - Analytics event logging complete
-- **Last activity:** 2026-02-09 - Completed 04-04-PLAN.md (Analytics Event Logging)
+- **Phase:** 4 of 6 (AI Generation Pipeline) - Complete
+- **Plan:** 6 of 6 complete (04-06)
+- **Status:** Phase 4 Complete — Next: Phase 5 (Fusion Intelligence and Polish)
+- **Last activity:** 2026-02-10 - Completed 04-06-PLAN.md (AI Badge, Image Display, Analytics Integration)
 
-**Progress:** [█████████████████.] 19/21 total plans (Phase 4: 4/6)
+**Progress:** [████████████████████] 21/21 total plans (Phase 4: 6/6)
 
 ## Progress
 
@@ -17,7 +17,7 @@
 | 1 | Foundation | 4/4 | Complete |
 | 2 | Core Read Path | 6/6 | Complete |
 | 3 | Pantry and User Features | 5/5 | Complete |
-| 4 | AI Generation Pipeline | 4/6 | In Progress |
+| 4 | AI Generation Pipeline | 6/6 | Complete |
 | 5 | Fusion Intelligence and Polish | 0/? | Pending |
 | 6 | Observability and Hardening | 0/? | Pending |
 
@@ -72,7 +72,7 @@ Phase 3 complete with:
 
 ## Phase 4 Deliverables
 
-Phase 4 in progress (4/6 plans complete):
+Phase 4 complete (6/6 plans):
 - Database schema extension (2 new tables: analytics_events, generation_history)
 - Ingredient validation utility with 3-tier matching (exact, substring, commonNames)
 - USDA food safety temperature injection for protein ingredients
@@ -97,6 +97,18 @@ Phase 4 in progress (4/6 plans complete):
 - 04-02: AI Recipe Generation Endpoint
 - 04-03: Image Generation Endpoint
 - 04-04: Analytics Event Logging
+- 04-05: Generation UI with Cuisine Picker and Progress Indicator
+- 04-06: AI Badge, Image Display, and Analytics Integration
+
+Additional Phase 4 deliverables (04-05, 04-06):
+- Generation page (/generate) with ingredient selector and cuisine picker
+- Progress indicator with polling for generation status
+- Resume support for in-progress generations
+- AI-generated badge (purple sparkle) on RecipeCard and recipe detail page
+- Safety Note amber callout styling in recipe instructions (SAFE-03)
+- Generate Image button for AI recipes missing images
+- Fire-and-forget recipe view analytics
+- Analytics event logging at all generation success/failure paths
 
 ## Key Decisions
 
@@ -202,9 +214,9 @@ Phase 4 in progress (4/6 plans complete):
 
 ## Session Continuity
 
-- **Last session:** 2026-02-09
-- **Stopped at:** Completed 04-04-PLAN.md (Analytics Event Logging)
+- **Last session:** 2026-02-10
+- **Stopped at:** Completed Phase 4 (AI Generation Pipeline) — all 6 plans done
 - **Resume file:** None
 
 ---
-*Last updated: 2026-02-09*
+*Last updated: 2026-02-10*
