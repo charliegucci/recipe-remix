@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 25,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe1/800/600',
       source: 'curated',
       featured: true,
       category: 'Italian'
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian']),
       cookTime: 20,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe2/800/600',
       source: 'curated',
       featured: false,
       category: 'Italian'
@@ -97,7 +97,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 45,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe3/800/600',
       source: 'curated',
       featured: false,
       category: 'Italian'
@@ -128,7 +128,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian']),
       cookTime: 30,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe4/800/600',
       source: 'curated',
       featured: false,
       category: 'Italian'
@@ -160,7 +160,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian', 'Gluten-Free']),
       cookTime: 35,
       difficulty: 'hard',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe5/800/600',
       source: 'curated',
       featured: false,
       category: 'Italian'
@@ -195,7 +195,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 45,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe6/800/600',
       source: 'curated',
       featured: true,
       category: 'Mexican'
@@ -228,7 +228,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 50,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe7/800/600',
       source: 'curated',
       featured: false,
       category: 'Mexican'
@@ -260,7 +260,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegan', 'Gluten-Free']),
       cookTime: 15,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe8/800/600',
       source: 'curated',
       featured: false,
       category: 'Mexican'
@@ -293,7 +293,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian']),
       cookTime: 30,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe9/800/600',
       source: 'curated',
       featured: false,
       category: 'Mexican'
@@ -325,7 +325,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 180,
       difficulty: 'hard',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe10/800/600',
       source: 'curated',
       featured: false,
       category: 'Mexican'
@@ -361,7 +361,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 35,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe11/800/600',
       source: 'curated',
       featured: true,
       category: 'Asian'
@@ -394,7 +394,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 40,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe12/800/600',
       source: 'curated',
       featured: false,
       category: 'Asian'
@@ -427,7 +427,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 45,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe13/800/600',
       source: 'curated',
       featured: false,
       category: 'Asian'
@@ -465,7 +465,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 400,
       difficulty: 'hard',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe14/800/600',
       source: 'curated',
       featured: false,
       category: 'Asian'
@@ -501,7 +501,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 30,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe15/800/600',
       source: 'curated',
       featured: false,
       category: 'Asian'
@@ -531,7 +531,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian', 'Vegan']),
       cookTime: 15,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe16/800/600',
       source: 'curated',
       featured: false,
       category: 'Asian'
@@ -569,7 +569,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 20,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe17/800/600',
       source: 'curated',
       featured: true,
       category: 'American'
@@ -603,7 +603,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian']),
       cookTime: 45,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe18/800/600',
       source: 'curated',
       featured: false,
       category: 'American'
@@ -638,7 +638,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 210,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe19/800/600',
       source: 'curated',
       featured: false,
       category: 'American'
@@ -673,7 +673,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian']),
       cookTime: 90,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe20/800/600',
       source: 'curated',
       featured: false,
       category: 'American'
@@ -709,7 +709,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 60,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe21/800/600',
       source: 'curated',
       featured: false,
       category: 'American'
@@ -740,7 +740,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 30,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe22/800/600',
       source: 'curated',
       featured: false,
       category: 'American'
@@ -777,7 +777,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian', 'Gluten-Free']),
       cookTime: 15,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe23/800/600',
       source: 'curated',
       featured: true,
       category: 'Mediterranean'
@@ -811,7 +811,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegan', 'Gluten-Free']),
       cookTime: 15,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe24/800/600',
       source: 'curated',
       featured: false,
       category: 'Mediterranean'
@@ -847,7 +847,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegan']),
       cookTime: 30,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe25/800/600',
       source: 'curated',
       featured: false,
       category: 'Mediterranean'
@@ -882,7 +882,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian', 'Gluten-Free']),
       cookTime: 35,
       difficulty: 'easy',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe26/800/600',
       source: 'curated',
       featured: false,
       category: 'Mediterranean'
@@ -916,7 +916,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 30,
       difficulty: 'medium',
-      imageKey: null,
+      imageKey: 'https://picsum.photos/seed/recipe27/800/600',
       source: 'curated',
       featured: false,
       category: 'Mediterranean'
