@@ -86,16 +86,16 @@ At a high level, Recipe Remix Engine uses a **hybrid recipe engine**:
 
 ```mermaid
 flowchart LR
-  user[User Browser] --> nuxtApp[NuxtApp (SSR/SPA)]
-  nuxtApp --> pantryApi[Pantry & Recipes API]
-  nuxtApp --> generateApi[AI Generate API]
+  user["User Browser"] --> nuxtApp["NuxtApp (SSR/SPA)"]
+  nuxtApp --> pantryApi["Pantry & Recipes API"]
+  nuxtApp --> generateApi["AI Generate API"]
 
-  pantryApi --> db[D1 Database]
-  pantryApi --> cache[KV Cache]
+  pantryApi --> db["D1 Database"]
+  pantryApi --> cache["KV Cache"]
 
   generateApi --> db
-  generateApi --> ai[WorkersAI (Llama 3.1)]
-  generateApi --> validator[Validation Pipeline]
+  generateApi --> ai["WorkersAI (Llama 3.1)"]
+  generateApi --> validator["Validation Pipeline"]
 
   ai --> validator
   validator --> nuxtApp
