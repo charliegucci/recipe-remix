@@ -14,6 +14,7 @@ export type AnalyticsEventType =
   | 'recipe_rated'
   | 'image_generated'
   | 'image_generation_failed'
+  | 'query_performance'
 
 /**
  * Input structure for logging an analytics event.

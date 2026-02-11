@@ -52,6 +52,7 @@ onMounted(() => {
         :src="imageUrl"
         :alt="recipe.title"
         loading="lazy"
+        decoding="async"
         class="w-full h-full object-cover"
       />
       <div

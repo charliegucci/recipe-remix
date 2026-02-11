@@ -8,6 +8,8 @@ import { checkDietaryRestrictions } from '../../utils/dietary-check'
 import { injectSafetyTemps } from '../../utils/food-safety'
 import { generateAndStoreImage } from '../../utils/image-generation'
 import { logAnalyticsEvent } from '../../utils/analytics'
+import { retryD1Write } from '../../utils/d1-retry'
+import { executeMonitoredQuery } from '../../utils/monitored-query'
 import { eq } from 'drizzle-orm'
 import crypto from 'node:crypto'
 
@@ -99,14 +101,18 @@ export default defineEventHandler(async (event) => {
   const generationId = crypto.randomUUID()
 
   try {
-    await db.insert(schema.generationHistory).values({
-      id: generationId,
-      userId,
-      inputIngredients: JSON.stringify(ingredients),
-      cuisinePreferences: JSON.stringify(cuisines),
-      status: 'generating',
-      createdAt: new Date()
-    })
+    await retryD1Write(() =>
+      executeMonitoredQuery(db, 'insert_generation_history', () =>
+        db.insert(schema.generationHistory).values({
+          id: generationId,
+          userId,
+          inputIngredients: JSON.stringify(ingredients),
+          cuisinePreferences: JSON.stringify(cuisines),
+          status: 'generating',
+          createdAt: new Date()
+        })
+      )
+    )
   } catch (error) {
     throw createError({
       statusCode: 500,
@@ -218,23 +224,27 @@ export default defineEventHandler(async (event) => {
         const recipeId = crypto.randomUUID()
 
         try {
-          await db.insert(schema.recipes).values({
-            id: recipeId,
-            title: recipe.title,
-            description: recipe.description,
-            ingredients: JSON.stringify(recipe.ingredients),
-            instructions: JSON.stringify(safeInstructions),
-            cuisineTags: JSON.stringify(recipe.cuisineTags),
-            dietaryTags: JSON.stringify(recipe.dietaryTags),
-            cookTime: recipe.cookTime,
-            difficulty: recipe.difficulty,
-            servings: recipe.servings,
-            explanation: recipe.whyThisWorks || null,
-            imageKey: null, // Image generation happens async in Plan 03
-            source: 'ai_generated',
-            featured: false,
-            createdAt: new Date()
-          })
+          await retryD1Write(() =>
+            executeMonitoredQuery(db, 'insert_recipe', () =>
+              db.insert(schema.recipes).values({
+                id: recipeId,
+                title: recipe.title,
+                description: recipe.description,
+                ingredients: JSON.stringify(recipe.ingredients),
+                instructions: JSON.stringify(safeInstructions),
+                cuisineTags: JSON.stringify(recipe.cuisineTags),
+                dietaryTags: JSON.stringify(recipe.dietaryTags),
+                cookTime: recipe.cookTime,
+                difficulty: recipe.difficulty,
+                servings: recipe.servings,
+                explanation: recipe.whyThisWorks || null,
+                imageKey: null, // Image generation happens async in Plan 03
+                source: 'ai_generated',
+                featured: false,
+                createdAt: new Date()
+              })
+            )
+          )
         } catch (error) {
           // Update history to failed
           await db.update(schema.generationHistory)
@@ -258,13 +268,17 @@ export default defineEventHandler(async (event) => {
         }
 
         // === 12. Update generation history to completed ===
-        await db.update(schema.generationHistory)
-          .set({
-            status: 'completed',
-            recipeId,
-            completedAt: new Date()
-          })
-          .where(schema.generationHistory.id.eq(generationId))
+        await retryD1Write(() =>
+          executeMonitoredQuery(db, 'update_generation_completed', () =>
+            db.update(schema.generationHistory)
+              .set({
+                status: 'completed',
+                recipeId,
+                completedAt: new Date()
+              })
+              .where(schema.generationHistory.id.eq(generationId))
+          )
+        )
 
         // === 12.5. Log analytics event ===
         logAnalyticsEvent(db, {

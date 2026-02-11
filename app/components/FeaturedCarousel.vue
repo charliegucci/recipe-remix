@@ -16,6 +16,7 @@ let autoAdvanceInterval: NodeJS.Timeout | null = null
 
 const getImageUrl = (imageKey: string | null) => {
   if (!imageKey) return null
+  if (imageKey.startsWith('http')) return imageKey
   const baseUrl = runtimeConfig.public.r2PublicUrl || 'https://pub-placeholder.r2.dev'
   return `${baseUrl}/${imageKey}`
 }
@@ -73,6 +74,8 @@ onUnmounted(() => {
             v-if="getImageUrl(recipe.imageKey)"
             :src="getImageUrl(recipe.imageKey)"
             :alt="recipe.title"
+            decoding="async"
+            :fetchpriority="index === currentIndex ? 'high' : 'low'"
             class="w-full h-full object-cover"
           />
           <div

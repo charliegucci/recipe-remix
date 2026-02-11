@@ -1,0 +1,63 @@
+name: CI Gates
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  bundle-size:
+    name: Bundle Size Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Check bundle size
+        run: |
+          npx wrangler deploy --dry-run --outdir .wrangler/dist 2>&1 || true
+          # Find the worker bundle and check gzip size
+          BUNDLE=$(find .wrangler/dist -name '*.js' -type f | head -1)
+          if [ -z "$BUNDLE" ]; then
+            echo "No bundle found — running nuxt build first"
+            npx nuxt build
+            npx wrangler deploy --dry-run --outdir .wrangler/dist 2>&1 || true
+            BUNDLE=$(find .wrangler/dist -name '*.js' -type f | head -1)
+          fi
+          if [ -z "$BUNDLE" ]; then
+            echo "::error::Could not find worker bundle"
+            exit 1
+          fi
+          GZIP_SIZE=$(gzip -c "$BUNDLE" | wc -c)
+          GZIP_MB=$(echo "scale=2; $GZIP_SIZE / 1048576" | bc)
+          echo "Bundle gzip size: ${GZIP_MB}MB ($GZIP_SIZE bytes)"
+          # Fail if > 3MB (3145728 bytes)
+          if [ "$GZIP_SIZE" -gt 3145728 ]; then
+            echo "::error::Bundle size ${GZIP_MB}MB exceeds 3MB limit"
+            exit 1
+          fi
+          echo "Bundle size OK: ${GZIP_MB}MB"
+
+  lighthouse:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Build
+        run: npx nuxt build
+
+      - name: Run Lighthouse CI
+        run: npx @lhci/cli autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
