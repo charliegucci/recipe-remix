@@ -37,7 +37,16 @@ Users can make delicious, creative meals from ingredients they already have — 
 
 ### Active
 
-(None — define in next milestone via `/gsd:new-milestone`)
+#### Current Milestone: v1.1 Test on Production
+
+**Goal:** Deploy to Cloudflare Pages, validate all features in production, and polish the experience with better UX, full SEO, and performance optimization.
+
+**Target features:**
+- Production deployment via NuxtHub to Cloudflare Pages
+- Production validation and environment-specific bug fixes
+- UI/UX polish (loading states, mobile nav, error handling, general cleanup)
+- SEO + sharing (shareable recipe URLs, meta/OG tags, sitemap, Recipe schema.org)
+- Performance tuning (caching, bundle size, Lighthouse optimization)
 
 ### Out of Scope
 
@@ -48,7 +57,7 @@ Users can make delicious, creative meals from ingredients they already have — 
 - Native mobile apps — web-first, responsive design
 - Flavor-compatibility scoring with confidence indicators — future
 - Nutritional information display — not implemented in v1
-- Social sharing / trending recipes — future
+- Trending recipes / social features — future (basic sharing URLs in v1.1)
 
 ## Context
 
@@ -95,4 +104,4 @@ Users can make delicious, creative meals from ingredients they already have — 
 | Session-local substitutions | Avoids recipe "forks" in DB | Revisit — users may want persistent swaps |
 
 ---
-*Last updated: 2026-02-11 after v1.0 milestone*
+*Last updated: 2026-02-11 after v1.1 milestone started*
