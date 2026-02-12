@@ -22,6 +22,17 @@ const { data: history, pending, error, refresh } = await useAsyncData(
 const isAuthenticated = computed(() => session.value?.user && !session.value.user.isAnonymous)
 const recipes = computed(() => history.value?.recipes || [])
 
+// SEO meta tags
+useServerSeoMeta({
+  title: 'Recipe History | Recipe Remix',
+  description: 'View your recently viewed recipes',
+  robots: 'noindex'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/history' }]
+})
+
 // Format date helper
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)

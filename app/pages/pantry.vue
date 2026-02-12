@@ -107,6 +107,17 @@ import { usePantry } from '~/composables/usePantry'
 
 const pantryState = usePantry()
 
+// SEO meta tags
+useServerSeoMeta({
+  title: 'My Pantry | Recipe Remix',
+  description: 'Manage your pantry ingredients for personalized recipe recommendations',
+  robots: 'noindex'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/pantry' }]
+})
+
 async function handleSelectIngredient(ingredient: { id: string; name: string }) {
   try {
     await pantryState.addIngredient(ingredient.id, ingredient.name)
