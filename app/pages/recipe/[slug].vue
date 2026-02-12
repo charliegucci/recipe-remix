@@ -8,6 +8,7 @@ interface Ingredient {
 interface Recipe {
   id: string
   title: string
+  slug: string
   description: string | null
   ingredients: Ingredient[]
   instructions: string[]
@@ -26,10 +27,10 @@ interface Recipe {
 }
 
 const route = useRoute()
-const recipeId = route.params.id as string
+const slug = route.params.slug as string
 
-// Fetch recipe data with SSR
-const { data: recipe, error } = await useFetch<Recipe>(`/api/recipes/${recipeId}`)
+// Fetch recipe data with SSR using slug
+const { data: recipe, error } = await useFetch<Recipe>(`/api/recipes/${slug}`)
 
 if (error.value) {
   throw createError({
@@ -77,15 +78,18 @@ function getDifficultyColor(difficulty: string | null): string {
   }
 }
 
+// Get the actual recipe ID from the fetched recipe (needed for sub-endpoints)
+const recipeId = computed(() => recipe.value?.id || '')
+
 // Get current user's existing review for this recipe
 const { useSession } = await import('~/lib/auth-client')
 const { data: session } = await useSession(useFetch)
 const userId = computed(() => session.value?.user?.id)
 
 const { data: existingReview, refresh: refreshExistingReview } = await useFetch<{ rating: number; review: string | null } | null>(
-  () => userId.value ? `/api/user/reviews/${recipeId}` : null,
+  () => userId.value && recipeId.value ? `/api/user/reviews/${recipeId.value}` : null,
   {
-    key: `user-review-${recipeId}`,
+    key: `user-review-${slug}`,
     transform: (data: any) => {
       // Find the current user's review from the list
       const userReview = data.reviews?.find((r: any) => r.userId === userId.value)
@@ -182,7 +186,7 @@ async function generateImage() {
   if (!recipe.value) return
   generatingImage.value = true
   try {
-    await $fetch(`/api/recipes/${recipeId}/image`, { method: 'POST' })
+    await $fetch(`/api/recipes/${recipeId.value}/image`, { method: 'POST' })
     // Refresh recipe data to get new imageKey
     await refreshNuxtData()
   } catch {
@@ -195,12 +199,14 @@ async function generateImage() {
 // Record view in history (client-side only)
 const { recordView } = useHistory()
 onMounted(() => {
-  recordView(recipeId)
-  // Fire-and-forget view analytics
-  $fetch('/api/analytics/events', {
-    method: 'POST',
-    body: { eventType: 'recipe_viewed', recipeId }
-  }).catch(() => {})
+  if (recipeId.value) {
+    recordView(recipeId.value)
+    // Fire-and-forget view analytics
+    $fetch('/api/analytics/events', {
+      method: 'POST',
+      body: { eventType: 'recipe_viewed', recipeId: recipeId.value }
+    }).catch(() => {})
+  }
 })
 </script>
 

@@ -1,17 +1,17 @@
-import { eq, sql } from 'drizzle-orm'
+import { eq, sql, or } from 'drizzle-orm'
 import { useDrizzle, schema } from '../../utils/drizzle'
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
+  const idOrSlug = getRouterParam(event, 'idOrSlug')
 
-  if (!id) {
+  if (!idOrSlug) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Recipe ID is required'
+      statusMessage: 'Recipe ID or slug is required'
     })
   }
 
-  const cacheKey = `recipe:${id}`
+  const cacheKey = `recipe:${idOrSlug}`
 
   // Check KV cache first (shorter TTL for review data freshness)
   const kv = hubKV()
@@ -20,13 +20,24 @@ export default defineEventHandler(async (event) => {
     return cached
   }
 
-  // Query D1 for single recipe
+  // Query D1 for single recipe - try slug first, then ID
   const db = useDrizzle(event)
-  const result = await db
+
+  // First try to find by slug (preferred for SEO)
+  let result = await db
     .select()
     .from(schema.recipes)
-    .where(eq(schema.recipes.id, id))
+    .where(eq(schema.recipes.slug, idOrSlug))
     .get()
+
+  // If not found by slug, try by ID (for backward compatibility and API calls)
+  if (!result) {
+    result = await db
+      .select()
+      .from(schema.recipes)
+      .where(eq(schema.recipes.id, idOrSlug))
+      .get()
+  }
 
   if (!result) {
     throw createError({
@@ -42,7 +53,7 @@ export default defineEventHandler(async (event) => {
       totalReviews: sql<number>`COUNT(*)`
     })
     .from(schema.userRecipeReviews)
-    .where(eq(schema.userRecipeReviews.recipeId, id))
+    .where(eq(schema.userRecipeReviews.recipeId, result.id))
     .get()
 
   const avgRating = aggregateResult?.avgRating || null

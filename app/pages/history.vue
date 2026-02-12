@@ -96,7 +96,7 @@ const formatDate = (dateString: string) => {
           <div class="flex flex-col sm:flex-row">
             <!-- Recipe Image -->
             <div class="sm:w-48 aspect-[4/3] sm:aspect-square flex-shrink-0 relative overflow-hidden">
-              <NuxtLink :to="`/recipe/${recipe.id}`" class="block h-full">
+              <NuxtLink :to="`/recipe/${recipe.slug}`" class="block h-full">
                 <img
                   v-if="recipe.imageKey"
                   :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `${$config.public.r2PublicUrl || 'https://pub-placeholder.r2.dev'}/${recipe.imageKey}`"
@@ -112,7 +112,7 @@ const formatDate = (dateString: string) => {
 
             <!-- Recipe Info -->
             <div class="flex-1 p-4 sm:p-6">
-              <NuxtLink :to="`/recipe/${recipe.id}`" class="block group">
+              <NuxtLink :to="`/recipe/${recipe.slug}`" class="block group">
                 <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                   {{ recipe.title }}
                 </h3>

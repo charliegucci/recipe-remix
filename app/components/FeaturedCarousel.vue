@@ -3,6 +3,7 @@ const props = defineProps<{
   recipes: Array<{
     id: string
     title: string
+    slug: string
     description: string
     cookTime: number
     imageKey: string | null
@@ -91,7 +92,7 @@ onUnmounted(() => {
           <!-- Text Content -->
           <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-12">
             <NuxtLink
-              :to="`/recipe/${recipe.id}`"
+              :to="`/recipe/${recipe.slug}`"
               class="block max-w-3xl"
             >
               <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4">
