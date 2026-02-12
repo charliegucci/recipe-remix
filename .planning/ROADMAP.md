@@ -54,10 +54,11 @@ Plans:
   3. Search engines can discover all recipe pages via sitemap.xml
   4. Recipe detail pages include schema.org Recipe structured data for rich search results
   5. All pages have unique, accurate meta tags (title, description) and canonical URLs
-**Plans**: TBD
+**Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 08-01: [To be planned]
+- [ ] 08-01-PLAN.md — Add SEO-friendly URL slugs with database migration and 301 redirects
+- [ ] 08-02-PLAN.md — Add meta tags, OG sharing, Recipe JSON-LD, sitemap, and canonical URLs
 
 #### Phase 9: UI/UX Polish
 **Goal**: App feels polished with smooth loading states, clear feedback, and refined mobile experience
@@ -103,9 +104,9 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 | 5. Fusion Intelligence and Polish | v1.0 | 4/4 | Complete | 2026-02-11 |
 | 6. Observability and Hardening | v1.0 | 4/4 | Complete | 2026-02-11 |
 | 7. Deployment + Production Validation | v1.1 | 3/3 | Complete | 2026-02-12 |
-| 8. SEO + Sharing | v1.1 | 0/TBD | Not started | - |
+| 8. SEO + Sharing | v1.1 | 0/2 | Planning complete | - |
 | 9. UI/UX Polish | v1.1 | 0/TBD | Not started | - |
 | 10. Performance Optimization | v1.1 | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-12 - Phase 7 complete (3/3 plans)*
+*Last updated: 2026-02-12 - Phase 8 planned (2 plans in 2 waves)*
