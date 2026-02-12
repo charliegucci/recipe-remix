@@ -3,11 +3,11 @@
 ## Current Position
 
 - **Milestone:** v1.1 Test on Production
-- **Phase:** 7 of 10 — Deployment + Production Validation
-- **Status:** Complete (all 3 plans executed)
-- **Last activity:** 2026-02-12 — Automated smoke tests with Playwright
+- **Phase:** 8 of 10 — SEO + Sharing
+- **Status:** In Progress (1 of 2 plans executed)
+- **Last activity:** 2026-02-12 — SEO-friendly slug URLs with redirects
 
-**Progress:** [████░░░░░░] 100% (3/3 plans complete in Phase 7)
+**Progress:** [█████░░░░░] 50% (1/2 plans complete in Phase 8)
 
 ## Project Reference
 
@@ -21,7 +21,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 7 | Deployment + Production Validation | 3/3 | Complete |
-| 8 | SEO + Sharing | 0/TBD | Not started |
+| 8 | SEO + Sharing | 1/2 | In Progress |
 | 9 | UI/UX Polish | 0/TBD | Not started |
 | 10 | Performance Optimization | 0/TBD | Not started |
 
@@ -45,20 +45,27 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Decision | Rationale |
 |----------|-----------|
+| Two-phase slug migration (nullable then unique) | Existing recipes have no slugs, schema constraint would fail on initial migration |
+| Slug-first API lookup with ID fallback | Preferred SEO URL while maintaining backward compatibility |
+| Server middleware for 301 redirects | Server-side redirects preserve SEO value and are crawlable |
+| UUID detection pattern in redirect middleware | UUIDs contain hyphens but must redirect (8-4-4-4-12 pattern check) |
 | Cloudflare Pages CI instead of NuxtHub Admin | NuxtHub Admin sunset Dec 2025 |
 | nodejs_compat compatibility flag | Required for node:buffer in Better Auth/Drizzle |
 | Binding names: DB, KV, CACHE, BLOB, AI | NuxtHub expected names, not wrangler.jsonc names |
 | GitHub Actions for CI/CD | Standard platform, excellent GitHub integration, free for public repos |
-| Separate workflows for prod/preview | Clear separation of concerns, different triggers and behaviors |
-| Resilient selectors in smoke tests | data-testid with text/role fallbacks prevent test brittleness |
-| Only chromium browser for smoke tests | Prioritize speed over comprehensive cross-browser coverage |
 
 ## Session Continuity
 
 - **Last session:** 2026-02-12
-- **Stopped at:** Phase 7 complete (all 3 plans: deployment, CI/CD, smoke tests)
+- **Stopped at:** Completed 08-01-PLAN.md (SEO-friendly slug URLs)
 - **Resume file:** None
-- **Next step:** Begin Phase 8 (SEO + Sharing) or complete milestone v1.1
+- **Next step:** Execute 08-02-PLAN.md (Open Graph meta tags and social sharing)
+
+## Performance Metrics
+
+| Phase-Plan | Duration | Tasks | Files | Commits |
+|------------|----------|-------|-------|---------|
+| 08-01 | 7 min | 2 | 18 | 3 |
 
 ---
 *Last updated: 2026-02-12*
