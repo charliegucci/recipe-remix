@@ -40,7 +40,7 @@ Turn whatever's already in your kitchen into creative, trustworthy fusion recipe
   - Goal: Deploy to Cloudflare Pages via NuxtHub, validate all features in production, and polish UX, SEO, and performance.
 - **v1.0 status:** Shipped (2026‑02‑11) – full-stack MVP with 33/33 requirements satisfied.
 
-- **Production:** https://recipe-remix-9fd.pages.dev
+- **Production:** https://remix.recipe.com
 - **Preview deployments:** Automatically created for pull requests
 
 For deeper planning context, see `.planning/PROJECT.md`, `.planning/STATE.md`, and `.planning/ROADMAP.md`.
