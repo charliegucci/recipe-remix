@@ -4,10 +4,10 @@
 
 - **Milestone:** v1.1 Test on Production
 - **Phase:** 7 of 10 — Deployment + Production Validation
-- **Status:** Executing Wave 2 (Plan 07-02 complete)
-- **Last activity:** 2026-02-12 — CI/CD automation with GitHub Actions
+- **Status:** Complete (all 3 plans executed)
+- **Last activity:** 2026-02-12 — Automated smoke tests with Playwright
 
-**Progress:** [███░░░░░░░] 25% (2/3 plans complete in Phase 7)
+**Progress:** [████░░░░░░] 100% (3/3 plans complete in Phase 7)
 
 ## Project Reference
 
@@ -20,7 +20,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
-| 7 | Deployment + Production Validation | 2/3 | In progress |
+| 7 | Deployment + Production Validation | 3/3 | Complete |
 | 8 | SEO + Sharing | 0/TBD | Not started |
 | 9 | UI/UX Polish | 0/TBD | Not started |
 | 10 | Performance Optimization | 0/TBD | Not started |
@@ -37,7 +37,9 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 - Bindings: DB (D1), KV + CACHE (KV), BLOB (R2), AI (Workers AI)
 - Database migrated (14 tables) and seeded (27 recipes, 300 ingredients)
 - GitHub Actions workflows automate production and preview deployments
-- Required secrets: NUXT_HUB_PROJECT_KEY, CLOUDFLARE_API_TOKEN
+- Required secrets: NUXT_HUB_PROJECT_KEY, CLOUDFLARE_API_TOKEN, PRODUCTION_URL
+- Smoke tests (11 tests): 5 critical paths + 6 production bindings
+- Playwright tests run post-deployment via GitHub Actions
 
 ## Recent Decisions
 
@@ -48,13 +50,15 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 | Binding names: DB, KV, CACHE, BLOB, AI | NuxtHub expected names, not wrangler.jsonc names |
 | GitHub Actions for CI/CD | Standard platform, excellent GitHub integration, free for public repos |
 | Separate workflows for prod/preview | Clear separation of concerns, different triggers and behaviors |
+| Resilient selectors in smoke tests | data-testid with text/role fallbacks prevent test brittleness |
+| Only chromium browser for smoke tests | Prioritize speed over comprehensive cross-browser coverage |
 
 ## Session Continuity
 
 - **Last session:** 2026-02-12
-- **Stopped at:** Plan 07-02 complete (CI/CD automation with GitHub Actions)
+- **Stopped at:** Phase 7 complete (all 3 plans: deployment, CI/CD, smoke tests)
 - **Resume file:** None
-- **Next step:** Execute Plan 07-03 (production validation and testing)
+- **Next step:** Begin Phase 8 (SEO + Sharing) or complete milestone v1.1
 
 ---
 *Last updated: 2026-02-12*
