@@ -8,7 +8,24 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
 
-  modules: ['@nuxthub/core'],
+  modules: ['@nuxthub/core', '@nuxtjs/sitemap', 'nuxt-schema-org'],
+
+  site: {
+    url: 'https://recipe-remix-9fd.pages.dev',
+    name: 'Recipe Remix'
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls']
+  },
+
+  schemaOrg: {
+    identity: {
+      type: 'Organization',
+      name: 'Recipe Remix',
+      url: 'https://recipe-remix-9fd.pages.dev'
+    }
+  },
 
   hub: {
     database: true,

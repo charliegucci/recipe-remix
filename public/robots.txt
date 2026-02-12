@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://recipe-remix-9fd.pages.dev/sitemap.xml
