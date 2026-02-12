@@ -52,6 +52,7 @@ export const verifications = sqliteTable('verifications', {
 export const recipes = sqliteTable('recipes', {
   id: text('id').primaryKey(),
   title: text('title').notNull(),
+  slug: text('slug').notNull().unique(),
   description: text('description'),
   ingredients: text('ingredients').notNull(), // JSON array: [{name, quantity, unit}]
   instructions: text('instructions').notNull(), // JSON array of strings
@@ -65,7 +66,9 @@ export const recipes = sqliteTable('recipes', {
   servings: integer('servings').default(4),
   explanation: text('explanation'), // "Why this fusion works" — AI-generated explanation
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date())
-})
+}, (table) => ({
+  slugIdx: index('recipes_slug_idx').on(table.slug)
+}))
 
 export const recipeCategories = sqliteTable('recipe_categories', {
   id: text('id').primaryKey(),
