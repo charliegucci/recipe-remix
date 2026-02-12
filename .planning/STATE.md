@@ -4,10 +4,10 @@
 
 - **Milestone:** v1.1 Test on Production
 - **Phase:** 8 of 10 — SEO + Sharing
-- **Status:** In Progress (1 of 2 plans executed)
-- **Last activity:** 2026-02-12 — SEO-friendly slug URLs with redirects
+- **Status:** Complete (2 of 2 plans executed)
+- **Last activity:** 2026-02-12 — SEO meta tags and social sharing
 
-**Progress:** [█████░░░░░] 50% (1/2 plans complete in Phase 8)
+**Progress:** [██████████] 100% (2/2 plans complete in Phase 8)
 
 ## Project Reference
 
@@ -21,7 +21,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
 | 7 | Deployment + Production Validation | 3/3 | Complete |
-| 8 | SEO + Sharing | 1/2 | In Progress |
+| 8 | SEO + Sharing | 2/2 | Complete |
 | 9 | UI/UX Polish | 0/TBD | Not started |
 | 10 | Performance Optimization | 0/TBD | Not started |
 
@@ -45,6 +45,11 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Decision | Rationale |
 |----------|-----------|
+| useServerSeoMeta for meta tags | Server-only rendering eliminates client-side hydration overhead |
+| R2 image URLs for og:image | Uses existing infrastructure, fallback to og-default.svg |
+| User-specific pages get noindex | Prevents duplicate content issues for personalized pages |
+| Shared duration formatter in server/ and app/ | Server for sitemap, app for pages (can't import server in pages) |
+| Recipe JSON-LD includes aggregate ratings | Rich results eligibility in Google search |
 | Two-phase slug migration (nullable then unique) | Existing recipes have no slugs, schema constraint would fail on initial migration |
 | Slug-first API lookup with ID fallback | Preferred SEO URL while maintaining backward compatibility |
 | Server middleware for 301 redirects | Server-side redirects preserve SEO value and are crawlable |
@@ -57,15 +62,16 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Session Continuity
 
 - **Last session:** 2026-02-12
-- **Stopped at:** Completed 08-01-PLAN.md (SEO-friendly slug URLs)
+- **Stopped at:** Completed 08-02-PLAN.md (SEO meta tags and social sharing)
 - **Resume file:** None
-- **Next step:** Execute 08-02-PLAN.md (Open Graph meta tags and social sharing)
+- **Next step:** Plan Phase 9 (UI/UX Polish)
 
 ## Performance Metrics
 
 | Phase-Plan | Duration | Tasks | Files | Commits |
 |------------|----------|-------|-------|---------|
 | 08-01 | 7 min | 2 | 18 | 3 |
+| 08-02 | 4 min | 2 | 13 | 2 |
 
 ---
 *Last updated: 2026-02-12*
