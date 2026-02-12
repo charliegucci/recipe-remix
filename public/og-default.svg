@@ -1,0 +1,22 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Brand text -->
+  <text x="600" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="80" font-weight="bold" fill="white" text-anchor="middle">
+    Recipe Remix
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="32" fill="rgba(255,255,255,0.9)" text-anchor="middle">
+    Creative Fusion Recipes from Your Pantry
+  </text>
+</svg>
