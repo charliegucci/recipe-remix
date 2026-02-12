@@ -70,10 +70,12 @@ Plans:
   3. When errors occur, user sees friendly messages with retry buttons (not raw error codes)
   4. Mobile users can navigate comfortably with proper touch targets and responsive refinements
   5. Page transitions feel smooth with subtle animations that enhance (not distract from) the experience
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 09-01: [To be planned]
+- [ ] 09-01-PLAN.md — Skeleton loaders and user-friendly error states across all pages
+- [ ] 09-02-PLAN.md — Generation progress time estimates, page transitions, and micro-animations
+- [ ] 09-03-PLAN.md — Mobile touch targets (hamburger menu) and UI spacing cleanup
 
 #### Phase 10: Performance Optimization
 **Goal**: App loads fast with optimal bundle size, image delivery, and Core Web Vitals
