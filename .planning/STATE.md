@@ -4,10 +4,10 @@
 
 - **Milestone:** v1.1 Test on Production
 - **Phase:** 7 of 10 — Deployment + Production Validation
-- **Status:** Executing Wave 1 (Plan 07-01 nearly complete)
-- **Last activity:** 2026-02-12 — App deployed to recipe-remix-9fd.pages.dev
+- **Status:** Executing Wave 2 (Plan 07-02 complete)
+- **Last activity:** 2026-02-12 — CI/CD automation with GitHub Actions
 
-**Progress:** [██░░░░░░░░] 10% (0/4 phases, Wave 1 in progress)
+**Progress:** [███░░░░░░░] 25% (2/3 plans complete in Phase 7)
 
 ## Project Reference
 
@@ -20,7 +20,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Phase | Name | Plans | Status |
 |-------|------|-------|--------|
-| 7 | Deployment + Production Validation | 0/3 | In progress |
+| 7 | Deployment + Production Validation | 2/3 | In progress |
 | 8 | SEO + Sharing | 0/TBD | Not started |
 | 9 | UI/UX Polish | 0/TBD | Not started |
 | 10 | Performance Optimization | 0/TBD | Not started |
@@ -36,6 +36,8 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 - Required nodejs_compat flag for Node.js module support
 - Bindings: DB (D1), KV + CACHE (KV), BLOB (R2), AI (Workers AI)
 - Database migrated (14 tables) and seeded (27 recipes, 300 ingredients)
+- GitHub Actions workflows automate production and preview deployments
+- Required secrets: NUXT_HUB_PROJECT_KEY, CLOUDFLARE_API_TOKEN
 
 ## Recent Decisions
 
@@ -44,13 +46,15 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 | Cloudflare Pages CI instead of NuxtHub Admin | NuxtHub Admin sunset Dec 2025 |
 | nodejs_compat compatibility flag | Required for node:buffer in Better Auth/Drizzle |
 | Binding names: DB, KV, CACHE, BLOB, AI | NuxtHub expected names, not wrangler.jsonc names |
+| GitHub Actions for CI/CD | Standard platform, excellent GitHub integration, free for public repos |
+| Separate workflows for prod/preview | Clear separation of concerns, different triggers and behaviors |
 
 ## Session Continuity
 
 - **Last session:** 2026-02-12
-- **Stopped at:** Plan 07-01 deployment verified working (recipes API + featured endpoint OK)
+- **Stopped at:** Plan 07-02 complete (CI/CD automation with GitHub Actions)
 - **Resume file:** None
-- **Next step:** Write 07-01-SUMMARY.md, then execute Wave 2 (07-02 + 07-03 in parallel)
+- **Next step:** Execute Plan 07-03 (production validation and testing)
 
 ---
 *Last updated: 2026-02-12*
