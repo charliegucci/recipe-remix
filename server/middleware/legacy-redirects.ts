@@ -21,16 +21,19 @@ export default defineEventHandler(async (event) => {
     return
   }
 
-  // Check if it looks like a slug (contains hyphens and lowercase letters)
-  // If it's already a slug-like string, let it through
-  const looksLikeSlug = /^[a-z0-9]+(-[a-z0-9]+)+$/.test(identifier)
+  // Check if it's a UUID (8-4-4-4-12 hex pattern)
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier)
+
+  // If it's NOT a UUID and looks like a slug, let it through
+  // Slugs are lowercase with hyphens, but not in UUID format
+  const looksLikeSlug = /^[a-z0-9]+(-[a-z0-9]+)+$/.test(identifier) && !isUuid
 
   if (looksLikeSlug) {
     // Already a slug, no redirect needed
     return
   }
 
-  // It might be an old UUID or numeric ID - look it up
+  // It's a UUID or other non-slug identifier - look it up for redirect
   const db = useDrizzle(event)
 
   try {
