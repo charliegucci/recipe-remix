@@ -3,6 +3,7 @@ const props = defineProps<{
   recipe: {
     id: string
     title: string
+    slug: string
     description: string
     cookTime: number
     difficulty: 'easy' | 'medium' | 'hard'
@@ -42,7 +43,7 @@ onMounted(() => {
 
 <template>
   <NuxtLink
-    :to="`/recipe/${recipe.id}`"
+    :to="`/recipe/${recipe.slug}`"
     class="block bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden group"
   >
     <!-- Image Section -->
