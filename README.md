@@ -1,6 +1,9 @@
 ## Recipe Remix Engine
 
-Turn whatever’s already in your kitchen into creative, trustworthy fusion recipes. Recipe Remix Engine is a Nuxt 4 + Cloudflare web app that takes your pantry ingredients, dietary restrictions, and cuisine preferences and generates cross‑cuisine mashups – with food‑safety validation and clear culinary reasoning.
+[![Deploy to Production](https://github.com/charliegucci/recipe-remix/actions/workflows/deploy.yml/badge.svg)](https://github.com/charliegucci/recipe-remix/actions/workflows/deploy.yml)
+[![Deploy Preview](https://github.com/charliegucci/recipe-remix/actions/workflows/preview.yml/badge.svg)](https://github.com/charliegucci/recipe-remix/actions/workflows/preview.yml)
+
+Turn whatever's already in your kitchen into creative, trustworthy fusion recipes. Recipe Remix Engine is a Nuxt 4 + Cloudflare web app that takes your pantry ingredients, dietary restrictions, and cuisine preferences and generates cross‑cuisine mashups – with food‑safety validation and clear culinary reasoning.
 
 ---
 
@@ -37,8 +40,8 @@ Turn whatever’s already in your kitchen into creative, trustworthy fusion reci
   - Goal: Deploy to Cloudflare Pages via NuxtHub, validate all features in production, and polish UX, SEO, and performance.
 - **v1.0 status:** Shipped (2026‑02‑11) – full-stack MVP with 33/33 requirements satisfied.
 
-> Once the production URL is finalized, add it here:
-> - **Production:** _TBD – Cloudflare Pages URL_
+- **Production:** https://recipe-remix-9fd.pages.dev
+- **Preview deployments:** Automatically created for pull requests
 
 For deeper planning context, see `.planning/PROJECT.md`, `.planning/STATE.md`, and `.planning/ROADMAP.md`.
 
@@ -199,6 +202,27 @@ npm run db:seed   # calls POST http://localhost:3000/api/_seed
 ### Deployment
 
 Recipe Remix is designed to run on **Cloudflare Pages + Workers** via NuxtHub.
+
+#### Automated Deployments (Recommended)
+
+The project uses GitHub Actions for continuous deployment:
+
+- **Production:** Push to `main` branch triggers automatic deployment
+- **Preview:** Pull requests automatically generate preview deployments
+- **Status:** Check the Actions tab in GitHub for deployment status
+
+**Required GitHub Secrets:**
+- `NUXT_HUB_PROJECT_KEY`: Get from NuxtHub project settings → API Keys
+- `CLOUDFLARE_API_TOKEN`: Create in Cloudflare dashboard → My Profile → API Tokens → Create Token → Use "Edit Cloudflare Pages" template
+
+**To add secrets:**
+1. Go to GitHub repo → Settings → Secrets and variables → Actions
+2. Click "New repository secret"
+3. Add both `NUXT_HUB_PROJECT_KEY` and `CLOUDFLARE_API_TOKEN`
+
+Once secrets are configured, deployments happen automatically on push.
+
+#### Manual Deployment (Alternative)
 
 High-level steps (exact details may vary slightly with your NuxtHub setup):
 
