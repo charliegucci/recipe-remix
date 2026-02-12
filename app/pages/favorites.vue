@@ -21,6 +21,17 @@ const { data: favorites, pending, error, refresh } = await useAsyncData(
 
 const isAuthenticated = computed(() => session.value?.user && !session.value.user.isAnonymous)
 const recipes = computed(() => favorites.value?.recipes || [])
+
+// SEO meta tags
+useServerSeoMeta({
+  title: 'Your Favorite Recipes | Recipe Remix',
+  description: 'View and manage your saved favorite recipes',
+  robots: 'noindex'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/favorites' }]
+})
 </script>
 
 <template>

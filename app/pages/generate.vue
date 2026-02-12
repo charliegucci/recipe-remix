@@ -245,6 +245,17 @@
 import { usePantry } from '~/composables/usePantry'
 import { useGenerate } from '~/composables/useGenerate'
 
+// SEO meta tags
+useServerSeoMeta({
+  title: 'Create a Recipe | Recipe Remix',
+  description: 'Generate custom fusion recipes from your pantry ingredients',
+  robots: 'noindex'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/generate' }]
+})
+
 // SSR-safe mounting pattern
 const mounted = ref(false)
 onMounted(() => {

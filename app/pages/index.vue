@@ -20,9 +20,19 @@ const [
   mediterraneanRecipes,
 ] = data.value || [[], [], [], [], [], []]
 
-// SEO
+// SEO with OpenGraph
+useServerSeoMeta({
+  title: 'Recipe Remix - Creative Fusion Recipes from Your Pantry',
+  description: 'Discover and create delicious fusion recipes using ingredients you already have. AI-powered recipe generation meets culinary creativity.',
+  ogTitle: 'Recipe Remix - Creative Fusion Recipes',
+  ogDescription: 'Discover and create delicious fusion recipes using ingredients you already have.',
+  ogImage: 'https://recipe-remix-9fd.pages.dev/og-default.svg',
+  ogType: 'website',
+  ogUrl: 'https://recipe-remix-9fd.pages.dev'
+})
+
 useHead({
-  title: 'Recipe Remix - Discover Delicious Recipes',
+  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev' }]
 })
 </script>
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { minutesToISO8601 } from '~/utils/duration-formatter'
+
 interface Ingredient {
   name: string
   quantity: string
@@ -46,13 +48,58 @@ if (!recipe.value) {
   })
 }
 
-// SEO metadata
-useHead({
+// SEO metadata with OpenGraph and Twitter cards
+const siteUrl = 'https://recipe-remix-9fd.pages.dev'
+const recipeUrl = `${siteUrl}/recipe/${slug}`
+const ogImage = recipe.value.imageKey
+  ? `${siteUrl}/api/images/${recipe.value.imageKey}`
+  : `${siteUrl}/og-default.svg`
+
+useServerSeoMeta({
   title: `${recipe.value.title} | Recipe Remix`,
-  meta: [
-    { name: 'description', content: recipe.value.description || 'Delicious recipe from Recipe Remix' }
-  ]
+  description: recipe.value.description || `Delicious ${recipe.value.cuisineTags.join(' & ')} fusion recipe`,
+  ogTitle: recipe.value.title,
+  ogDescription: recipe.value.description || `Try this ${recipe.value.difficulty || 'delicious'} fusion recipe`,
+  ogImage: ogImage,
+  ogType: 'website',
+  ogUrl: recipeUrl,
+  twitterCard: 'summary_large_image',
+  twitterTitle: recipe.value.title,
+  twitterDescription: recipe.value.description || `Delicious fusion recipe from Recipe Remix`
 })
+
+// Canonical URL
+useHead({
+  link: [{ rel: 'canonical', href: recipeUrl }]
+})
+
+// Recipe structured data (JSON-LD)
+useSchemaOrg([
+  defineRecipe({
+    name: recipe.value.title,
+    description: recipe.value.description || undefined,
+    image: ogImage,
+    author: { '@type': 'Organization', name: 'Recipe Remix' },
+    datePublished: recipe.value.createdAt,
+    cookTime: recipe.value.cookTime ? minutesToISO8601(recipe.value.cookTime) : undefined,
+    totalTime: recipe.value.cookTime ? minutesToISO8601(Math.ceil(recipe.value.cookTime * 1.3)) : undefined,
+    recipeYield: `${recipe.value.servings} servings`,
+    recipeCategory: recipe.value.cuisineTags?.[0] || 'Fusion',
+    recipeCuisine: recipe.value.cuisineTags?.join(', ') || 'Fusion',
+    recipeIngredient: recipe.value.ingredients.map(i => `${i.quantity} ${i.unit} ${i.name}`.trim()),
+    recipeInstructions: recipe.value.instructions.map((step, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      text: step
+    })),
+    keywords: [...(recipe.value.cuisineTags || []), ...(recipe.value.dietaryTags || [])].filter(Boolean).join(', '),
+    aggregateRating: recipe.value.avgRating ? {
+      '@type': 'AggregateRating',
+      ratingValue: recipe.value.avgRating,
+      reviewCount: recipe.value.totalReviews
+    } : undefined
+  })
+])
 
 // Helper function to format cook time
 function formatCookTime(minutes: number | null): string {
