@@ -2,17 +2,17 @@
 
 ## Current Position
 
-- **Milestone:** v1.1 Test on Production — SHIPPED
-- **Phase:** All complete (10/10)
-- **Status:** Milestone complete, ready for next milestone
-- **Last activity:** 2026-02-13 - Completed quick task 2: Fix GitHub issues #5-#8 (README, CI/CD, URL, images)
+- **Milestone:** v1.2 CI/CD, Branching & Production Polish
+- **Phase:** Not started (defining requirements)
+- **Status:** Defining requirements
+- **Last activity:** 2026-02-13 — Milestone v1.2 started
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-02-13)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** Planning next milestone
+**Current focus:** v1.2 CI/CD, Branching & Production Polish
 
 ## Progress
 
@@ -44,9 +44,9 @@ All milestones shipped. See .planning/MILESTONES.md for history.
 ## Session Continuity
 
 - **Last session:** 2026-02-13
-- **Stopped at:** Completed quick task 2: Fix GitHub issues #5-#8
+- **Stopped at:** Defining v1.2 requirements
 - **Resume file:** None
-- **Next step:** `/gsd:new-milestone` to plan v2.0
+- **Next step:** Define requirements, then `/gsd:plan-phase`
 
 ---
 *Last updated: 2026-02-13*

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A full-stack web app that generates creative AI fusion recipes from ingredients you already have. Users input their pantry, dietary restrictions, and cuisine preferences, and the app creates unexpected cross-cuisine mashups — validated for food safety and explained with culinary reasoning. Live at recipe-remix-9fd.pages.dev, built on Nuxt 4 + Cloudflare edge infrastructure with full SEO, polished UX, and performance optimization.
+A full-stack web app that generates creative AI fusion recipes from ingredients you already have. Users input their pantry, dietary restrictions, and cuisine preferences, and the app creates unexpected cross-cuisine mashups — validated for food safety and explained with culinary reasoning. Live at remix-recipe.com, built on Nuxt 4 + Cloudflare edge infrastructure with full SEO, polished UX, and performance optimization.
 
 ## Core Value
 
@@ -51,7 +51,16 @@ Users can make delicious, creative meals from ingredients they already have — 
 
 ### Active
 
-(No active milestone — ready for v2.0 planning)
+**Current Milestone: v1.2 — CI/CD, Branching & Production Polish**
+
+**Goal:** Make CI/CD pipelines fully operational, enforce PR-based workflow with branch protection, verify production URL migration, and ensure hero slider uses actual recipe images.
+
+**Target features:**
+- All GitHub Actions workflows (deploy, preview, CI gates, smoke tests) working end-to-end
+- Branch protection on main requiring PRs and passing CI checks
+- Feature branch + GitHub issue workflow established
+- Production URL fully migrated to https://remix-recipe.com (verified in production)
+- Hero slider displaying actual recipe images from blob storage
 
 ### Out of Scope
 
@@ -69,7 +78,7 @@ Users can make delicious, creative meals from ingredients they already have — 
 ## Context
 
 **Shipped v1.1 Test on Production** with 10,768 LOC (TypeScript/Vue/JS/CSS).
-**Production URL:** https://recipe-remix-9fd.pages.dev
+**Production URL:** https://remix-recipe.com
 
 **Tech stack:** Nuxt 4 (compat layer) + NuxtHub + Cloudflare D1/R2/KV + Drizzle ORM + Better Auth + Tailwind v4 + Workers AI (Llama 3.1 70B + flux-1-schnell) + @nuxt/image.
 
@@ -123,5 +132,7 @@ Users can make delicious, creative meals from ingredients they already have — 
 | CDN edge caching with tiered TTLs | Different endpoints need different freshness | Good — 1hr for detail, 5min for browse |
 | Lighthouse CI on PRs only | Save CI minutes, run when code is ready for review | Good — automated performance gate |
 
+| PR-based workflow with branch protection | No direct pushes to main — all changes via PRs with CI gates | — Pending |
+
 ---
-*Last updated: 2026-02-13 after v1.1 milestone completed*
+*Last updated: 2026-02-13 after v1.2 milestone started*
