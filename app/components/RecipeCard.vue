@@ -39,7 +39,7 @@ onMounted(() => {
 
 <template>
   <NuxtLink
-    :to="`/recipe/${recipe.slug}`"
+    :to="`/recipe/${recipe.slug || recipe.id}`"
     class="block bg-white rounded-xl shadow-sm motion-safe:hover:shadow-lg motion-safe:hover:-translate-y-1 transition-all duration-200 overflow-hidden group"
   >
     <!-- Image Section -->

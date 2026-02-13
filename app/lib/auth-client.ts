@@ -4,8 +4,8 @@ import { anonymousClient } from 'better-auth/client/plugins'
 /**
  * Better Auth client for Vue/Nuxt.
  *
- * IMPORTANT: This client uses an absolute URL for SSR compatibility.
- * The base URL is determined at runtime based on environment.
+ * In the browser we use the current origin so login/register work on any port (e.g. 3001).
+ * For SSR (e.g. useSession) we use NUXT_PUBLIC_AUTH_URL or localhost:3000.
  *
  * Usage in components:
  *   const { data: session } = await authClient.useSession(useFetch)
@@ -17,9 +17,10 @@ import { anonymousClient } from 'better-auth/client/plugins'
  *   await signOut()
  */
 export const authClient = createAuthClient({
-  // Use absolute URL - required for SSR where relative URLs have no origin
-  // In production, set NUXT_PUBLIC_AUTH_URL environment variable
-  baseURL: process.env.NUXT_PUBLIC_AUTH_URL || 'http://localhost:3000/api/auth',
+  baseURL:
+    typeof window !== 'undefined' && window.location?.origin
+      ? `${window.location.origin}/api/auth`
+      : (process.env.NUXT_PUBLIC_AUTH_URL || 'http://localhost:3000/api/auth'),
   plugins: [
     anonymousClient()
   ]

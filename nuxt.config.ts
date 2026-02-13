@@ -30,6 +30,7 @@ export default defineNuxtConfig({
   image: {
     quality: 80,
     formats: ['webp'],
+    domains: ['picsum.photos', 'images.unsplash.com'],
     screens: {
       xs: 320,
       sm: 640,
