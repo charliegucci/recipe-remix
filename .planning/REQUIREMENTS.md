@@ -52,29 +52,27 @@ Requirements for v1.2 — CI/CD, Branching & Production Polish. Each maps to roa
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CICD-01 | TBD | Pending |
-| CICD-02 | TBD | Pending |
-| CICD-03 | TBD | Pending |
-| CICD-04 | TBD | Pending |
-| BRCH-01 | TBD | Pending |
-| BRCH-02 | TBD | Pending |
-| BRCH-03 | TBD | Pending |
-| URL-01 | TBD | Pending |
-| URL-02 | TBD | Pending |
-| URL-03 | TBD | Pending |
-| IMG-01 | TBD | Pending |
-| IMG-02 | TBD | Pending |
-| IMG-03 | TBD | Pending |
+| CICD-01 | Phase 11 | Pending |
+| CICD-02 | Phase 11 | Pending |
+| CICD-03 | Phase 11 | Pending |
+| CICD-04 | Phase 11 | Pending |
+| BRCH-01 | Phase 12 | Pending |
+| BRCH-02 | Phase 12 | Pending |
+| BRCH-03 | Phase 12 | Pending |
+| URL-01 | Phase 12 | Pending |
+| URL-02 | Phase 12 | Pending |
+| URL-03 | Phase 12 | Pending |
+| IMG-01 | Phase 13 | Pending |
+| IMG-02 | Phase 13 | Pending |
+| IMG-03 | Phase 13 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 13 total
-- Mapped to phases: 0
-- Unmapped: 13
+- Mapped to phases: 13
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-13*
-*Last updated: 2026-02-13 after initial definition*
+*Last updated: 2026-02-13 after v1.2 roadmap creation*
