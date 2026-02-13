@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.2 CI/CD, Branching & Production Polish
 - **Phase:** 11 of 13 (CI/CD Pipeline)
-- **Plan:** 0 of TBD in current phase
-- **Status:** Ready to plan
-- **Last activity:** 2026-02-13 — v1.2 roadmap created
+- **Plan:** 1 of 4 in current phase
+- **Status:** Executing
+- **Last activity:** 2026-02-13 — Completed plan 11-01 (Fix GitHub Actions Deploy Workflows)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 25%
 
 ## Project Reference
 
@@ -40,6 +40,9 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 
 - [v1.2 roadmap]: Phase 13 (hero images) is independent and can execute in parallel if needed
 - [v1.2 roadmap]: Branching + URL grouped in Phase 12 (both production hygiene, BRCH depends on CI gates)
+- [11-01]: Use NuxtHub CLI instead of Wrangler for deployments (SSR apps are Worker-based, not static)
+- [11-01]: Use NUXT_HUB_PROJECT_KEY for authentication instead of separate API tokens
+- [11-01]: Enhanced preview URL regex to match both .pages.dev and .nuxt.dev domains
 
 ### Quick Tasks Completed
 
@@ -50,15 +53,21 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 
 ### Blockers/Concerns
 
-- GitHub Actions workflows exist from v1.1 but need verification they work end-to-end
 - Custom domain remix-recipe.com may need DNS/Cloudflare Pages configuration verified
+- NUXT_HUB_PROJECT_KEY secret needs to be added to GitHub repository settings before workflows can run
+
+### Performance Metrics
+
+| Phase-Plan | Duration | Tasks | Files | Date |
+|------------|----------|-------|-------|------|
+| 11-01 | 55s | 2 | 2 | 2026-02-13 |
 
 ## Session Continuity
 
-- **Last session:** 2026-02-13
-- **Stopped at:** v1.2 roadmap created, ready to plan Phase 11
+- **Last session:** 2026-02-13T03:13:08Z
+- **Stopped at:** Completed 11-01-PLAN.md (Fix GitHub Actions Deploy Workflows)
 - **Resume file:** None
-- **Next step:** `/gsd:plan-phase 11`
+- **Next step:** Execute plan 11-02 (Playwright Tests)
 
 ---
 *Last updated: 2026-02-13*
