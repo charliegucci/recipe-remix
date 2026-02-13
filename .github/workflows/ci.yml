@@ -22,11 +22,11 @@ jobs:
 
       - name: Check bundle size
         run: |
-          # Measure the server bundle from nuxt build output
-          TOTAL_SIZE=$(find .output/server -name '*.mjs' -o -name '*.js' | xargs cat | wc -c)
-          GZIP_SIZE=$(find .output/server -name '*.mjs' -o -name '*.js' | xargs cat | gzip -c | wc -c)
+          # Measure the worker bundle from nuxt build output (dist/_worker.js/)
+          TOTAL_SIZE=$(find dist/_worker.js -name '*.mjs' -o -name '*.js' | xargs cat | wc -c)
+          GZIP_SIZE=$(find dist/_worker.js -name '*.mjs' -o -name '*.js' | xargs cat | gzip -c | wc -c)
           GZIP_MB=$(echo "scale=2; $GZIP_SIZE / 1048576" | bc)
-          echo "Server bundle gzip size: ${GZIP_MB}MB ($GZIP_SIZE bytes)"
+          echo "Worker bundle gzip size: ${GZIP_MB}MB ($GZIP_SIZE bytes)"
           # Fail if gzip > 3MB
           if [ "$GZIP_SIZE" -gt 3145728 ]; then
             echo "::error::Bundle size ${GZIP_MB}MB exceeds 3MB limit"
