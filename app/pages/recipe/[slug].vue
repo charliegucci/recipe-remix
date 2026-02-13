@@ -405,10 +405,11 @@ onMounted(() => {
       </div>
 
       <!-- Why This Fusion Works (AI recipes only) -->
-      <WhyThisWorks
+      <LazyWhyThisWorks
         v-if="isAiGenerated && activeExplanation"
         :explanation="activeExplanation"
         class="mb-6"
+        hydrate-on-idle
       />
 
       <!-- Ingredients Section -->
@@ -464,25 +465,27 @@ onMounted(() => {
 
         <!-- Review Form -->
         <div class="mb-8">
-          <ReviewForm
+          <LazyReviewForm
             :recipe-id="recipeId"
             :existing-review="existingReview || undefined"
             @submitted="handleReviewSubmitted"
+            hydrate-on-visible
           />
         </div>
 
         <!-- Review List -->
         <div>
-          <ReviewList
+          <LazyReviewList
             ref="reviewListRef"
             :recipe-id="recipeId"
+            hydrate-on-visible
           />
         </div>
       </div>
     </div>
 
     <!-- Substitution Dialog -->
-    <SubstitutionDialog
+    <LazySubstitutionDialog
       v-if="substitutionTarget"
       :recipe-id="recipeId"
       :ingredient-name="substitutionTarget"
