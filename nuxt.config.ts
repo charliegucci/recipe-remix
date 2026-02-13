@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
 
-  modules: ['@nuxthub/core', '@nuxtjs/sitemap', 'nuxt-schema-org'],
+  modules: ['@nuxthub/core', '@nuxtjs/sitemap', 'nuxt-schema-org', '@nuxt/image'],
 
   site: {
     url: 'https://recipe-remix-9fd.pages.dev',
@@ -24,6 +24,18 @@ export default defineNuxtConfig({
       type: 'Organization',
       name: 'Recipe Remix',
       url: 'https://recipe-remix-9fd.pages.dev'
+    }
+  },
+
+  image: {
+    quality: 80,
+    formats: ['webp'],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280
     }
   },
 

@@ -280,12 +280,15 @@ onMounted(() => {
     <!-- Hero Image Section -->
     <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] overflow-hidden bg-gradient-to-br from-orange-400 to-pink-500">
       <!-- Image if available -->
-      <img
+      <NuxtImg
         v-if="recipe.imageKey"
         :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `/api/images/${recipe.imageKey}`"
         :alt="recipe.title"
-        class="w-full h-full object-cover"
         loading="eager"
+        fetchpriority="high"
+        format="webp"
+        sizes="sm:100vw md:100vw lg:800px"
+        class="w-full h-full object-cover"
       />
       <!-- No image: placeholder with generate button for AI recipes -->
       <div v-else class="w-full h-full flex flex-col items-center justify-center text-white/80 relative z-10">

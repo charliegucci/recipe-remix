@@ -71,12 +71,14 @@ onUnmounted(() => {
           class="min-w-full h-full relative"
         >
           <!-- Image -->
-          <img
+          <NuxtImg
             v-if="getImageUrl(recipe.imageKey)"
             :src="getImageUrl(recipe.imageKey)"
             :alt="recipe.title"
-            decoding="async"
+            :loading="index === currentIndex ? 'eager' : 'lazy'"
             :fetchpriority="index === currentIndex ? 'high' : 'low'"
+            format="webp"
+            sizes="sm:100vw md:100vw lg:1200px"
             class="w-full h-full object-cover"
           />
           <div

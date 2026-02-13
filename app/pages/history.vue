@@ -107,11 +107,13 @@ const formatDate = (dateString: string) => {
             <!-- Recipe Image -->
             <div class="sm:w-48 aspect-[4/3] sm:aspect-square flex-shrink-0 relative overflow-hidden">
               <NuxtLink :to="`/recipe/${recipe.slug}`" class="block h-full">
-                <img
+                <NuxtImg
                   v-if="recipe.imageKey"
                   :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `${$config.public.r2PublicUrl || 'https://pub-placeholder.r2.dev'}/${recipe.imageKey}`"
                   :alt="recipe.title"
                   loading="lazy"
+                  format="webp"
+                  sizes="sm:192px"
                   class="w-full h-full object-cover"
                 />
                 <div v-else class="w-full h-full bg-gray-200 flex items-center justify-center">

@@ -48,12 +48,13 @@ onMounted(() => {
   >
     <!-- Image Section -->
     <div class="relative aspect-[4/3] overflow-hidden">
-      <img
+      <NuxtImg
         v-if="imageUrl"
         :src="imageUrl"
         :alt="recipe.title"
         loading="lazy"
-        decoding="async"
+        format="webp"
+        sizes="sm:100vw md:50vw lg:400px"
         class="w-full h-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
       />
       <div
