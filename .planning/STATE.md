@@ -3,11 +3,11 @@
 ## Current Position
 
 - **Milestone:** v1.1 Test on Production
-- **Phase:** 8 of 10 — SEO + Sharing
-- **Status:** Complete (2 of 2 plans executed)
-- **Last activity:** 2026-02-13 — Phase 8 complete, verified passed
+- **Phase:** 9 of 10 — UI/UX Polish
+- **Status:** In Progress (1 of TBD plans executed)
+- **Last activity:** 2026-02-13 — Completed 09-01 (Skeleton Loaders & Error States)
 
-**Progress:** [██████████] 100% (2/2 plans complete in Phase 8)
+**Progress:** [██████████] 100% (1/1 plans complete in Phase 9)
 
 ## Project Reference
 
@@ -22,7 +22,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 |-------|------|-------|--------|
 | 7 | Deployment + Production Validation | 3/3 | Complete |
 | 8 | SEO + Sharing | 2/2 | Complete |
-| 9 | UI/UX Polish | 0/TBD | Not started |
+| 9 | UI/UX Polish | 1/TBD | In Progress |
 | 10 | Performance Optimization | 0/TBD | Not started |
 
 ## Accumulated Context
@@ -45,6 +45,10 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Decision | Rationale |
 |----------|-----------|
+| ErrorMessage instead of Nuxt error page on recipe detail | Softer error handling keeps users in app with retry, maintains SEO meta tags |
+| 44px min-height for ErrorMessage retry button | Meets touch target accessibility guidelines (UX-04 prep) |
+| RecipeListSkeleton with configurable count | Different pages need different skeleton counts (6 vs 9) |
+| RecipeDetailSkeleton matches exact layout | Prevents layout shift and provides accurate visual placeholder |
 | useServerSeoMeta for meta tags | Server-only rendering eliminates client-side hydration overhead |
 | R2 image URLs for og:image | Uses existing infrastructure, fallback to og-default.svg |
 | User-specific pages get noindex | Prevents duplicate content issues for personalized pages |
@@ -62,9 +66,9 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Session Continuity
 
 - **Last session:** 2026-02-13
-- **Stopped at:** Phase 8 complete and verified
+- **Stopped at:** Completed 09-01-PLAN.md (Skeleton Loaders & Error States)
 - **Resume file:** None
-- **Next step:** Plan Phase 9 (UI/UX Polish)
+- **Next step:** Continue Phase 9 execution or plan additional UX polish tasks
 
 ## Performance Metrics
 
@@ -72,6 +76,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 |------------|----------|-------|-------|---------|
 | 08-01 | 7 min | 2 | 18 | 3 |
 | 08-02 | 4 min | 2 | 13 | 2 |
+| 09-01 | 3 min | 2 | 8 | 2 |
 
 ---
 *Last updated: 2026-02-13*
