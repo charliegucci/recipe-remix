@@ -17,25 +17,17 @@ jobs:
 
       - run: npm ci
 
+      - name: Build
+        run: npx nuxt build
+
       - name: Check bundle size
         run: |
-          npx wrangler deploy --dry-run --outdir .wrangler/dist 2>&1 || true
-          # Find the worker bundle and check gzip size
-          BUNDLE=$(find .wrangler/dist -name '*.js' -type f | head -1)
-          if [ -z "$BUNDLE" ]; then
-            echo "No bundle found — running nuxt build first"
-            npx nuxt build
-            npx wrangler deploy --dry-run --outdir .wrangler/dist 2>&1 || true
-            BUNDLE=$(find .wrangler/dist -name '*.js' -type f | head -1)
-          fi
-          if [ -z "$BUNDLE" ]; then
-            echo "::error::Could not find worker bundle"
-            exit 1
-          fi
-          GZIP_SIZE=$(gzip -c "$BUNDLE" | wc -c)
+          # Measure the server bundle from nuxt build output
+          TOTAL_SIZE=$(find .output/server -name '*.mjs' -o -name '*.js' | xargs cat | wc -c)
+          GZIP_SIZE=$(find .output/server -name '*.mjs' -o -name '*.js' | xargs cat | gzip -c | wc -c)
           GZIP_MB=$(echo "scale=2; $GZIP_SIZE / 1048576" | bc)
-          echo "Bundle gzip size: ${GZIP_MB}MB ($GZIP_SIZE bytes)"
-          # Fail if > 3MB (3145728 bytes)
+          echo "Server bundle gzip size: ${GZIP_MB}MB ($GZIP_SIZE bytes)"
+          # Fail if gzip > 3MB
           if [ "$GZIP_SIZE" -gt 3145728 ]; then
             echo "::error::Bundle size ${GZIP_MB}MB exceeds 3MB limit"
             exit 1
@@ -58,6 +50,4 @@ jobs:
         run: npx nuxt build
 
       - name: Run Lighthouse CI
-        run: npx @lhci/cli autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: npx lhci autorun
