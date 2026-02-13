@@ -33,6 +33,7 @@ export function useGenerate() {
   const status = ref<GenerationStatus>('idle')
   const generatedRecipe = ref<GeneratedRecipe | null>(null)
   const errorMessage = ref<string>('')
+  const startTime = ref<number | null>(null)
 
   // Persist generationId to localStorage (SSR-safe)
   const generationId = useLocalStorage<string | null>('lastGenerationId', null, {
@@ -50,6 +51,7 @@ export function useGenerate() {
     status.value = 'generating'
     errorMessage.value = ''
     generatedRecipe.value = null
+    startTime.value = Date.now()
 
     try {
       const response = await $fetch<{
@@ -110,6 +112,7 @@ export function useGenerate() {
     generatedRecipe.value = null
     errorMessage.value = ''
     generationId.value = null
+    startTime.value = null
   }
 
   /**
@@ -212,6 +215,7 @@ export function useGenerate() {
     generatedRecipe,
     errorMessage,
     generationId,
+    startTime,
     generate,
     reset,
     resumeGeneration,
