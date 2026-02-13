@@ -87,10 +87,12 @@ Plans:
   3. Heavy components are code-split at route level to reduce initial load
   4. Lighthouse performance score reaches 95+ on home, browse, and recipe detail pages
   5. Core Web Vitals (LCP, FID, CLS) meet "good" thresholds on real user devices
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 10-01: [To be planned]
+- [ ] 10-01-PLAN.md — Bundle audit and image optimization with @nuxt/image
+- [ ] 10-02-PLAN.md — Lazy components with lazy hydration and edge caching headers
+- [ ] 10-03-PLAN.md — Lighthouse CI setup with performance budgets and baseline audit
 
 ## Progress
 
