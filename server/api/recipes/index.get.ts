@@ -21,6 +21,10 @@ export default defineEventHandler(async (event) => {
   const kv = hubKV()
   const cached = await kv.getItem(cacheKey)
   if (cached) {
+    // Set CDN cache headers before returning
+    setResponseHeaders(event, {
+      'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=3600'
+    })
     return cached
   }
 
@@ -65,6 +69,11 @@ export default defineEventHandler(async (event) => {
 
   // Cache in KV with 5 minute TTL
   await kv.setItem(cacheKey, recipes, { ttl: 300 })
+
+  // Set CDN cache headers before returning
+  setResponseHeaders(event, {
+    'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=3600'
+  })
 
   return recipes
 })
