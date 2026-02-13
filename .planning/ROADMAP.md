@@ -71,11 +71,11 @@ Plans:
   3. Opening a PR shows a pre-filled template with testing and review checklist
   4. Visiting https://remix-recipe.com loads the application with all features working (auth, recipes, images)
   5. Better Auth login/signup works correctly on the remix-recipe.com domain (no CORS or origin errors)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 12-01: TBD
-- [ ] 12-02: TBD
+- [ ] 12-01-PLAN.md — Branch protection, PR template, and issue templates
+- [ ] 12-02-PLAN.md — Production URL verification and Better Auth domain config
 
 ### Phase 13: Hero Slider Images
 **Goal**: The homepage hero slider showcases actual recipe images instead of placeholders, with graceful fallback handling
@@ -109,7 +109,7 @@ Phases execute in numeric order: 11 → 12 → 13
 | 9. UI/UX Polish | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 10. Performance Optimization | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 11. CI/CD Pipeline | v1.2 | 4/4 | Complete | 2026-02-13 |
-| 12. Branching & Production URL | v1.2 | 0/TBD | Not started | - |
+| 12. Branching & Production URL | v1.2 | 0/2 | Planned | - |
 | 13. Hero Slider Images | v1.2 | 0/TBD | Not started | - |
 
 ---
