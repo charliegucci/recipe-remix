@@ -21,7 +21,7 @@ function increase() {
       <button
         @click="decrease"
         :disabled="servings <= 1"
-        class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
@@ -31,7 +31,7 @@ function increase() {
       <button
         @click="increase"
         :disabled="servings >= 20"
-        class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />

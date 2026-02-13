@@ -74,7 +74,7 @@ function toggleCompletion() {
 
         <!-- Checkmark indicator -->
         <div
-          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all"
+          class="flex-shrink-0 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-all"
           :class="{
             'border-2 border-gray-300': !completed,
             'bg-green-500': completed

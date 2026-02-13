@@ -81,7 +81,7 @@ const toggleCuisine = (cuisine: string) => {
       type="button"
       @click="toggleCuisine(surpriseMeOption.name)"
       :class="[
-        'w-full min-h-12 px-4 py-3 rounded-lg border-2 transition-all duration-200',
+        'w-full min-h-[44px] px-4 py-3 rounded-lg border-2 transition-all duration-200',
         'flex items-center justify-center gap-2 text-sm font-medium',
         isSelected(surpriseMeOption.name)
           ? 'border-blue-500 bg-blue-50 text-blue-700'
@@ -101,7 +101,7 @@ const toggleCuisine = (cuisine: string) => {
         @click="toggleCuisine(cuisine.name)"
         :disabled="isDisabled(cuisine.name)"
         :class="[
-          'min-h-12 px-3 py-2 rounded-lg border-2 transition-all duration-200',
+          'min-h-[44px] px-3 py-2 rounded-lg border-2 transition-all duration-200',
           'flex flex-col items-center justify-center gap-1 text-xs font-medium',
           isSelected(cuisine.name)
             ? 'border-blue-500 bg-blue-50 text-blue-700'

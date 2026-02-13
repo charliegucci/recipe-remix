@@ -60,7 +60,7 @@ async function handleRegister() {
             v-model="name"
             type="text"
             autocomplete="name"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            class="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             placeholder="Your name"
           />
         </div>
@@ -75,7 +75,7 @@ async function handleRegister() {
             type="email"
             required
             autocomplete="email"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            class="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             placeholder="you@example.com"
           />
         </div>
@@ -90,7 +90,7 @@ async function handleRegister() {
             type="password"
             required
             autocomplete="new-password"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            class="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             placeholder="••••••••"
           />
           <p class="text-xs text-gray-500 mt-1">At least 8 characters</p>
@@ -106,7 +106,7 @@ async function handleRegister() {
             type="password"
             required
             autocomplete="new-password"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            class="w-full px-4 py-3 min-h-[44px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             placeholder="••••••••"
           />
         </div>
@@ -118,7 +118,7 @@ async function handleRegister() {
         <button
           type="submit"
           :disabled="loading"
-          class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="w-full bg-orange-600 text-white py-3 px-4 min-h-[44px] rounded-lg hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
         >
           {{ loading ? 'Creating account...' : 'Create Account' }}
         </button>
@@ -126,7 +126,7 @@ async function handleRegister() {
 
       <p class="mt-6 text-center text-sm text-gray-600">
         Already have an account?
-        <NuxtLink to="/login" class="text-orange-600 hover:text-orange-700 font-medium">
+        <NuxtLink to="/login" class="text-orange-600 hover:text-orange-700 font-medium inline-flex items-center min-h-[44px]">
           Sign in
         </NuxtLink>
       </p>
