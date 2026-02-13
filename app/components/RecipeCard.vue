@@ -44,7 +44,7 @@ onMounted(() => {
 <template>
   <NuxtLink
     :to="`/recipe/${recipe.slug}`"
-    class="block bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden group"
+    class="block bg-white rounded-xl shadow-sm motion-safe:hover:shadow-lg motion-safe:hover:-translate-y-1 transition-all duration-200 overflow-hidden group"
   >
     <!-- Image Section -->
     <div class="relative aspect-[4/3] overflow-hidden">
@@ -54,7 +54,7 @@ onMounted(() => {
         :alt="recipe.title"
         loading="lazy"
         decoding="async"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
       />
       <div
         v-else
