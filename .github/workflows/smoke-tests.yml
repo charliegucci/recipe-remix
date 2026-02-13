@@ -34,11 +34,11 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Run smoke tests
         env:
-          TEST_URL: ${{ inputs.test_url || secrets.PRODUCTION_URL }}
+          TEST_URL: ${{ inputs.test_url || secrets.PRODUCTION_URL || 'https://remix-recipe.com' }}
         run: npm run test:smoke
 
       - name: Upload test results
