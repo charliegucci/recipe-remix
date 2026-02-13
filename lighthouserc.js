@@ -1,37 +1,37 @@
 module.exports = {
   ci: {
     collect: {
-      startServerCommand: 'npx nuxt preview',
-      startServerReadyPattern: 'Local:',
-      startServerReadyTimeout: 30000,
       url: [
         'http://localhost:3000/',
-        'http://localhost:3000/recipes'
+        'http://localhost:3000/recipe/thai-italian-pasta'
       ],
       numberOfRuns: 3,
-      settings: {
-        preset: 'desktop',
-        // Override to mobile throttling for mobile score target
-        formFactor: 'mobile',
-        throttling: {
-          rttMs: 150,
-          throughputKbps: 1638.4,
-          cpuSlowdownMultiplier: 4
-        },
-        screenEmulation: {
-          mobile: true,
-          width: 375,
-          height: 812,
-          deviceScaleFactor: 3
-        }
-      }
+      startServerCommand: 'npm run preview',
+      startServerReadyPattern: 'Local:',
+      startServerReadyTimeout: 30000
     },
     assert: {
+      preset: 'lighthouse:recommended',
       assertions: {
-        'categories:performance': ['error', { minScore: 0.9 }],
+        // Performance score must be 95+
+        'categories:performance': ['error', { minScore: 0.95 }],
+
+        // Core Web Vitals (2026 thresholds)
         'largest-contentful-paint': ['error', { maxNumericValue: 2500 }],
         'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
-        'total-blocking-time': ['error', { maxNumericValue: 300 }]
+
+        // INP replaced FID — Lighthouse uses TBT as proxy
+        'total-blocking-time': ['error', { maxNumericValue: 200 }],
+
+        // Image optimization checks
+        'uses-optimized-images': 'warn',
+        'modern-image-formats': 'warn',
+        'unused-javascript': 'warn',
+        'uses-responsive-images': 'warn',
+
+        // Relax some rules that are less relevant for SPAs
+        'unsized-images': 'warn',
+        'offscreen-images': 'off'
       }
     },
     upload: {
