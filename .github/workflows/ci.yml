@@ -46,8 +46,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Build
-        run: npx nuxt build
+      - name: Install Chrome
+        run: npx playwright install --with-deps chromium
 
       - name: Run Lighthouse CI
-        run: npx lhci autorun
+        run: npx lhci autorun --collect.url="https://remix-recipe.com/" --collect.url="https://remix-recipe.com/recipe/thai-italian-pasta" --collect.startServerCommand="" --collect.numberOfRuns=1
