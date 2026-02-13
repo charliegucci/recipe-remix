@@ -25,7 +25,7 @@ const handleClick = async (event: Event) => {
 <template>
   <button
     @click="handleClick"
-    class="p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-200 active:scale-90 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-1"
+    class="p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-200 motion-safe:hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
     :aria-label="isFav ? 'Remove from favorites' : 'Add to favorites'"
   >
     <!-- Filled heart when favorited -->
