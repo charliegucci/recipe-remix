@@ -5,7 +5,7 @@
 - **Milestone:** v1.1 Test on Production — SHIPPED
 - **Phase:** All complete (10/10)
 - **Status:** Milestone complete, ready for next milestone
-- **Last activity:** 2026-02-13 — v1.1 milestone archived
+- **Last activity:** 2026-02-13 - Completed quick task 1: Create GitHub issues for README update, CI/CD wiring, production URL change, and hero slider images
 
 ## Project Reference
 
@@ -33,6 +33,12 @@ All milestones shipped. See .planning/MILESTONES.md for history.
 - Bindings: DB (D1), KV + CACHE (KV), BLOB (R2), AI (Workers AI)
 - GitHub Actions: production deploys, preview deploys, Lighthouse CI, smoke tests
 - nodejs_compat flag required for Node.js module support
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Create GitHub issues for README update, CI/CD wiring, production URL change, and hero slider images | 2026-02-13 | pending | [1-create-github-issues-for-readme-update-c](./quick/1-create-github-issues-for-readme-update-c/) |
 
 ## Session Continuity
 
