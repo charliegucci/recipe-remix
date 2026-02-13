@@ -21,3 +21,25 @@
 **Archives:** `milestones/v1.0-ROADMAP.md`, `milestones/v1.0-REQUIREMENTS.md`
 
 ---
+
+## v1.1 Test on Production (Shipped: 2026-02-13)
+
+**Phases:** 7-10 | **Plans:** 11 | **LOC:** 10,768
+**Timeline:** 3 days (2026-02-11 → 2026-02-13)
+**Git range:** `3f51458` → `61d339a`
+
+**Delivered:** Production deployment on Cloudflare Pages with CI/CD, full SEO with shareable recipe URLs and rich previews, polished UX with skeleton loaders and animations, and performance optimization with lazy loading and edge caching.
+
+**Key accomplishments:**
+1. Deployed to Cloudflare Pages with all bindings (D1, KV, R2, Workers AI) verified functional at recipe-remix-9fd.pages.dev
+2. GitHub Actions CI/CD with automated production deploys on push and preview deploys on PRs
+3. SEO-friendly slugs, meta tags, OG sharing, Recipe JSON-LD schema, sitemap.xml, and canonical URLs
+4. Skeleton loaders, generation progress with time estimates, error states with retry, page transitions
+5. Mobile touch targets (44px), hamburger navigation, and responsive UI spacing cleanup
+6. @nuxt/image with WebP, lazy components with hydration directives, CDN edge caching, Lighthouse CI (95+ threshold)
+
+**Requirements:** 26/26 satisfied (100%)
+**Archives:** `milestones/v1.1-ROADMAP.md`, `milestones/v1.1-REQUIREMENTS.md`
+
+---
+
