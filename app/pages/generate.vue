@@ -129,7 +129,7 @@
       <!-- Progress Section -->
       <div v-else-if="status === 'generating' || status === 'validating'" class="space-y-6">
         <div class="bg-white border border-gray-200 rounded-lg p-6">
-          <GenerationProgress :status="status" :error-message="errorMessage" :start-time="startTime" />
+          <LazyGenerationProgress :status="status" :error-message="errorMessage" :start-time="startTime" />
         </div>
         <button
           @click="handleReset"
@@ -179,7 +179,7 @@
       <div>
         <h2 class="text-xl font-semibold text-gray-900 mb-3">Choose Cuisines to Fuse</h2>
         <p class="text-sm text-gray-600 mb-4">Select up to 3 cuisines or pick "Surprise Me"</p>
-        <CuisineSelector v-model="selectedCuisines" :max="3" />
+        <LazyCuisineSelector v-model="selectedCuisines" :max="3" hydrate-on-idle />
       </div>
 
       <!-- Dietary Restrictions Display -->
