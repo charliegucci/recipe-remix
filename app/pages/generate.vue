@@ -113,7 +113,7 @@
             <!-- View Full Recipe Link -->
             <div class="flex gap-3">
               <NuxtLink
-                :to="`/recipe/${generatedRecipe.slug}`"
+                :to="`/recipe/${(generatedRecipe as { slug?: string }).slug || generatedRecipe.id}`"
                 class="flex-1 px-4 py-2 bg-orange-600 text-white text-center rounded-lg hover:bg-orange-700 transition-colors font-medium"
               >
                 View Full Recipe

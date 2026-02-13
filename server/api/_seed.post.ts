@@ -1,14 +1,29 @@
 import { useDrizzle } from '../utils/drizzle'
-import { recipes, recipeCategories } from '../db/schema'
+import {
+  recipes,
+  recipeCategories,
+  userFavorites,
+  userRecipeHistory,
+  userRecipeReviews,
+  analyticsEvents,
+  generationHistory
+} from '../db/schema'
+import { generateUniqueSlug } from '../utils/slug-generator'
 
 export default defineEventHandler(async (event) => {
   const db = useDrizzle(event)
 
-  // Clear existing data
+  // Clear existing data (order matters: delete tables that reference recipes first)
   await db.delete(recipeCategories)
+  await db.delete(userFavorites)
+  await db.delete(userRecipeHistory)
+  await db.delete(userRecipeReviews)
+  await db.delete(analyticsEvents)
+  await db.delete(generationHistory)
   await db.delete(recipes)
 
-  // Seed recipes with stable UUIDs
+  // Seed recipes with stable UUIDs.
+  // Featured recipes (5) use Unsplash food images matching the dish; others use picsum. For production, blob storage + imageKey is an option (Phase 13).
   const recipeData = [
     // Italian (5 recipes, 1 featured)
     {
@@ -35,7 +50,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 25,
       difficulty: 'medium',
-      imageKey: 'https://picsum.photos/seed/recipe1/800/600',
+      imageKey: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800',
       source: 'curated',
       featured: true,
       category: 'Italian'
@@ -195,7 +210,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 45,
       difficulty: 'medium',
-      imageKey: 'https://picsum.photos/seed/recipe6/800/600',
+      imageKey: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800',
       source: 'curated',
       featured: true,
       category: 'Mexican'
@@ -361,7 +376,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 35,
       difficulty: 'medium',
-      imageKey: 'https://picsum.photos/seed/recipe11/800/600',
+      imageKey: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800',
       source: 'curated',
       featured: true,
       category: 'Asian'
@@ -569,7 +584,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 20,
       difficulty: 'easy',
-      imageKey: 'https://picsum.photos/seed/recipe17/800/600',
+      imageKey: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800',
       source: 'curated',
       featured: true,
       category: 'American'
@@ -777,7 +792,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian', 'Gluten-Free']),
       cookTime: 15,
       difficulty: 'easy',
-      imageKey: 'https://picsum.photos/seed/recipe23/800/600',
+      imageKey: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800',
       source: 'curated',
       featured: true,
       category: 'Mediterranean'
@@ -923,12 +938,15 @@ export default defineEventHandler(async (event) => {
     }
   ]
 
+  const existingSlugs = new Set<string>()
+
   // Insert recipes
   for (const recipe of recipeData) {
     const { category, ...recipeFields } = recipe
+    const slug = generateUniqueSlug(recipe.title, existingSlugs)
 
-    // Insert recipe
-    await db.insert(recipes).values(recipeFields)
+    // Insert recipe (slug required for /recipe/[slug] links)
+    await db.insert(recipes).values({ ...recipeFields, slug })
 
     // Insert category junction
     await db.insert(recipeCategories).values({
@@ -936,6 +954,14 @@ export default defineEventHandler(async (event) => {
       recipeId: recipe.id,
       category: category
     })
+  }
+
+  // Invalidate featured cache so carousel shows new imageKeys immediately
+  try {
+    const kv = hubKV()
+    await kv.del('recipes:featured')
+  } catch {
+    // KV not available in some environments; non-fatal
   }
 
   return {

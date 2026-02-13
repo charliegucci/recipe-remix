@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// Carousel image: imageKey can be a blob path (/_hub/blob/...) or external URL.
+// Real recipe images use NuxtHub blob storage; set imageKey to the blob path per recipe (Phase 13).
 const props = defineProps<{
   recipes: Array<{
     id: string
@@ -12,13 +14,23 @@ const props = defineProps<{
 }>()
 
 const currentIndex = ref(0)
+const imageLoadFailed = ref(new Set<string>())
 let autoAdvanceInterval: NodeJS.Timeout | null = null
+
+const onImageError = (recipeId: string) => {
+  imageLoadFailed.value = new Set([...imageLoadFailed.value, recipeId])
+}
+
+const showImage = (recipe: { id: string; imageKey: string | null }) =>
+  getImageUrl(recipe.imageKey) && !imageLoadFailed.value.has(recipe.id)
 
 const getImageUrl = (imageKey: string | null) => {
   if (!imageKey) return null
   if (imageKey.startsWith('http')) return imageKey
   return `/_hub/blob/${imageKey}`
 }
+
+const isExternalUrl = (imageKey: string | null) => !!imageKey && imageKey.startsWith('http')
 
 const goToSlide = (index: number) => {
   currentIndex.value = index
@@ -68,16 +80,26 @@ onUnmounted(() => {
           :key="recipe.id"
           class="min-w-full h-full relative"
         >
-          <!-- Image -->
+          <!-- Image: plain img for external URLs (e.g. Unsplash) so browser loads directly; NuxtImg for blob -->
+          <img
+            v-if="showImage(recipe) && isExternalUrl(recipe.imageKey)"
+            :src="getImageUrl(recipe.imageKey)!"
+            :alt="recipe.title"
+            :loading="index === currentIndex ? 'eager' : 'lazy'"
+            :fetchpriority="index === currentIndex ? 'high' : 'low'"
+            class="w-full h-full object-cover"
+            @error="onImageError(recipe.id)"
+          />
           <NuxtImg
-            v-if="getImageUrl(recipe.imageKey)"
-            :src="getImageUrl(recipe.imageKey)"
+            v-else-if="showImage(recipe)"
+            :src="getImageUrl(recipe.imageKey)!"
             :alt="recipe.title"
             :loading="index === currentIndex ? 'eager' : 'lazy'"
             :fetchpriority="index === currentIndex ? 'high' : 'low'"
             format="webp"
             sizes="sm:100vw md:100vw lg:1200px"
             class="w-full h-full object-cover"
+            @error="onImageError(recipe.id)"
           />
           <div
             v-else
@@ -94,7 +116,7 @@ onUnmounted(() => {
           <!-- Text Content -->
           <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-12">
             <NuxtLink
-              :to="`/recipe/${recipe.slug}`"
+              :to="`/recipe/${recipe.slug || recipe.id}`"
               class="block max-w-3xl"
             >
               <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4">

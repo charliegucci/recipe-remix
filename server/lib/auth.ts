@@ -50,7 +50,9 @@ export function getAuth() {
             // Note: Client-side migration handles the actual data transfer
             // The client detects anonymous -> authenticated transition and calls
             // /api/user/migrate-guest-data with localStorage data
-            console.log(`Linking anonymous user ${anonymousUser.id} to ${newUser.id}`)
+            const fromId = (anonymousUser as { user?: { id: string }; id?: string }).id ?? (anonymousUser as { user?: { id: string } }).user?.id ?? 'unknown'
+            const toId = (newUser as { user?: { id: string }; id?: string }).id ?? (newUser as { user?: { id: string } }).user?.id ?? 'unknown'
+            console.log(`Linking anonymous user ${fromId} to ${toId}`)
           }
         })
       ],
@@ -58,8 +60,27 @@ export function getAuth() {
       // Base URL for callbacks
       baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
 
-      // Secret for signing tokens
-      secret: process.env.BETTER_AUTH_SECRET
+      // Trusted origins for CORS and cookie operations
+      trustedOrigins: [
+        'https://remix-recipe.com',
+        'https://recipe-remix-9fd.pages.dev',
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:3002',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:3001'
+      ],
+
+      // Secret for signing tokens (required for login/register)
+      secret: (() => {
+        const secret = process.env.BETTER_AUTH_SECRET
+        if (secret) return secret
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn('[Better Auth] BETTER_AUTH_SECRET is not set; using dev-only fallback. Set it in .env for production (e.g. openssl rand -base64 32).')
+          return 'dev-secret-key-for-local-only-min-32-characters-long'
+        }
+        throw new Error('BETTER_AUTH_SECRET is required in production. Set it in your environment (e.g. openssl rand -base64 32).')
+      })()
     })
   }
   return _auth

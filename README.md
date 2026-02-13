@@ -157,6 +157,8 @@ You’ll need environment variables for:
 - Workers AI access (model IDs, API keys/tokens if needed)
 - Better Auth configuration (secrets, cookie/session config, email settings if used)
 
+**Login and register require `BETTER_AUTH_SECRET`** so Better Auth can sign sessions. Generate a value with `openssl rand -base64 32` and add it to `.env`. In development only, if unset, the app uses a dev fallback (see server log); in production the app will error until the secret is set.
+
 Typically this will live in one or more `.env` files depending on your Nuxt/Cloudflare setup, e.g.:
 
 ```bash
@@ -165,7 +167,7 @@ NUXT_HUB_PROJECT_ID=...
 NUXT_HUB_ACCOUNT_ID=...
 NUXT_HUB_ENV=development
 
-BETTER_AUTH_SECRET=...
+BETTER_AUTH_SECRET=...   # required for login/register; generate with: openssl rand -base64 32
 BETTER_AUTH_URL=http://localhost:3000
 
 CF_ACCOUNT_ID=...
@@ -198,6 +200,29 @@ npm run db:studio
 # Seed local data (requires dev server running)
 npm run db:seed   # calls POST http://localhost:3000/api/_seed
 ```
+
+**Recipe slugs and links:** Recipe detail URLs use a `slug` (e.g. `/recipe/spaghetti-carbonara`). The seed script sets slugs when inserting recipes. If your database was created or seeded before slugs were added:
+
+- **Re-seed** so every recipe gets a slug: run `npm run db:seed` again (with the dev server running), or
+- **Backfill only:** `POST /api/_seeds/generate-slugs` to generate slugs for recipes that have none.
+
+After backfilling slugs, the featured-recipes carousel may still show cached data (KV key `recipes:featured`, 24h TTL). Either redeploy so cache is cold, or wait for the cache to expire, so the homepage carousel gets recipes with slugs.
+
+#### KV cache: deleted keys and repopulation
+
+All KV usage is **read-through cache**: on a cache miss, the API fetches from D1 (or the source of truth), writes the result to KV, and returns it. If you delete a key in the Cloudflare dashboard (or via script), no redeploy or code change is needed—the **next request** to that endpoint will repopulate the key automatically.
+
+| Key pattern | Endpoint / usage | TTL | Source of truth |
+| ----------- | ----------------- | --- | ---------------- |
+| `recipes:featured` | `server/api/recipes/featured.get.ts` | 24h | D1 `recipes` where `featured = true` |
+| `recipes:list:...` | `server/api/recipes/index.get.ts` | 5min | D1 `recipes` |
+| `recipe:{idOrSlug}` | `server/api/recipes/[idOrSlug].get.ts` | 5min | D1 `recipes` |
+| `analytics:observability` | `server/api/analytics/observability.get.ts` | 5min | Computed at request time |
+| Match-pantry / ingredient-search | match-pantry, ingredients/search | 5min | D1 / computed |
+
+**Force repopulation:** To warm the cache without waiting for traffic, call the corresponding API (e.g. `GET /api/recipes/featured` for the featured carousel, or open the homepage).
+
+**If something is still broken:** If the whole KV namespace was deleted, recreate it in the Cloudflare dashboard and re-bind it in your Pages project (same binding name as in NuxtHub/wrangler, e.g. `KV` / `CACHE`). Then hit the APIs above to repopulate. Confirm the app’s KV binding is attached to the correct namespace in the deployment you’re testing.
 
 ---
 

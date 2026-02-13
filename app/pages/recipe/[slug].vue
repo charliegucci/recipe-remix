@@ -51,7 +51,9 @@ const recipeUrl = `${siteUrl}/recipe/${slug}`
 
 if (recipe.value) {
   const ogImage = recipe.value.imageKey
-    ? `${siteUrl}/api/images/${recipe.value.imageKey}`
+    ? recipe.value.imageKey.startsWith('http')
+      ? recipe.value.imageKey
+      : `${siteUrl}/_hub/blob/${recipe.value.imageKey}`
     : `${siteUrl}/og-default.svg`
 
   useServerSeoMeta({
@@ -279,10 +281,18 @@ onMounted(() => {
   <div v-else-if="recipe" class="recipe-detail-page bg-gray-50 min-h-screen">
     <!-- Hero Image Section -->
     <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] overflow-hidden bg-gradient-to-br from-orange-400 to-pink-500">
-      <!-- Image if available -->
+      <!-- Image: plain img for external URLs (Unsplash, picsum) so browser loads directly; NuxtImg for blob -->
+      <img
+        v-if="recipe.imageKey && recipe.imageKey.startsWith('http')"
+        :src="recipe.imageKey"
+        :alt="recipe.title"
+        loading="eager"
+        fetchpriority="high"
+        class="w-full h-full object-cover"
+      />
       <NuxtImg
-        v-if="recipe.imageKey"
-        :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `/api/images/${recipe.imageKey}`"
+        v-else-if="recipe.imageKey"
+        :src="`/_hub/blob/${recipe.imageKey}`"
         :alt="recipe.title"
         loading="eager"
         fetchpriority="high"
@@ -328,17 +338,17 @@ onMounted(() => {
 
     <!-- Content Container -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-      <!-- Navigation: Back to Home -->
+      <!-- Navigation: Back to Home (full page load to avoid client-nav white screen) -->
       <div class="mb-6">
-        <NuxtLink
-          to="/"
+        <a
+          href="/"
           class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
         >
           <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
           Back to Home
-        </NuxtLink>
+        </a>
       </div>
 
       <!-- Metadata Bar with Rating -->
