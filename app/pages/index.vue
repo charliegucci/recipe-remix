@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // SSR data fetching for featured recipes and category sections
-const { data } = await useAsyncData('home', () =>
+const { data, pending } = await useAsyncData('home', () =>
   Promise.all([
     $fetch('/api/recipes/featured'),
     $fetch('/api/recipes?category=italian&page=1'),
@@ -38,46 +38,51 @@ useHead({
 
 <template>
   <div class="space-y-8 md:space-y-12 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-6 md:py-8">
+    <!-- Loading State -->
+    <RecipeListSkeleton v-if="pending" :count="9" />
+
     <!-- Featured Carousel -->
     <FeaturedCarousel
-      v-if="featuredRecipes && featuredRecipes.length > 0"
+      v-else-if="featuredRecipes && featuredRecipes.length > 0"
       :recipes="featuredRecipes"
     />
 
     <!-- Category Sections -->
-    <RecipeCategorySection
-      v-if="italianRecipes && italianRecipes.length > 0"
-      category="italian"
-      category-label="Italian Cuisine"
-      :initial-recipes="italianRecipes"
-    />
+    <template v-else>
+      <RecipeCategorySection
+        v-if="italianRecipes && italianRecipes.length > 0"
+        category="italian"
+        category-label="Italian Cuisine"
+        :initial-recipes="italianRecipes"
+      />
 
-    <RecipeCategorySection
-      v-if="mexicanRecipes && mexicanRecipes.length > 0"
-      category="mexican"
-      category-label="Mexican Cuisine"
-      :initial-recipes="mexicanRecipes"
-    />
+      <RecipeCategorySection
+        v-if="mexicanRecipes && mexicanRecipes.length > 0"
+        category="mexican"
+        category-label="Mexican Cuisine"
+        :initial-recipes="mexicanRecipes"
+      />
 
-    <RecipeCategorySection
-      v-if="asianRecipes && asianRecipes.length > 0"
-      category="asian"
-      category-label="Asian Cuisine"
-      :initial-recipes="asianRecipes"
-    />
+      <RecipeCategorySection
+        v-if="asianRecipes && asianRecipes.length > 0"
+        category="asian"
+        category-label="Asian Cuisine"
+        :initial-recipes="asianRecipes"
+      />
 
-    <RecipeCategorySection
-      v-if="americanRecipes && americanRecipes.length > 0"
-      category="american"
-      category-label="American Cuisine"
-      :initial-recipes="americanRecipes"
-    />
+      <RecipeCategorySection
+        v-if="americanRecipes && americanRecipes.length > 0"
+        category="american"
+        category-label="American Cuisine"
+        :initial-recipes="americanRecipes"
+      />
 
-    <RecipeCategorySection
-      v-if="mediterraneanRecipes && mediterraneanRecipes.length > 0"
-      category="mediterranean"
-      category-label="Mediterranean Cuisine"
-      :initial-recipes="mediterraneanRecipes"
-    />
+      <RecipeCategorySection
+        v-if="mediterraneanRecipes && mediterraneanRecipes.length > 0"
+        category="mediterranean"
+        category-label="Mediterranean Cuisine"
+        :initial-recipes="mediterraneanRecipes"
+      />
+    </template>
   </div>
 </template>

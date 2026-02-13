@@ -129,7 +129,7 @@
       <!-- Progress Section -->
       <div v-else-if="status === 'generating' || status === 'validating'" class="space-y-6">
         <div class="bg-white border border-gray-200 rounded-lg p-6">
-          <GenerationProgress :status="status" :error-message="errorMessage" />
+          <GenerationProgress :status="status" :error-message="errorMessage" :start-time="startTime" />
         </div>
         <button
           @click="handleReset"
@@ -143,17 +143,13 @@
     <!-- Generation Form (show when idle or after error) -->
     <div v-else-if="mounted && (status === 'idle' || status === 'error')" class="space-y-6">
       <!-- Error Message -->
-      <div v-if="status === 'error' && errorMessage" class="p-4 bg-red-50 border border-red-200 rounded-lg">
-        <div class="flex gap-3">
-          <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div>
-            <p class="text-sm font-medium text-red-800">Generation Failed</p>
-            <p class="text-sm text-red-700 mt-1">{{ errorMessage }}</p>
-          </div>
-        </div>
-      </div>
+      <ErrorMessage
+        v-if="status === 'error' && errorMessage"
+        title="Generation Failed"
+        :message="errorMessage"
+        retry-label="Try Again"
+        @retry="handleReset"
+      />
 
       <!-- Pantry Ingredients -->
       <div>
@@ -266,7 +262,7 @@ onMounted(() => {
 const pantryState = usePantry()
 
 // Generation state
-const { status, generatedRecipe, errorMessage, generate, reset, resumeGeneration } = useGenerate()
+const { status, generatedRecipe, errorMessage, startTime, generate, reset, resumeGeneration } = useGenerate()
 
 // Selected cuisines
 const selectedCuisines = ref<string[]>([])
