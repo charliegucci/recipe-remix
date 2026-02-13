@@ -5,7 +5,7 @@
 - **Milestone:** v1.1 Test on Production
 - **Phase:** 10 of 10 — Performance Optimization
 - **Status:** In Progress (1 of 3 plans executed)
-- **Last activity:** 2026-02-13 — Completed plan 10-02 (Lazy Components & CDN Caching)
+- **Last activity:** 2026-02-13 — Completed plan 10-01 (Bundle and Image Optimization)
 
 **Progress:** [██████░░░░░░░░░░░░░░] 33% (1/3 plans complete in Phase 10)
 
@@ -45,6 +45,10 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Decision | Rationale |
 |----------|-----------|
+| Use default IPX provider instead of Cloudflare provider | R2 serves raw images without transformation capability; IPX provides runtime transformation for WebP conversion and resizing |
+| WebP format with quality 80 | Optimal balance between file size and visual quality for recipe images |
+| Eager loading only for hero images | Prioritize LCP (Largest Contentful Paint) for above-fold content, lazy load everything else to reduce initial page load |
+| Responsive sizes tuned per component context | RecipeCard uses 400px max (grid), FeaturedCarousel uses 1200px (full-width hero), history thumbnails use 192px (small) |
 | Lazy-load below-fold components with hydrate-on-visible | Defer hydration until user scrolls to reduce initial JS execution |
 | CDN cache s-maxage=3600 for recipe detail and featured | 1-hour CDN cache since content changes infrequently |
 | stale-while-revalidate=86400 for recipe detail | Serve stale content while revalidating in background for better perceived performance |
@@ -67,9 +71,9 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Session Continuity
 
 - **Last session:** 2026-02-13
-- **Stopped at:** Completed 10-02-PLAN.md
+- **Stopped at:** Completed 10-01-PLAN.md
 - **Resume file:** None
-- **Next step:** Execute remaining Phase 10 plans (10-01, 10-03)
+- **Next step:** Execute remaining Phase 10 plans (10-02, 10-03)
 
 ## Performance Metrics
 
@@ -80,7 +84,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 | 09-01 | 3 min | 2 | 8 | 2 |
 | 09-02 | 5 min | 2 | 8 | 2 |
 | 09-03 | 3 min | 2 | 10 | 2 |
-| 10-02 | 2 min | 2 | 5 | 2 |
+| 10-01 | 4 min | 2 | 8 | 1 |
 
 ---
 *Last updated: 2026-02-13*
