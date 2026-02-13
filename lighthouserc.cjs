@@ -7,8 +7,8 @@ module.exports = {
       ],
       numberOfRuns: 3,
       startServerCommand: 'npm run preview',
-      startServerReadyPattern: 'Local:',
-      startServerReadyTimeout: 30000
+      startServerReadyPattern: 'Previewing Nuxt app',
+      startServerReadyTimeout: 60000
     },
     assert: {
       preset: 'lighthouse:recommended',
