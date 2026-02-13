@@ -33,7 +33,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set +e
-          OUTPUT=$(npx wrangler pages deploy dist --project-name=recipe-remix --branch=preview-${{ github.event.pull_request.number }} 2>&1)
+          OUTPUT=$(npx wrangler pages deploy dist --project-name=recipe-remix --branch=preview-${{ github.event.pull_request.number }} --compatibility-flags=nodejs_compat 2>&1)
           EXIT_CODE=$?
           echo "$OUTPUT"
           if [ $EXIT_CODE -ne 0 ]; then
