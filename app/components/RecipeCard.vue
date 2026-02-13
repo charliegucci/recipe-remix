@@ -15,14 +15,10 @@ const props = defineProps<{
 
 const isAiGenerated = computed(() => props.recipe.source === 'ai_generated')
 
-const runtimeConfig = useRuntimeConfig()
 const imageUrl = computed(() => {
   if (!props.recipe.imageKey) return null
-  // Direct URLs (e.g. placeholder images) are used as-is
   if (props.recipe.imageKey.startsWith('http')) return props.recipe.imageKey
-  // R2 public bucket URL - will be configured via env var in production
-  const baseUrl = runtimeConfig.public.r2PublicUrl || 'https://pub-placeholder.r2.dev'
-  return `${baseUrl}/${props.recipe.imageKey}`
+  return `/_hub/blob/${props.recipe.imageKey}`
 })
 
 const difficultyColor = computed(() => {

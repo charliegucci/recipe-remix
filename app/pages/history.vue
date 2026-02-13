@@ -109,7 +109,7 @@ const formatDate = (dateString: string) => {
               <NuxtLink :to="`/recipe/${recipe.slug}`" class="block h-full">
                 <NuxtImg
                   v-if="recipe.imageKey"
-                  :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `${$config.public.r2PublicUrl || 'https://pub-placeholder.r2.dev'}/${recipe.imageKey}`"
+                  :src="recipe.imageKey.startsWith('http') ? recipe.imageKey : `/_hub/blob/${recipe.imageKey}`"
                   :alt="recipe.title"
                   loading="lazy"
                   format="webp"
