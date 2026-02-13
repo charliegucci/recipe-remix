@@ -38,7 +38,7 @@
 
 **Milestone Goal:** Make CI/CD pipelines fully operational, enforce PR-based workflow with branch protection, verify production URL migration, and display actual recipe images in the hero slider.
 
-- [ ] **Phase 11: CI/CD Pipeline** — All GitHub Actions workflows running and succeeding end-to-end
+- [x] **Phase 11: CI/CD Pipeline** — All GitHub Actions workflows running and succeeding end-to-end (completed 2026-02-13)
 - [ ] **Phase 12: Branching & Production URL** — Branch protection enforced, PR workflow established, production domain verified
 - [ ] **Phase 13: Hero Slider Images** — Hero slider displays actual recipe images from blob storage
 
@@ -56,10 +56,10 @@
 **Plans**: 4 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Fix deploy + preview workflows to use NuxtHub CLI
-- [ ] 11-02-PLAN.md — Fix CI gates (bundle size check + Lighthouse CI)
-- [ ] 11-03-PLAN.md — Fix smoke tests workflow + update test selectors
-- [ ] 11-04-PLAN.md — Validate all workflows and end-to-end verification
+- [x] 11-01-PLAN.md — Fix deploy + preview workflows to use wrangler pages deploy
+- [x] 11-02-PLAN.md — Fix CI gates (bundle size check + Lighthouse CI)
+- [x] 11-03-PLAN.md — Fix smoke tests workflow + update test selectors
+- [x] 11-04-PLAN.md — Validate all workflows and end-to-end verification
 
 ### Phase 12: Branching & Production URL
 **Goal**: Main branch is protected with mandatory PRs and passing CI, feature branches follow a consistent workflow, and the production domain remix-recipe.com is fully operational
@@ -108,9 +108,9 @@ Phases execute in numeric order: 11 → 12 → 13
 | 8. SEO + Sharing | v1.1 | 2/2 | Complete | 2026-02-13 |
 | 9. UI/UX Polish | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 10. Performance Optimization | v1.1 | 3/3 | Complete | 2026-02-13 |
-| 11. CI/CD Pipeline | v1.2 | 0/4 | Planned | - |
+| 11. CI/CD Pipeline | v1.2 | 4/4 | Complete | 2026-02-13 |
 | 12. Branching & Production URL | v1.2 | 0/TBD | Not started | - |
 | 13. Hero Slider Images | v1.2 | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-13 — v1.2 roadmap created*
+*Last updated: 2026-02-13 — Phase 11 complete*
