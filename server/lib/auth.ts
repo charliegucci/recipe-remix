@@ -58,6 +58,13 @@ export function getAuth() {
       // Base URL for callbacks
       baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
 
+      // Trusted origins for CORS and cookie operations
+      trustedOrigins: [
+        'https://remix-recipe.com',
+        'https://recipe-remix-9fd.pages.dev',
+        'http://localhost:3000'
+      ],
+
       // Secret for signing tokens
       secret: process.env.BETTER_AUTH_SECRET
     })
