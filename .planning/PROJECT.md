@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A full-stack web app that generates creative AI fusion recipes from ingredients you already have. Users input their pantry, dietary restrictions, and cuisine preferences, and the app creates unexpected cross-cuisine mashups — validated for food safety and explained with culinary reasoning. Built on Nuxt 4 + Cloudflare edge infrastructure.
+A full-stack web app that generates creative AI fusion recipes from ingredients you already have. Users input their pantry, dietary restrictions, and cuisine preferences, and the app creates unexpected cross-cuisine mashups — validated for food safety and explained with culinary reasoning. Live at recipe-remix-9fd.pages.dev, built on Nuxt 4 + Cloudflare edge infrastructure with full SEO, polished UX, and performance optimization.
 
 ## Core Value
 
@@ -34,19 +34,24 @@ Users can make delicious, creative meals from ingredients they already have — 
 - Production-ready error handling with D1 retry — v1.0
 - Analytics and observability dashboard — v1.0
 - Food safety validation (ingredient verification, dietary checks, USDA temperatures) — v1.0
+- Production deployment to Cloudflare Pages with all bindings functional — v1.1
+- CI/CD with automated production and preview deployments — v1.1
+- Smoke tests covering critical user paths — v1.1
+- SEO-friendly shareable recipe URLs with slugs — v1.1
+- Dynamic meta tags, OG sharing, Recipe JSON-LD schema — v1.1
+- Sitemap.xml and canonical URLs — v1.1
+- Skeleton loaders and user-friendly error states — v1.1
+- Generation progress with time estimates — v1.1
+- Page transitions and micro-animations — v1.1
+- Mobile touch targets (44px) and responsive UI polish — v1.1
+- Image optimization with @nuxt/image (WebP, lazy/eager loading) — v1.1
+- Lazy components with hydration directives — v1.1
+- CDN edge caching with Cache-Control headers — v1.1
+- Lighthouse CI with 95+ performance budget — v1.1
 
 ### Active
 
-#### Current Milestone: v1.1 Test on Production
-
-**Goal:** Deploy to Cloudflare Pages, validate all features in production, and polish the experience with better UX, full SEO, and performance optimization.
-
-**Target features:**
-- Production deployment via NuxtHub to Cloudflare Pages
-- Production validation and environment-specific bug fixes
-- UI/UX polish (loading states, mobile nav, error handling, general cleanup)
-- SEO + sharing (shareable recipe URLs, meta/OG tags, sitemap, Recipe schema.org)
-- Performance tuning (caching, bundle size, Lighthouse optimization)
+(No active milestone — ready for v2.0 planning)
 
 ### Out of Scope
 
@@ -56,35 +61,46 @@ Users can make delicious, creative meals from ingredients they already have — 
 - Monetization/payments — figure out later
 - Native mobile apps — web-first, responsive design
 - Flavor-compatibility scoring with confidence indicators — future
-- Nutritional information display — not implemented in v1
-- Trending recipes / social features — future (basic sharing URLs in v1.1)
+- Nutritional information display — not implemented yet
+- Trending recipes / social features — future
+- Real-time collaboration — not needed for recipe generation
+- Multi-language support — English-only for now
 
 ## Context
 
-**Shipped v1.0 MVP** with 9,767 LOC (TypeScript/Vue/JS/CSS) across 160 files.
+**Shipped v1.1 Test on Production** with 10,768 LOC (TypeScript/Vue/JS/CSS).
+**Production URL:** https://recipe-remix-9fd.pages.dev
 
-**Tech stack:** Nuxt 4 (compat layer) + NuxtHub + Cloudflare D1/R2/KV + Drizzle ORM + Better Auth + Tailwind v4 + Workers AI (Llama 3.1 70B + flux-1-schnell).
+**Tech stack:** Nuxt 4 (compat layer) + NuxtHub + Cloudflare D1/R2/KV + Drizzle ORM + Better Auth + Tailwind v4 + Workers AI (Llama 3.1 70B + flux-1-schnell) + @nuxt/image.
 
-**Database:** 27 curated recipes across 5 cuisines, 305 canonical ingredients, 8 D1 tables (auth + recipes + pantry + analytics).
+**Database:** 27 curated recipes across 5 cuisines, 305 canonical ingredients, 14 D1 tables.
+
+**Infrastructure:**
+- Cloudflare Pages CI with Git integration (NuxtHub Admin sunset)
+- GitHub Actions for production/preview deploys and Lighthouse CI
+- CDN edge caching on recipe endpoints (s-maxage with stale-while-revalidate)
+- Smoke tests (11 tests) covering critical paths and production bindings
 
 **Architecture highlights:**
 - KV read-through caching with tiered TTLs (5min/1hr/24hr)
-- Fire-and-forget analytics + reliable fallback endpoints
+- Lazy components with hydration directives (hydrate-on-visible/idle)
+- @nuxt/image with WebP, responsive sizes, lazy/eager loading strategy
 - SSR-safe localStorage patterns with VueUse
 - Multi-layer AI validation pipeline (ingredients, dietary, food safety)
 - Optimistic UI for user interactions
+- SEO: slugs, meta tags, OG images, Recipe JSON-LD, sitemap, canonicals
 
-**Known tech debt (7 items, non-blocking):**
-- NuxtImg broken on Cloudflare Pages (using native lazy loading)
+**Known tech debt (reduced from 7 to 4):**
+- ~~NuxtImg broken on Cloudflare Pages~~ — Fixed in v1.1 with IPX provider
 - Workers fire-and-forget may not complete (standalone endpoint fallback)
 - Ingredient substitutions are session-local only
 - k6 load test not automated in CI
 
 ## Constraints
 
-- **Tech Stack**: Nuxt 4 + Cloudflare ecosystem (Workers, D1, KV, R2) — validated in v1.0
+- **Tech Stack**: Nuxt 4 + Cloudflare ecosystem (Workers, D1, KV, R2) — validated across 2 milestones
 - **Auth**: Better Auth with email/password + anonymous — working well
-- **Quality Bar**: Production-ready with CI gates (bundle size 3MB, Lighthouse 90+)
+- **Quality Bar**: Lighthouse CI enforces 95+ performance, LCP ≤2.5s, CLS ≤0.1
 - **Platform**: Web app with mobile-responsive design (not native apps)
 - **AI Models**: Workers AI (Llama 3.1 70B for text, flux-1-schnell for images)
 
@@ -96,12 +112,16 @@ Users can make delicious, creative meals from ingredients they already have — 
 | Nuxt 4 + Cloudflare stack | User preference for this ecosystem | Good — edge performance, integrated AI |
 | Optional accounts | Lower barrier to entry, features unlock with signup | Good — anonymous auth works well |
 | Defer photo/voice input to v2 | Focus core experience first | Good — v1 shipped faster |
-| Basic dietary categories only | Keeps v1 scope manageable | Good — 5 restriction types sufficient |
 | Better Auth for authentication | Supports D1, email/password, anonymous users | Good — seamless integration |
 | Llama 3.1 70B for recipe generation | Balance of capability and cost | Good — ~90% first-pass parse success |
 | Post-generation validation | Allows AI creativity, catches violations explicitly | Good — clear error messages |
 | Fire-and-forget analytics | Never blocks user operations | Good — resilient telemetry |
 | Session-local substitutions | Avoids recipe "forks" in DB | Revisit — users may want persistent swaps |
+| Cloudflare Pages CI over NuxtHub Admin | NuxtHub Admin sunset Dec 2025 | Good — reliable, standard CI/CD |
+| IPX provider for @nuxt/image | R2 serves raw images, no transformation API | Good — WebP conversion works |
+| Lazy hydration for below-fold components | Reduce initial JS payload on heavy pages | Good — 6 components deferred |
+| CDN edge caching with tiered TTLs | Different endpoints need different freshness | Good — 1hr for detail, 5min for browse |
+| Lighthouse CI on PRs only | Save CI minutes, run when code is ready for review | Good — automated performance gate |
 
 ---
-*Last updated: 2026-02-11 after v1.1 milestone started*
+*Last updated: 2026-02-13 after v1.1 milestone completed*

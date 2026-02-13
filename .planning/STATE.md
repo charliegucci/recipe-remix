@@ -2,95 +2,44 @@
 
 ## Current Position
 
-- **Milestone:** v1.1 Test on Production
-- **Phase:** 10 of 10 — Performance Optimization
-- **Status:** Complete (3 of 3 plans executed)
-- **Last activity:** 2026-02-13 — Completed all Phase 10 plans
-
-**Progress:** [████████████████████] 100% (3/3 plans complete in Phase 10)
+- **Milestone:** v1.1 Test on Production — SHIPPED
+- **Phase:** All complete (10/10)
+- **Status:** Milestone complete, ready for next milestone
+- **Last activity:** 2026-02-13 — v1.1 milestone archived
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-11)
+See: .planning/PROJECT.md (updated 2026-02-13)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** v1.1 — Deploy to production, polish UX, SEO, performance
+**Current focus:** Planning next milestone
 
 ## Progress
 
-| Phase | Name | Plans | Status |
-|-------|------|-------|--------|
-| 7 | Deployment + Production Validation | 3/3 | Complete |
-| 8 | SEO + Sharing | 2/2 | Complete |
-| 9 | UI/UX Polish | 3/3 | Complete |
-| 10 | Performance Optimization | 3/3 | Complete |
+All milestones shipped. See .planning/MILESTONES.md for history.
+
+| Milestone | Phases | Plans | Status | Shipped |
+|-----------|--------|-------|--------|---------|
+| v1.0 MVP | 1-6 | 29 | Complete | 2026-02-11 |
+| v1.1 Test on Production | 7-10 | 11 | Complete | 2026-02-13 |
 
 ## Accumulated Context
 
-- v1.0 shipped with 6 phases, 33/33 requirements, 9,767 LOC
 - Production URL: https://recipe-remix-9fd.pages.dev
+- 10,768 LOC across 10 phases, 40 plans
 - D1 ID: bc8bdfcc-201c-4bda-b490-8b1f2df17da8
 - KV ID: e5f67970ee6446f18f55151b2e5358c1
 - R2 bucket: recipe-remix-images
-- NuxtHub Admin was sunset — deployed via Cloudflare Pages CI + Git integration
-- Required nodejs_compat flag for Node.js module support
 - Bindings: DB (D1), KV + CACHE (KV), BLOB (R2), AI (Workers AI)
-- Database migrated (14 tables) and seeded (27 recipes, 300 ingredients)
-- GitHub Actions workflows automate production and preview deployments
-- Required secrets: NUXT_HUB_PROJECT_KEY, CLOUDFLARE_API_TOKEN, PRODUCTION_URL
-- Smoke tests (11 tests): 5 critical paths + 6 production bindings
-- Playwright tests run post-deployment via GitHub Actions
-
-## Recent Decisions
-
-| Decision | Rationale |
-|----------|-----------|
-| Use default IPX provider instead of Cloudflare provider | R2 serves raw images without transformation capability; IPX provides runtime transformation for WebP conversion and resizing |
-| WebP format with quality 80 | Optimal balance between file size and visual quality for recipe images |
-| Eager loading only for hero images | Prioritize LCP (Largest Contentful Paint) for above-fold content, lazy load everything else to reduce initial page load |
-| Responsive sizes tuned per component context | RecipeCard uses 400px max (grid), FeaturedCarousel uses 1200px (full-width hero), history thumbnails use 192px (small) |
-| Lazy-load below-fold components with hydrate-on-visible | Defer hydration until user scrolls to reduce initial JS execution |
-| CDN cache s-maxage=3600 for recipe detail and featured | 1-hour CDN cache since content changes infrequently |
-| stale-while-revalidate=86400 for recipe detail | Serve stale content while revalidating in background for better perceived performance |
-| 44px touch target via min-w/min-h not padding | Preserves visual sizing while expanding tap area |
-| Mobile hamburger with v-if toggle | Clean DOM when closed, aria-expanded accessibility |
-| Star rating 44px buttons with centered SVGs | Enlarged tap area without wrapper elements |
-| Step-based time estimates (generating: 20s, validating: 10s, imaging: 15s) | Simple, predictable estimates based on typical AI generation times |
-| 200ms fade transition with out-in mode | Fast enough to feel snappy, slow enough to be perceptible as intentional |
-| motion-safe: prefix for all decorative animations | Respects user's prefers-reduced-motion preference for accessibility |
-| ErrorMessage instead of Nuxt error page on recipe detail | Softer error handling keeps users in app with retry, maintains SEO meta tags |
-| RecipeListSkeleton with configurable count | Different pages need different skeleton counts (6 vs 9) |
-| RecipeDetailSkeleton matches exact layout | Prevents layout shift and provides accurate visual placeholder |
-| useServerSeoMeta for meta tags | Server-only rendering eliminates client-side hydration overhead |
-| R2 image URLs for og:image | Uses existing infrastructure, fallback to og-default.svg |
-| Two-phase slug migration (nullable then unique) | Existing recipes have no slugs, schema constraint would fail on initial migration |
-| Cloudflare Pages CI instead of NuxtHub Admin | NuxtHub Admin sunset Dec 2025 |
-| nodejs_compat compatibility flag | Required for node:buffer in Better Auth/Drizzle |
-| GitHub Actions for CI/CD | Standard platform, excellent GitHub integration, free for public repos |
-| Performance score threshold of 95+ | Aligns with PERF-04 requirement and industry best practices for production apps |
-| LCP <= 2.5s, CLS <= 0.1, TBT <= 200ms | Core Web Vitals 2026 thresholds for 'good' user experience |
-| .cjs extension for lighthouserc config | Package.json has 'type': 'module', so CommonJS configs need .cjs extension |
-| Lighthouse CI on pull requests only | Saves CI minutes by running only when code is ready for review |
+- GitHub Actions: production deploys, preview deploys, Lighthouse CI, smoke tests
+- nodejs_compat flag required for Node.js module support
 
 ## Session Continuity
 
 - **Last session:** 2026-02-13
-- **Stopped at:** Completed Phase 10 (10-03: Lighthouse CI)
+- **Stopped at:** v1.1 milestone archived
 - **Resume file:** None
-- **Next step:** Phase 10 complete - v1.1 milestone ready
-
-## Performance Metrics
-
-| Phase-Plan | Duration | Tasks | Files | Commits |
-|------------|----------|-------|-------|---------|
-| 08-01 | 7 min | 2 | 18 | 3 |
-| 08-02 | 4 min | 2 | 13 | 2 |
-| 09-01 | 3 min | 2 | 8 | 2 |
-| 09-02 | 5 min | 2 | 8 | 2 |
-| 09-03 | 3 min | 2 | 10 | 2 |
-| 10-01 | 4 min | 2 | 8 | 2 |
-| 10-02 | 2 min | 2 | 5 | 2 |
-| 10-03 | 5 min | 2 | 5 | 2 |
+- **Next step:** `/gsd:new-milestone` to plan v2.0
 
 ---
 *Last updated: 2026-02-13*
