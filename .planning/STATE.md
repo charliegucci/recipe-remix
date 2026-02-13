@@ -4,11 +4,11 @@
 
 - **Milestone:** v1.2 CI/CD, Branching & Production Polish
 - **Phase:** 11 of 13 (CI/CD Pipeline)
-- **Plan:** 2 of 4 in current phase
+- **Plan:** 3 of 4 in current phase
 - **Status:** Executing
-- **Last activity:** 2026-02-13 — Completed plan 11-02 (Fix CI Gates Workflow)
+- **Last activity:** 2026-02-13 — Completed plan 11-03 (Fix Smoke Tests for Production)
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 75%
 
 ## Project Reference
 
@@ -45,6 +45,9 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 - [11-01]: Enhanced preview URL regex to match both .pages.dev and .nuxt.dev domains
 - [11-02]: Use .output/server/ directory measurement instead of wrangler deploy for bundle size
 - [11-02]: Update Lighthouse CI config with 60s timeout and 'Previewing Nuxt app' pattern
+- [11-03]: Production URL fallback strategy: use 'https://remix-recipe.com' as fallback if PRODUCTION_URL secret not set
+- [11-03]: Selector resilience: semantic selectors (href, text) as primary, data-testid as fallback only
+- [11-03]: Production timeout strategy: test.slow() for auth/AI, 10-15s individual timeouts, networkidle for stability
 
 ### Quick Tasks Completed
 
@@ -64,13 +67,14 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 |------------|----------|-------|-------|------|
 | 11-01 | 55s | 2 | 2 | 2026-02-13 |
 | 11-02 | 1m 39s | 2 | 2 | 2026-02-13 |
+| 11-03 | 2m 36s | 2 | 3 | 2026-02-13 |
 
 ## Session Continuity
 
-- **Last session:** 2026-02-13T03:14:02Z
-- **Stopped at:** Completed 11-02-PLAN.md (Fix CI Gates Workflow)
+- **Last session:** 2026-02-13T03:14:56Z
+- **Stopped at:** Completed 11-03-PLAN.md (Fix Smoke Tests for Production)
 - **Resume file:** None
-- **Next step:** Execute plan 11-03
+- **Next step:** Execute plan 11-04
 
 ---
 *Last updated: 2026-02-13*
