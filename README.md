@@ -2,6 +2,8 @@
 
 [![Deploy to Production](https://github.com/charliegucci/recipe-remix/actions/workflows/deploy.yml/badge.svg)](https://github.com/charliegucci/recipe-remix/actions/workflows/deploy.yml)
 [![Deploy Preview](https://github.com/charliegucci/recipe-remix/actions/workflows/preview.yml/badge.svg)](https://github.com/charliegucci/recipe-remix/actions/workflows/preview.yml)
+[![CI Gates](https://github.com/charliegucci/recipe-remix/actions/workflows/ci.yml/badge.svg)](https://github.com/charliegucci/recipe-remix/actions/workflows/ci.yml)
+[![Smoke Tests](https://github.com/charliegucci/recipe-remix/actions/workflows/smoke-tests.yml/badge.svg)](https://github.com/charliegucci/recipe-remix/actions/workflows/smoke-tests.yml)
 
 Turn whatever's already in your kitchen into creative, trustworthy fusion recipes. Recipe Remix Engine is a Nuxt 4 + Cloudflare web app that takes your pantry ingredients, dietary restrictions, and cuisine preferences and generates cross‑cuisine mashups – with food‑safety validation and clear culinary reasoning.
 
@@ -36,8 +38,8 @@ Turn whatever's already in your kitchen into creative, trustworthy fusion recipe
 
 ### Live Status
 
-- **Current milestone:** v1.1 – **Test on Production**
-  - Goal: Deploy to Cloudflare Pages via NuxtHub, validate all features in production, and polish UX, SEO, and performance.
+- **Current milestone:** v1.1 – **Test on Production** — SHIPPED (2026-02-13)
+  - Deployed to Cloudflare Pages via NuxtHub with all features validated, UX polished, SEO optimized, and Lighthouse 90+ achieved.
 - **v1.0 status:** Shipped (2026‑02‑11) – full-stack MVP with 33/33 requirements satisfied.
 
 - **Production:** https://remix-recipe.com
@@ -305,12 +307,9 @@ If a recipe fails validation, the user sees a clear error or a safer alternative
   - 6 phases completed
   - 33/33 requirements satisfied
   - ~9,767 LOC
-- **v1.1 – Test on Production (in progress)**
-  - Deploy to Cloudflare Pages via NuxtHub
-  - Fix environment-specific issues
-  - Polish UX (loading states, mobile nav, errors)
-  - SEO & sharing (recipe URLs, meta/OG tags, Recipe schema.org)
-  - Performance tuning (caching, bundle size, Lighthouse 90+)
+- **v1.1 – Test on Production** (shipped 2026-02-13)
+  - 4 phases completed (deployment, bug fixes, SEO, performance)
+  - 10,768 LOC across 10 phases, 40 plans
 
 Out-of-scope for now (future ideas):
 
