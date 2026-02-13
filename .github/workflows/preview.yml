@@ -32,8 +32,14 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
+          set +e
           OUTPUT=$(npx wrangler pages deploy dist --project-name=recipe-remix --branch=preview-${{ github.event.pull_request.number }} 2>&1)
+          EXIT_CODE=$?
           echo "$OUTPUT"
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "::error::wrangler pages deploy failed with exit code $EXIT_CODE"
+            exit $EXIT_CODE
+          fi
           PREVIEW_URL=$(echo "$OUTPUT" | grep -oE 'https://[^ ]+\.pages\.dev' | head -1)
           echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
 
