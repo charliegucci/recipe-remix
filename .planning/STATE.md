@@ -5,7 +5,7 @@
 - **Milestone:** v1.1 Test on Production — SHIPPED
 - **Phase:** All complete (10/10)
 - **Status:** Milestone complete, ready for next milestone
-- **Last activity:** 2026-02-13 - Completed quick task 1: Create GitHub issues for README update, CI/CD wiring, production URL change, and hero slider images
+- **Last activity:** 2026-02-13 - Completed quick task 2: Fix GitHub issues #5-#8 (README, CI/CD, URL, images)
 
 ## Project Reference
 
@@ -39,11 +39,12 @@ All milestones shipped. See .planning/MILESTONES.md for history.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 1 | Create GitHub issues for README update, CI/CD wiring, production URL change, and hero slider images | 2026-02-13 | 44370e2 | [1-create-github-issues-for-readme-update-c](./quick/1-create-github-issues-for-readme-update-c/) |
+| 2 | Fix GitHub issues #5-#8: README update, CI/CD fix, production URL, image URLs | 2026-02-13 | dd50835 | [2-fix-github-issues-5-8-readme-update-ci-c](./quick/2-fix-github-issues-5-8-readme-update-ci-c/) |
 
 ## Session Continuity
 
 - **Last session:** 2026-02-13
-- **Stopped at:** v1.1 milestone archived
+- **Stopped at:** Completed quick task 2: Fix GitHub issues #5-#8
 - **Resume file:** None
 - **Next step:** `/gsd:new-milestone` to plan v2.0
 
