@@ -34,6 +34,13 @@ export default defineNuxtConfig({
     ai: true
   },
 
+  app: {
+    pageTransition: {
+      name: 'fade',
+      mode: 'out-in'
+    }
+  },
+
   css: ['~/assets/css/main.css'],
 
   vite: {

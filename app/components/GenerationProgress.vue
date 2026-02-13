@@ -2,6 +2,7 @@
 const props = defineProps<{
   status: 'idle' | 'generating' | 'validating' | 'imaging' | 'complete' | 'error'
   errorMessage?: string
+  startTime?: number | null
 }>()
 
 // Define steps with their icons and text
@@ -40,6 +41,49 @@ const getStepStatus = (stepKey: string) => {
   if (stepIndex === currentIndex) return 'active'
   return 'pending'
 }
+
+// Elapsed time tracking
+const elapsed = ref(0)
+let timer: ReturnType<typeof setInterval> | null = null
+
+watch(() => props.startTime, (val) => {
+  if (val) {
+    elapsed.value = 0
+    timer = setInterval(() => {
+      elapsed.value = Math.floor((Date.now() - val) / 1000)
+    }, 1000)
+  } else if (timer) {
+    clearInterval(timer)
+    timer = null
+  }
+}, { immediate: true })
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer)
+})
+
+// Estimated remaining time
+const estimatedRemaining = computed(() => {
+  if (props.status === 'idle' || props.status === 'complete' || props.status === 'error') {
+    return null
+  }
+
+  // Step-based estimates (in seconds)
+  const estimates: Record<string, number> = {
+    generating: 20,
+    validating: 10,
+    imaging: 15
+  }
+
+  const currentStepEstimate = estimates[props.status] || 0
+  const remaining = currentStepEstimate - elapsed.value
+
+  if (remaining <= 0) {
+    return 'Almost done...'
+  }
+
+  return `About ${remaining} seconds remaining...`
+})
 </script>
 
 <template>
@@ -100,6 +144,14 @@ const getStepStatus = (stepKey: string) => {
         </div>
       </div>
     </div>
+
+    <!-- Time Estimate -->
+    <p
+      v-if="estimatedRemaining"
+      class="text-sm text-gray-500 text-center mt-2"
+    >
+      {{ estimatedRemaining }}
+    </p>
 
     <!-- Error Message -->
     <div
