@@ -4,10 +4,10 @@
 
 - **Milestone:** v1.1 Test on Production
 - **Phase:** 9 of 10 — UI/UX Polish
-- **Status:** In Progress (1 of TBD plans executed)
-- **Last activity:** 2026-02-13 — Completed 09-01 (Skeleton Loaders & Error States)
+- **Status:** In Progress (2 of 3 plans executed)
+- **Last activity:** 2026-02-13 — Completed 09-02 (Generation Progress & Micro-Animations)
 
-**Progress:** [██████████] 100% (1/1 plans complete in Phase 9)
+**Progress:** [██████████████] 67% (2/3 plans complete in Phase 9)
 
 ## Project Reference
 
@@ -22,7 +22,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 |-------|------|-------|--------|
 | 7 | Deployment + Production Validation | 3/3 | Complete |
 | 8 | SEO + Sharing | 2/2 | Complete |
-| 9 | UI/UX Polish | 1/TBD | In Progress |
+| 9 | UI/UX Polish | 2/3 | In Progress |
 | 10 | Performance Optimization | 0/TBD | Not started |
 
 ## Accumulated Context
@@ -45,6 +45,10 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 
 | Decision | Rationale |
 |----------|-----------|
+| Step-based time estimates (generating: 20s, validating: 10s, imaging: 15s) | Simple, predictable estimates based on typical AI generation times |
+| 200ms fade transition with out-in mode | Fast enough to feel snappy, slow enough to be perceptible as intentional |
+| motion-safe: prefix for all decorative animations | Respects user's prefers-reduced-motion preference for accessibility |
+| 44px minimum touch targets on interactive elements | WCAG 2.1 Level AA compliance for touch accessibility (prep for UX-04) |
 | ErrorMessage instead of Nuxt error page on recipe detail | Softer error handling keeps users in app with retry, maintains SEO meta tags |
 | 44px min-height for ErrorMessage retry button | Meets touch target accessibility guidelines (UX-04 prep) |
 | RecipeListSkeleton with configurable count | Different pages need different skeleton counts (6 vs 9) |
@@ -66,9 +70,9 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Session Continuity
 
 - **Last session:** 2026-02-13
-- **Stopped at:** Completed 09-01-PLAN.md (Skeleton Loaders & Error States)
+- **Stopped at:** Completed 09-02-PLAN.md (Generation Progress & Micro-Animations)
 - **Resume file:** None
-- **Next step:** Continue Phase 9 execution or plan additional UX polish tasks
+- **Next step:** Execute 09-03-PLAN.md to complete Phase 9
 
 ## Performance Metrics
 
@@ -77,6 +81,7 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 | 08-01 | 7 min | 2 | 18 | 3 |
 | 08-02 | 4 min | 2 | 13 | 2 |
 | 09-01 | 3 min | 2 | 8 | 2 |
+| 09-02 | 5 min | 2 | 8 | 2 |
 
 ---
 *Last updated: 2026-02-13*
