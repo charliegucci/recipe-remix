@@ -53,11 +53,13 @@
   2. Opening a PR creates a preview deployment and posts the preview URL as a comment on the PR
   3. CI gates (bundle size check and Lighthouse) run on PRs and report pass/fail status that can block merge
   4. Smoke tests run automatically after production deploy and results are visible in GitHub Actions
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 11-01: TBD
-- [ ] 11-02: TBD
+- [ ] 11-01-PLAN.md — Fix deploy + preview workflows to use NuxtHub CLI
+- [ ] 11-02-PLAN.md — Fix CI gates (bundle size check + Lighthouse CI)
+- [ ] 11-03-PLAN.md — Fix smoke tests workflow + update test selectors
+- [ ] 11-04-PLAN.md — Validate all workflows and end-to-end verification
 
 ### Phase 12: Branching & Production URL
 **Goal**: Main branch is protected with mandatory PRs and passing CI, feature branches follow a consistent workflow, and the production domain remix-recipe.com is fully operational
@@ -106,7 +108,7 @@ Phases execute in numeric order: 11 → 12 → 13
 | 8. SEO + Sharing | v1.1 | 2/2 | Complete | 2026-02-13 |
 | 9. UI/UX Polish | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 10. Performance Optimization | v1.1 | 3/3 | Complete | 2026-02-13 |
-| 11. CI/CD Pipeline | v1.2 | 0/TBD | Not started | - |
+| 11. CI/CD Pipeline | v1.2 | 0/4 | Planned | - |
 | 12. Branching & Production URL | v1.2 | 0/TBD | Not started | - |
 | 13. Hero Slider Images | v1.2 | 0/TBD | Not started | - |
 
