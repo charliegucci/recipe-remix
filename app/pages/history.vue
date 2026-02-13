@@ -73,16 +73,15 @@ const formatDate = (dateString: string) => {
       </div>
 
       <!-- Loading State -->
-      <div v-else-if="pending" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <RecipeCardSkeleton v-for="i in 6" :key="i" />
-      </div>
+      <RecipeListSkeleton v-else-if="pending" :count="6" />
 
       <!-- Error State -->
-      <div v-else-if="error" class="text-center py-12">
-        <p class="text-red-600 mb-4">Failed to load history</p>
-        <button @click="refresh()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Try Again
-        </button>
+      <div v-else-if="error" class="max-w-2xl mx-auto">
+        <ErrorMessage
+          title="Couldn't load history"
+          message="We had trouble loading your recipe history."
+          @retry="refresh()"
+        />
       </div>
 
       <!-- Empty State -->

@@ -32,74 +32,79 @@ const route = useRoute()
 const slug = route.params.slug as string
 
 // Fetch recipe data with SSR using slug
-const { data: recipe, error } = await useFetch<Recipe>(`/api/recipes/${slug}`)
+const { data: recipe, error, refresh } = await useFetch<Recipe>(`/api/recipes/${slug}`)
+
+// Local error state for friendly error display (instead of Nuxt error page)
+const fetchError = ref<string | null>(null)
 
 if (error.value) {
-  throw createError({
-    statusCode: error.value.statusCode || 500,
-    statusMessage: error.value.statusMessage || 'Recipe not found'
-  })
+  fetchError.value = error.value.statusMessage || 'Recipe not found'
 }
 
-if (!recipe.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Recipe not found'
-  })
+if (!recipe.value && !fetchError.value) {
+  fetchError.value = 'Recipe not found'
 }
 
 // SEO metadata with OpenGraph and Twitter cards
 const siteUrl = 'https://recipe-remix-9fd.pages.dev'
 const recipeUrl = `${siteUrl}/recipe/${slug}`
-const ogImage = recipe.value.imageKey
-  ? `${siteUrl}/api/images/${recipe.value.imageKey}`
-  : `${siteUrl}/og-default.svg`
 
-useServerSeoMeta({
-  title: `${recipe.value.title} | Recipe Remix`,
-  description: recipe.value.description || `Delicious ${recipe.value.cuisineTags.join(' & ')} fusion recipe`,
-  ogTitle: recipe.value.title,
-  ogDescription: recipe.value.description || `Try this ${recipe.value.difficulty || 'delicious'} fusion recipe`,
-  ogImage: ogImage,
-  ogType: 'website',
-  ogUrl: recipeUrl,
-  twitterCard: 'summary_large_image',
-  twitterTitle: recipe.value.title,
-  twitterDescription: recipe.value.description || `Delicious fusion recipe from Recipe Remix`
-})
+if (recipe.value) {
+  const ogImage = recipe.value.imageKey
+    ? `${siteUrl}/api/images/${recipe.value.imageKey}`
+    : `${siteUrl}/og-default.svg`
 
-// Canonical URL
-useHead({
-  link: [{ rel: 'canonical', href: recipeUrl }]
-})
-
-// Recipe structured data (JSON-LD)
-useSchemaOrg([
-  defineRecipe({
-    name: recipe.value.title,
-    description: recipe.value.description || undefined,
-    image: ogImage,
-    author: { '@type': 'Organization', name: 'Recipe Remix' },
-    datePublished: recipe.value.createdAt,
-    cookTime: recipe.value.cookTime ? minutesToISO8601(recipe.value.cookTime) : undefined,
-    totalTime: recipe.value.cookTime ? minutesToISO8601(Math.ceil(recipe.value.cookTime * 1.3)) : undefined,
-    recipeYield: `${recipe.value.servings} servings`,
-    recipeCategory: recipe.value.cuisineTags?.[0] || 'Fusion',
-    recipeCuisine: recipe.value.cuisineTags?.join(', ') || 'Fusion',
-    recipeIngredient: recipe.value.ingredients.map(i => `${i.quantity} ${i.unit} ${i.name}`.trim()),
-    recipeInstructions: recipe.value.instructions.map((step, i) => ({
-      '@type': 'HowToStep',
-      position: i + 1,
-      text: step
-    })),
-    keywords: [...(recipe.value.cuisineTags || []), ...(recipe.value.dietaryTags || [])].filter(Boolean).join(', '),
-    aggregateRating: recipe.value.avgRating ? {
-      '@type': 'AggregateRating',
-      ratingValue: recipe.value.avgRating,
-      reviewCount: recipe.value.totalReviews
-    } : undefined
+  useServerSeoMeta({
+    title: `${recipe.value.title} | Recipe Remix`,
+    description: recipe.value.description || `Delicious ${recipe.value.cuisineTags.join(' & ')} fusion recipe`,
+    ogTitle: recipe.value.title,
+    ogDescription: recipe.value.description || `Try this ${recipe.value.difficulty || 'delicious'} fusion recipe`,
+    ogImage: ogImage,
+    ogType: 'website',
+    ogUrl: recipeUrl,
+    twitterCard: 'summary_large_image',
+    twitterTitle: recipe.value.title,
+    twitterDescription: recipe.value.description || `Delicious fusion recipe from Recipe Remix`
   })
-])
+
+  // Canonical URL
+  useHead({
+    link: [{ rel: 'canonical', href: recipeUrl }]
+  })
+
+  // Recipe structured data (JSON-LD)
+  useSchemaOrg([
+    defineRecipe({
+      name: recipe.value.title,
+      description: recipe.value.description || undefined,
+      image: ogImage,
+      author: { '@type': 'Organization', name: 'Recipe Remix' },
+      datePublished: recipe.value.createdAt,
+      cookTime: recipe.value.cookTime ? minutesToISO8601(recipe.value.cookTime) : undefined,
+      totalTime: recipe.value.cookTime ? minutesToISO8601(Math.ceil(recipe.value.cookTime * 1.3)) : undefined,
+      recipeYield: `${recipe.value.servings} servings`,
+      recipeCategory: recipe.value.cuisineTags?.[0] || 'Fusion',
+      recipeCuisine: recipe.value.cuisineTags?.join(', ') || 'Fusion',
+      recipeIngredient: recipe.value.ingredients.map(i => `${i.quantity} ${i.unit} ${i.name}`.trim()),
+      recipeInstructions: recipe.value.instructions.map((step, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        text: step
+      })),
+      keywords: [...(recipe.value.cuisineTags || []), ...(recipe.value.dietaryTags || [])].filter(Boolean).join(', '),
+      aggregateRating: recipe.value.avgRating ? {
+        '@type': 'AggregateRating',
+        ratingValue: recipe.value.avgRating,
+        reviewCount: recipe.value.totalReviews
+      } : undefined
+    })
+  ])
+} else {
+  useServerSeoMeta({
+    title: 'Recipe Not Found | Recipe Remix',
+    description: 'The requested recipe could not be found'
+  })
+}
 
 // Helper function to format cook time
 function formatCookTime(minutes: number | null): string {
@@ -258,7 +263,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="recipe" class="recipe-detail-page bg-gray-50 min-h-screen">
+  <!-- Error State -->
+  <div v-if="fetchError" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div class="max-w-md w-full">
+      <ErrorMessage
+        title="Recipe Not Found"
+        :message="fetchError"
+        retry-label="Try Again"
+        @retry="async () => { fetchError = null; await refresh(); if (error.value) fetchError = error.value.statusMessage || 'Recipe not found' }"
+      />
+    </div>
+  </div>
+
+  <!-- Recipe Content -->
+  <div v-else-if="recipe" class="recipe-detail-page bg-gray-50 min-h-screen">
     <!-- Hero Image Section -->
     <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] overflow-hidden bg-gradient-to-br from-orange-400 to-pink-500">
       <!-- Image if available -->
