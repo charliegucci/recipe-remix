@@ -13,12 +13,12 @@
         <span class="text-sm font-medium">{{ item.name }}</span>
         <button
           type="button"
-          class="flex items-center justify-center w-5 h-5 rounded-full hover:bg-emerald-200 active:bg-emerald-300 transition-colors"
+          class="flex items-center justify-center min-w-[44px] min-h-[44px] -mr-2 rounded-full hover:bg-emerald-200 active:bg-emerald-300 transition-colors"
           @click="$emit('remove', item.id)"
           aria-label="Remove ingredient"
         >
           <svg
-            class="w-3 h-3"
+            class="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

@@ -5,7 +5,7 @@
       :key="option.value"
       type="button"
       :class="[
-        'px-4 py-2 rounded-full text-sm font-medium transition-all min-h-12',
+        'px-4 py-2 rounded-full text-sm font-medium transition-all min-h-[44px]',
         'border-2',
         isActive(option.value)
           ? 'bg-emerald-500 text-white border-emerald-500'

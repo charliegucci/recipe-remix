@@ -60,9 +60,8 @@ function getStarFill(position: number): 'full' | 'half' | 'empty' {
       :key="i"
       type="button"
       :disabled="readonly"
-      class="relative transition-transform focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-1 rounded"
+      class="relative min-w-[44px] min-h-[44px] flex items-center justify-center transition-transform focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-1 rounded"
       :class="[
-        sizeClasses[size],
         !readonly ? 'hover:scale-110 active:scale-95' : ''
       ]"
       @click="handleClick(i)"
@@ -72,7 +71,8 @@ function getStarFill(position: number): 'full' | 'half' | 'empty' {
     >
       <!-- Empty star (background) -->
       <svg
-        class="absolute inset-0 text-gray-300"
+        :class="sizeClasses[size]"
+        class="text-gray-300"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,8 @@ function getStarFill(position: number): 'full' | 'half' | 'empty' {
       <!-- Half star overlay (for readonly mode with decimal ratings) -->
       <svg
         v-if="getStarFill(i) === 'half'"
-        class="absolute inset-0 text-amber-400"
+        :class="sizeClasses[size]"
+        class="absolute text-amber-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +96,8 @@ function getStarFill(position: number): 'full' | 'half' | 'empty' {
       <!-- Full star overlay -->
       <svg
         v-if="getStarFill(i) === 'full'"
-        class="absolute inset-0 text-amber-400"
+        :class="sizeClasses[size]"
+        class="absolute text-amber-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"

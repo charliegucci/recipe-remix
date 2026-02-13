@@ -51,7 +51,7 @@
           v-for="ingredient in results"
           :key="ingredient.id"
           type="button"
-          class="w-full px-4 py-3 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors flex items-center justify-between min-h-12"
+          class="w-full px-4 py-3 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors flex items-center justify-between min-h-[44px]"
           @mousedown="selectIngredient(ingredient)"
         >
           <span class="text-base font-medium text-gray-900">{{ ingredient.name }}</span>
