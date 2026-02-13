@@ -46,7 +46,7 @@ if (!recipe.value && !fetchError.value) {
 }
 
 // SEO metadata with OpenGraph and Twitter cards
-const siteUrl = 'https://recipe-remix-9fd.pages.dev'
+const siteUrl = 'https://remix-recipe.com'
 const recipeUrl = `${siteUrl}/recipe/${slug}`
 
 if (recipe.value) {

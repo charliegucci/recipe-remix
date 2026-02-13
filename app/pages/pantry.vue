@@ -115,7 +115,7 @@ useServerSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/pantry' }]
+  link: [{ rel: 'canonical', href: 'https://remix-recipe.com/pantry' }]
 })
 
 async function handleSelectIngredient(ingredient: { id: string; name: string }) {

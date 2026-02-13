@@ -26,13 +26,13 @@ useServerSeoMeta({
   description: 'Discover and create delicious fusion recipes using ingredients you already have. AI-powered recipe generation meets culinary creativity.',
   ogTitle: 'Recipe Remix - Creative Fusion Recipes',
   ogDescription: 'Discover and create delicious fusion recipes using ingredients you already have.',
-  ogImage: 'https://recipe-remix-9fd.pages.dev/og-default.svg',
+  ogImage: 'https://remix-recipe.com/og-default.svg',
   ogType: 'website',
-  ogUrl: 'https://recipe-remix-9fd.pages.dev'
+  ogUrl: 'https://remix-recipe.com'
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev' }]
+  link: [{ rel: 'canonical', href: 'https://remix-recipe.com' }]
 })
 </script>
 

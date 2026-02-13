@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   modules: ['@nuxthub/core', '@nuxtjs/sitemap', 'nuxt-schema-org', '@nuxt/image'],
 
   site: {
-    url: 'https://recipe-remix-9fd.pages.dev',
+    url: 'https://remix-recipe.com',
     name: 'Recipe Remix'
   },
 
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     identity: {
       type: 'Organization',
       name: 'Recipe Remix',
-      url: 'https://recipe-remix-9fd.pages.dev'
+      url: 'https://remix-recipe.com'
     }
   },
 

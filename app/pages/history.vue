@@ -30,7 +30,7 @@ useServerSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/history' }]
+  link: [{ rel: 'canonical', href: 'https://remix-recipe.com/history' }]
 })
 
 // Format date helper

@@ -30,7 +30,7 @@ useServerSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/favorites' }]
+  link: [{ rel: 'canonical', href: 'https://remix-recipe.com/favorites' }]
 })
 </script>
 

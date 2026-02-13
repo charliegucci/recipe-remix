@@ -25,7 +25,7 @@ All milestones shipped. See .planning/MILESTONES.md for history.
 
 ## Accumulated Context
 
-- Production URL: https://recipe-remix-9fd.pages.dev
+- Production URL: https://remix-recipe.com
 - 10,768 LOC across 10 phases, 40 plans
 - D1 ID: bc8bdfcc-201c-4bda-b490-8b1f2df17da8
 - KV ID: e5f67970ee6446f18f55151b2e5358c1
@@ -38,7 +38,7 @@ All milestones shipped. See .planning/MILESTONES.md for history.
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
-| 1 | Create GitHub issues for README update, CI/CD wiring, production URL change, and hero slider images | 2026-02-13 | pending | [1-create-github-issues-for-readme-update-c](./quick/1-create-github-issues-for-readme-update-c/) |
+| 1 | Create GitHub issues for README update, CI/CD wiring, production URL change, and hero slider images | 2026-02-13 | 44370e2 | [1-create-github-issues-for-readme-update-c](./quick/1-create-github-issues-for-readme-update-c/) |
 
 ## Session Continuity
 

@@ -32,7 +32,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          OUTPUT=$(npx wrangler pages deploy dist --project-name=recipe-remix --branch=preview-${{ github.event.pull_request.number }} 2>&1)
+          OUTPUT=$(npx wrangler pages deploy .output/public --project-name=recipe-remix --branch=preview-${{ github.event.pull_request.number }} 2>&1)
           echo "$OUTPUT"
           PREVIEW_URL=$(echo "$OUTPUT" | grep -o 'https://[^ ]*pages.dev' | head -1)
           echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT

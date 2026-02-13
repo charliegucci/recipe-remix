@@ -252,7 +252,7 @@ useServerSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: 'https://recipe-remix-9fd.pages.dev/generate' }]
+  link: [{ rel: 'canonical', href: 'https://remix-recipe.com/generate' }]
 })
 
 // SSR-safe mounting pattern
