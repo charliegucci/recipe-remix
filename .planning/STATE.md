@@ -2,20 +2,20 @@
 
 ## Current Position
 
-- **Milestone:** v1.2 CI/CD, Branching & Production Polish
-- **Phase:** 11 of 13 (CI/CD Pipeline) — COMPLETE
-- **Plan:** 4 of 4 in current phase
-- **Status:** Phase 11 complete, ready to plan Phase 12
-- **Last activity:** 2026-02-13 — Phase 11 verified and complete
+- **Milestone:** v1.2 CI/CD, Branching & Production Polish — COMPLETE
+- **Phase:** 13 of 13 (Hero Slider Images) — COMPLETE
+- **Plan:** 2 of 2 in current phase
+- **Status:** v1.2 milestone complete
+- **Last activity:** 2026-02-18 — Phase 13 verified and closed out
 
-Progress: [████████░░] 33% (1/3 phases in v1.2)
+Progress: [██████████] 100% (3/3 phases in v1.2)
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-13)
+See: .planning/PROJECT.md (updated 2026-02-18)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** Phase 12 - Branching & Production URL
+**Current focus:** All milestones shipped — ready for `/gsd:new-milestone`
 
 ## Progress
 
@@ -23,12 +23,12 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 |-----------|--------|-------|--------|---------|
 | v1.0 MVP | 1-6 | 29 | Complete | 2026-02-11 |
 | v1.1 Test on Production | 7-10 | 11 | Complete | 2026-02-13 |
-| v1.2 CI/CD & Polish | 11-13 | 4+ TBD | In progress | - |
+| v1.2 CI/CD & Polish | 11-13 | 8 | Complete | 2026-02-18 |
 
 ## Accumulated Context
 
 - Production URL: https://remix-recipe.com
-- 10,768 LOC across 10 phases, 40 plans
+- 10,768+ LOC across 13 phases, 48 plans
 - D1 ID: bc8bdfcc-201c-4bda-b490-8b1f2df17da8
 - KV ID: e5f67970ee6446f18f55151b2e5358c1
 - R2 bucket: recipe-remix-images
@@ -45,6 +45,12 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 - [11-verify]: wrangler.jsonc with pages_build_output_dir enables config-based deploys
 - [11-verify]: Lighthouse CI tests production URL (not local server) — nuxt preview needs Cloudflare bindings
 - [11-verify]: Removed lighthouse:recommended preset — too strict for remote URL testing
+- [12-close]: Branch protection confirmed active via API (required checks: Bundle Size Check, Lighthouse CI)
+- [12-close]: remix-recipe.com resolves with HTTP 200, Cloudflare SSL active
+- [13-01]: Featured recipes use null imageKey in seed data; _seed-images endpoint is authoritative source for blob paths
+- [13-01]: R2 blob path pattern for featured recipes: recipes/featured/{recipeId}.jpg (UUID-based)
+- [13-02]: /_hub/blob/ routes require NuxtHub authorization — created /api/images/ public route with hubBlob().serve()
+- [13-02]: NuxtImg (IPX) can't serve blob paths — use plain <img> tags for blob image references
 
 ### Quick Tasks Completed
 
@@ -56,7 +62,6 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 ### Blockers/Concerns
 
 - Smoke test selectors don't match production DOM — tests trigger but fail on assertions
-- Custom domain remix-recipe.com needs auth verification (CORS/origin for Better Auth)
 
 ### Performance Metrics
 
@@ -66,13 +71,17 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 | 11-02 | 1m 39s | 2 | 2 | 2026-02-13 |
 | 11-03 | 2m 36s | 2 | 3 | 2026-02-13 |
 | 11-04 | ~25min | 2 | 0 (validation) | 2026-02-13 |
+| 12-01 | executed 2026-02-13 | 2 | 3 | 2026-02-13 |
+| 12-02 | executed 2026-02-13 | 2 | 2 | 2026-02-13 |
+| 13-01 | ~5min | 2 | 2 | 2026-02-17 |
+| 13-02 | ~15min | 2 | 7 | 2026-02-18 |
 
 ## Session Continuity
 
-- **Last session:** 2026-02-13
-- **Stopped at:** Phase 11 complete
+- **Last session:** 2026-02-18
+- **Stopped at:** v1.2 milestone complete
 - **Resume file:** None
-- **Next step:** `/gsd:plan-phase 12`
+- **Next step:** `/gsd:new-milestone`
 
 ---
-*Last updated: 2026-02-13*
+*Last updated: 2026-02-18*

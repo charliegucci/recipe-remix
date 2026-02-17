@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const auth = getAuth()
   const session = await auth.api.getSession({ headers: event.headers })
 
-  if (!session?.user || session.user.isAnonymous) {
+  if (!session?.user || (session.user as any).isAnonymous) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Authentication required'

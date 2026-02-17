@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Carousel image: imageKey can be a blob path (/_hub/blob/...) or external URL.
+// Carousel image: imageKey can be a blob path (/api/images/...) or external URL.
 // Real recipe images use NuxtHub blob storage; set imageKey to the blob path per recipe (Phase 13).
 const props = defineProps<{
   recipes: Array<{
@@ -27,7 +27,7 @@ const showImage = (recipe: { id: string; imageKey: string | null }) =>
 const getImageUrl = (imageKey: string | null) => {
   if (!imageKey) return null
   if (imageKey.startsWith('http')) return imageKey
-  return `/_hub/blob/${imageKey}`
+  return `/api/images/${imageKey}`
 }
 
 const isExternalUrl = (imageKey: string | null) => !!imageKey && imageKey.startsWith('http')
@@ -90,24 +90,23 @@ onUnmounted(() => {
             class="w-full h-full object-cover"
             @error="onImageError(recipe.id)"
           />
-          <NuxtImg
+          <img
             v-else-if="showImage(recipe)"
             :src="getImageUrl(recipe.imageKey)!"
             :alt="recipe.title"
             :loading="index === currentIndex ? 'eager' : 'lazy'"
             :fetchpriority="index === currentIndex ? 'high' : 'low'"
-            format="webp"
-            sizes="sm:100vw md:100vw lg:1200px"
             class="w-full h-full object-cover"
             @error="onImageError(recipe.id)"
           />
           <div
             v-else
-            class="w-full h-full bg-gradient-to-br from-amber-600 via-orange-500 to-red-500 flex items-center justify-center"
+            class="w-full h-full bg-gradient-to-br from-amber-600 via-orange-500 to-red-500 flex flex-col items-center justify-center gap-3"
           >
-            <svg class="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-16 h-16 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
             </svg>
+            <span class="text-white/70 text-sm font-medium tracking-wide uppercase">{{ recipe.title }}</span>
           </div>
 
           <!-- Gradient Overlay -->

@@ -8,7 +8,7 @@
 
 - ✅ **v1.0 MVP** — Phases 1-6 (shipped 2026-02-11) | [Archive](milestones/v1.0-ROADMAP.md)
 - ✅ **v1.1 Test on Production** — Phases 7-10 (shipped 2026-02-13) | [Archive](milestones/v1.1-ROADMAP.md)
-- 🚧 **v1.2 CI/CD, Branching & Production Polish** — Phases 11-13 (in progress)
+- ✅ **v1.2 CI/CD, Branching & Production Polish** — Phases 11-13 (shipped 2026-02-18) | [Archive](milestones/v1.2-ROADMAP.md)
 
 ## Phases
 
@@ -34,67 +34,16 @@
 
 </details>
 
-### 🚧 v1.2 CI/CD, Branching & Production Polish
+<details>
+<summary>✅ v1.2 CI/CD, Branching & Production Polish (Phases 11-13) — SHIPPED 2026-02-18</summary>
 
-**Milestone Goal:** Make CI/CD pipelines fully operational, enforce PR-based workflow with branch protection, verify production URL migration, and display actual recipe images in the hero slider.
+- [x] Phase 11: CI/CD Pipeline (4/4 plans) — completed 2026-02-13
+- [x] Phase 12: Branching & Production URL (2/2 plans) — completed 2026-02-13
+- [x] Phase 13: Hero Slider Images (2/2 plans) — completed 2026-02-18
 
-- [x] **Phase 11: CI/CD Pipeline** — All GitHub Actions workflows running and succeeding end-to-end (completed 2026-02-13)
-- [ ] **Phase 12: Branching & Production URL** — Branch protection enforced, PR workflow established, production domain verified
-- [ ] **Phase 13: Hero Slider Images** — Hero slider displays actual recipe images from blob storage
-
-## Phase Details
-
-### Phase 11: CI/CD Pipeline
-**Goal**: Every GitHub Actions workflow (deploy, preview, CI gates, smoke tests) runs successfully and provides reliable feedback
-**Depends on**: Nothing (v1.1 laid groundwork, this phase fixes and verifies)
-**Requirements**: CICD-01, CICD-02, CICD-03, CICD-04
-**Success Criteria** (what must be TRUE):
-  1. Pushing to main triggers a production deploy that completes successfully on Cloudflare Pages
-  2. Opening a PR creates a preview deployment and posts the preview URL as a comment on the PR
-  3. CI gates (bundle size check and Lighthouse) run on PRs and report pass/fail status that can block merge
-  4. Smoke tests run automatically after production deploy and results are visible in GitHub Actions
-**Plans**: 4 plans
-
-Plans:
-- [x] 11-01-PLAN.md — Fix deploy + preview workflows to use wrangler pages deploy
-- [x] 11-02-PLAN.md — Fix CI gates (bundle size check + Lighthouse CI)
-- [x] 11-03-PLAN.md — Fix smoke tests workflow + update test selectors
-- [x] 11-04-PLAN.md — Validate all workflows and end-to-end verification
-
-### Phase 12: Branching & Production URL
-**Goal**: Main branch is protected with mandatory PRs and passing CI, feature branches follow a consistent workflow, and the production domain remix-recipe.com is fully operational
-**Depends on**: Phase 11 (CI gates must work before branch protection can require them)
-**Requirements**: BRCH-01, BRCH-02, BRCH-03, URL-01, URL-02, URL-03
-**Success Criteria** (what must be TRUE):
-  1. Direct pushes to main are rejected — all changes require a PR with at least one passing CI check
-  2. Creating a GitHub issue produces a feature branch with consistent naming (e.g., feature/123-description)
-  3. Opening a PR shows a pre-filled template with testing and review checklist
-  4. Visiting https://remix-recipe.com loads the application with all features working (auth, recipes, images)
-  5. Better Auth login/signup works correctly on the remix-recipe.com domain (no CORS or origin errors)
-**Plans**: 2 plans
-
-Plans:
-- [ ] 12-01-PLAN.md — Branch protection, PR template, and issue templates
-- [ ] 12-02-PLAN.md — Production URL verification and Better Auth domain config
-
-### Phase 13: Hero Slider Images
-**Goal**: The homepage hero slider showcases actual recipe images instead of placeholders, with graceful fallback handling
-**Depends on**: Nothing (independent of CI/CD and branching work)
-**Requirements**: IMG-01, IMG-02, IMG-03
-**Success Criteria** (what must be TRUE):
-  1. Featured recipes in the database have imageKey values pointing to actual recipe images in blob storage
-  2. The hero slider on the homepage displays real recipe photos that load correctly
-  3. When a recipe image is missing or fails to load, a styled gradient placeholder appears instead of a broken image
-**Plans**: TBD
-
-Plans:
-- [ ] 13-01: TBD
+</details>
 
 ## Progress
-
-**Execution Order:**
-Phases execute in numeric order: 11 → 12 → 13
-(Phase 13 is independent and could execute in parallel with 11 or 12 if needed)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -109,8 +58,8 @@ Phases execute in numeric order: 11 → 12 → 13
 | 9. UI/UX Polish | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 10. Performance Optimization | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 11. CI/CD Pipeline | v1.2 | 4/4 | Complete | 2026-02-13 |
-| 12. Branching & Production URL | v1.2 | 0/2 | Planned | - |
-| 13. Hero Slider Images | v1.2 | 0/TBD | Not started | - |
+| 12. Branching & Production URL | v1.2 | 2/2 | Complete | 2026-02-13 |
+| 13. Hero Slider Images | v1.2 | 2/2 | Complete | 2026-02-18 |
 
 ---
-*Last updated: 2026-02-13 — Phase 11 complete*
+*Last updated: 2026-02-18 — v1.2 milestone archived*

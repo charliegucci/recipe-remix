@@ -11,7 +11,7 @@ import { useDrizzle, schema } from '../../../utils/drizzle'
 export default defineEventHandler(async (event: H3Event) => {
   // Check authentication
   const session = await getAuth().api.getSession({ headers: event.headers })
-  if (!session?.user || session.user.isAnonymous) {
+  if (!session?.user || (session.user as any).isAnonymous) {
     throw createError({ statusCode: 401, message: 'Authentication required' })
   }
 

@@ -7,7 +7,7 @@ const { data: session } = await authClient.useSession(useFetch)
 const { data: favorites, pending, error, refresh } = await useAsyncData(
   'user-favorites',
   async () => {
-    if (!session.value?.user || session.value.user.isAnonymous) {
+    if (!session.value?.user || (session.value.user as any).isAnonymous) {
       return { recipes: [], hasMore: false }
     }
     try {
@@ -19,7 +19,7 @@ const { data: favorites, pending, error, refresh } = await useAsyncData(
   }
 )
 
-const isAuthenticated = computed(() => session.value?.user && !session.value.user.isAnonymous)
+const isAuthenticated = computed(() => session.value?.user && !(session.value.user as any).isAnonymous)
 const recipes = computed(() => favorites.value?.recipes || [])
 
 // SEO meta tags
@@ -84,7 +84,7 @@ useHead({
         <RecipeCard
           v-for="recipe in recipes"
           :key="recipe.id"
-          :recipe="recipe"
+          :recipe="(recipe as any)"
         />
       </div>
     </div>
