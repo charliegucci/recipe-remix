@@ -2,20 +2,20 @@
 
 ## Current Position
 
-- **Milestone:** v1.2 CI/CD, Branching & Production Polish
-- **Phase:** 13 of 13 (Hero Slider Images) — In Progress
-- **Plan:** 1 of 3 complete in current phase
-- **Status:** Plan 13-01 complete — seed-images endpoint created, featured recipes use null imageKeys
-- **Last activity:** 2026-02-17 — 13-01 executed: seed-images endpoint + null imageKeys in seed data
+- **Milestone:** v1.2 CI/CD, Branching & Production Polish — COMPLETE
+- **Phase:** 13 of 13 (Hero Slider Images) — COMPLETE
+- **Plan:** 2 of 2 in current phase
+- **Status:** All phases complete, milestone v1.2 shipped
+- **Last activity:** 2026-02-18 — Phase 13 verified and closed out
 
-Progress: [██████████] 80% (Phase 13 in progress — 1/3 plans complete)
+Progress: [██████████] 100% (3/3 phases in v1.2)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-02-13)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** Phase 13 - Hero Slider Images
+**Current focus:** v1.2 milestone complete — ready for next milestone
 
 ## Progress
 
@@ -23,12 +23,12 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 |-----------|--------|-------|--------|---------|
 | v1.0 MVP | 1-6 | 29 | Complete | 2026-02-11 |
 | v1.1 Test on Production | 7-10 | 11 | Complete | 2026-02-13 |
-| v1.2 CI/CD & Polish | 11-13 | 6+ TBD | In progress | - |
+| v1.2 CI/CD & Polish | 11-13 | 8 | Complete | 2026-02-18 |
 
 ## Accumulated Context
 
 - Production URL: https://remix-recipe.com
-- 10,768 LOC across 10 phases, 40 plans
+- 10,768+ LOC across 13 phases, 48 plans
 - D1 ID: bc8bdfcc-201c-4bda-b490-8b1f2df17da8
 - KV ID: e5f67970ee6446f18f55151b2e5358c1
 - R2 bucket: recipe-remix-images
@@ -49,6 +49,8 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 - [12-close]: remix-recipe.com resolves with HTTP 200, Cloudflare SSL active
 - [13-01]: Featured recipes use null imageKey in seed data; _seed-images endpoint is authoritative source for blob paths
 - [13-01]: R2 blob path pattern for featured recipes: recipes/featured/{recipeId}.jpg (UUID-based)
+- [13-02]: /_hub/blob/ routes require NuxtHub authorization — created /api/images/ public route with hubBlob().serve()
+- [13-02]: NuxtImg (IPX) can't serve blob paths — use plain <img> tags for blob image references
 
 ### Quick Tasks Completed
 
@@ -72,13 +74,14 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 | 12-01 | executed 2026-02-13 | 2 | 3 | 2026-02-13 |
 | 12-02 | executed 2026-02-13 | 2 | 2 | 2026-02-13 |
 | 13-01 | ~5min | 2 | 2 | 2026-02-17 |
+| 13-02 | ~15min | 2 | 7 | 2026-02-18 |
 
 ## Session Continuity
 
-- **Last session:** 2026-02-17
-- **Stopped at:** Completed 13-01-PLAN.md
+- **Last session:** 2026-02-18
+- **Stopped at:** v1.2 milestone complete
 - **Resume file:** None
-- **Next step:** Execute 13-02-PLAN.md
+- **Next step:** `/gsd:complete-milestone` or `/gsd:new-milestone`
 
 ---
-*Last updated: 2026-02-17 (13-01 complete)*
+*Last updated: 2026-02-18*

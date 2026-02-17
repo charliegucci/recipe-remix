@@ -8,7 +8,7 @@
 
 - ✅ **v1.0 MVP** — Phases 1-6 (shipped 2026-02-11) | [Archive](milestones/v1.0-ROADMAP.md)
 - ✅ **v1.1 Test on Production** — Phases 7-10 (shipped 2026-02-13) | [Archive](milestones/v1.1-ROADMAP.md)
-- 🚧 **v1.2 CI/CD, Branching & Production Polish** — Phases 11-13 (in progress)
+- ✅ **v1.2 CI/CD, Branching & Production Polish** — Phases 11-13 (shipped 2026-02-18) | [Archive](milestones/v1.2-ROADMAP.md)
 
 ## Phases
 
@@ -34,13 +34,13 @@
 
 </details>
 
-### 🚧 v1.2 CI/CD, Branching & Production Polish
+### ✅ v1.2 CI/CD, Branching & Production Polish — SHIPPED 2026-02-18
 
 **Milestone Goal:** Make CI/CD pipelines fully operational, enforce PR-based workflow with branch protection, verify production URL migration, and display actual recipe images in the hero slider.
 
 - [x] **Phase 11: CI/CD Pipeline** — All GitHub Actions workflows running and succeeding end-to-end (completed 2026-02-13)
 - [x] **Phase 12: Branching & Production URL** — Branch protection enforced, PR workflow established, production domain verified (completed 2026-02-13)
-- [ ] **Phase 13: Hero Slider Images** — Hero slider displays actual recipe images from blob storage
+- [x] **Phase 13: Hero Slider Images** — Hero slider displays actual recipe images from blob storage (completed 2026-02-18)
 
 ## Phase Details
 
@@ -88,8 +88,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 13-01-PLAN.md — Upload real food images to R2 blob storage and update seed data
-- [ ] 13-02-PLAN.md — Polish hero slider and recipe card image fallback behavior
+- [x] 13-01-PLAN.md — Upload real food images to R2 blob storage and update seed data
+- [x] 13-02-PLAN.md — Polish hero slider and recipe card image fallback behavior
 
 ## Progress
 
@@ -111,7 +111,7 @@ Phases execute in numeric order: 11 → 12 → 13
 | 10. Performance Optimization | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 11. CI/CD Pipeline | v1.2 | 4/4 | Complete | 2026-02-13 |
 | 12. Branching & Production URL | v1.2 | 2/2 | Complete | 2026-02-13 |
-| 13. Hero Slider Images | v1.2 | 0/2 | Not started | - |
+| 13. Hero Slider Images | v1.2 | 2/2 | Complete | 2026-02-18 |
 
 ---
-*Last updated: 2026-02-17 — Phase 13 planned*
+*Last updated: 2026-02-18 — Phase 13 complete, v1.2 milestone shipped*
