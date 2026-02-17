@@ -12,7 +12,7 @@
   ],
   "r2_buckets": [
     {
-      "binding": "IMAGES",
+      "binding": "BLOB",
       "bucket_name": "recipe-remix-images"
     }
   ],
