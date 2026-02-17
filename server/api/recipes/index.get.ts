@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
         schema.recipeCategories,
         eq(schema.recipes.id, schema.recipeCategories.recipeId)
       )
-      .where(eq(schema.recipeCategories.category, category as string))
+      .where(eq(schema.recipeCategories.category, (category as string).charAt(0).toUpperCase() + (category as string).slice(1).toLowerCase()))
       .orderBy(schema.recipes.createdAt)
       .limit(PAGE_SIZE)
       .offset(offset)
