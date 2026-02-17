@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   await db.delete(recipes)
 
   // Seed recipes with stable UUIDs.
-  // Featured recipes (5) use Unsplash food images matching the dish; others use picsum. For production, blob storage + imageKey is an option (Phase 13).
+  // Featured recipes start with null imageKey; run POST /_seed-images after seeding to upload real images to blob storage.
   const recipeData = [
     // Italian (5 recipes, 1 featured)
     {
@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 25,
       difficulty: 'medium',
-      imageKey: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800',
+      imageKey: null,
       source: 'curated',
       featured: true,
       category: 'Italian'
@@ -210,7 +210,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 45,
       difficulty: 'medium',
-      imageKey: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800',
+      imageKey: null,
       source: 'curated',
       featured: true,
       category: 'Mexican'
@@ -376,7 +376,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 35,
       difficulty: 'medium',
-      imageKey: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800',
+      imageKey: null,
       source: 'curated',
       featured: true,
       category: 'Asian'
@@ -584,7 +584,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify([]),
       cookTime: 20,
       difficulty: 'easy',
-      imageKey: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800',
+      imageKey: null,
       source: 'curated',
       featured: true,
       category: 'American'
@@ -792,7 +792,7 @@ export default defineEventHandler(async (event) => {
       dietaryTags: JSON.stringify(['Vegetarian', 'Gluten-Free']),
       cookTime: 15,
       difficulty: 'easy',
-      imageKey: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800',
+      imageKey: null,
       source: 'curated',
       featured: true,
       category: 'Mediterranean'
