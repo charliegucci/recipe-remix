@@ -5,17 +5,17 @@
 - **Milestone:** v1.2 CI/CD, Branching & Production Polish — COMPLETE
 - **Phase:** 13 of 13 (Hero Slider Images) — COMPLETE
 - **Plan:** 2 of 2 in current phase
-- **Status:** All phases complete, milestone v1.2 shipped
+- **Status:** v1.2 milestone complete
 - **Last activity:** 2026-02-18 — Phase 13 verified and closed out
 
 Progress: [██████████] 100% (3/3 phases in v1.2)
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-13)
+See: .planning/PROJECT.md (updated 2026-02-18)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** v1.2 milestone complete — ready for next milestone
+**Current focus:** All milestones shipped — ready for `/gsd:new-milestone`
 
 ## Progress
 
@@ -81,7 +81,7 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 - **Last session:** 2026-02-18
 - **Stopped at:** v1.2 milestone complete
 - **Resume file:** None
-- **Next step:** `/gsd:complete-milestone` or `/gsd:new-milestone`
+- **Next step:** `/gsd:new-milestone`
 
 ---
 *Last updated: 2026-02-18*

@@ -43,3 +43,25 @@
 
 ---
 
+
+## v1.2 CI/CD, Branching & Production Polish (Shipped: 2026-02-18)
+
+**Phases:** 11-13 | **Plans:** 8 | **LOC:** ~11,000+
+**Timeline:** 5 days (2026-02-13 → 2026-02-18)
+**Git range:** `0de9d77` → `e5b8f82`
+
+**Delivered:** Fully operational CI/CD pipelines, PR-based workflow with branch protection, production domain at remix-recipe.com, and hero slider with real recipe images from R2 blob storage.
+
+**Key accomplishments:**
+1. GitHub Actions workflows fixed: production deploy, preview deploy, CI gates (bundle size + Lighthouse), smoke tests
+2. Branch protection on main requiring PRs with passing CI checks
+3. PR template and GitHub issue templates for feature branch workflow
+4. Production domain remix-recipe.com verified with Cloudflare SSL and Better Auth trusted origins
+5. Seed-images endpoint uploading curated food photos to R2 via hubBlob().put()
+6. Hero slider and recipe cards with gradient fallback placeholders and public blob image serving route
+
+**Requirements:** 13/13 satisfied (100%)
+**Archives:** `milestones/v1.2-ROADMAP.md`, `milestones/v1.2-REQUIREMENTS.md`
+
+---
+
