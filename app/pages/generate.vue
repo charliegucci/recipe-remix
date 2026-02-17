@@ -18,13 +18,11 @@
         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
           <!-- Image -->
           <div class="aspect-video bg-gray-100 relative">
-            <NuxtImg
+            <img
               v-if="generatedRecipe.imageKey"
-              :src="`/_hub/blob/${generatedRecipe.imageKey}`"
+              :src="`/api/images/${generatedRecipe.imageKey}`"
               :alt="generatedRecipe.title"
               loading="lazy"
-              format="webp"
-              sizes="sm:100vw md:100vw lg:896px"
               class="w-full h-full object-cover"
             />
             <div v-else class="w-full h-full flex items-center justify-center text-gray-400">

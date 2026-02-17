@@ -20,7 +20,7 @@ const imageLoadFailed = ref(false)
 const imageUrl = computed(() => {
   if (!props.recipe.imageKey) return null
   if (props.recipe.imageKey.startsWith('http')) return props.recipe.imageKey
-  return `/_hub/blob/${props.recipe.imageKey}`
+  return `/api/images/${props.recipe.imageKey}`
 })
 
 const showImage = computed(() => !!imageUrl.value && !imageLoadFailed.value)
@@ -52,13 +52,11 @@ onMounted(() => {
   >
     <!-- Image Section -->
     <div class="relative aspect-[4/3] overflow-hidden">
-      <NuxtImg
+      <img
         v-if="showImage"
         :src="imageUrl!"
         :alt="recipe.title"
         loading="lazy"
-        format="webp"
-        sizes="sm:100vw md:50vw lg:400px"
         class="w-full h-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
         @error="onImageError"
       />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Carousel image: imageKey can be a blob path (/_hub/blob/...) or external URL.
+// Carousel image: imageKey can be a blob path (/api/images/...) or external URL.
 // Real recipe images use NuxtHub blob storage; set imageKey to the blob path per recipe (Phase 13).
 const props = defineProps<{
   recipes: Array<{
@@ -27,7 +27,7 @@ const showImage = (recipe: { id: string; imageKey: string | null }) =>
 const getImageUrl = (imageKey: string | null) => {
   if (!imageKey) return null
   if (imageKey.startsWith('http')) return imageKey
-  return `/_hub/blob/${imageKey}`
+  return `/api/images/${imageKey}`
 }
 
 const isExternalUrl = (imageKey: string | null) => !!imageKey && imageKey.startsWith('http')
@@ -90,14 +90,12 @@ onUnmounted(() => {
             class="w-full h-full object-cover"
             @error="onImageError(recipe.id)"
           />
-          <NuxtImg
+          <img
             v-else-if="showImage(recipe)"
             :src="getImageUrl(recipe.imageKey)!"
             :alt="recipe.title"
             :loading="index === currentIndex ? 'eager' : 'lazy'"
             :fetchpriority="index === currentIndex ? 'high' : 'low'"
-            format="webp"
-            sizes="sm:100vw md:100vw lg:1200px"
             class="w-full h-full object-cover"
             @error="onImageError(recipe.id)"
           />

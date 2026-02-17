@@ -53,7 +53,7 @@ if (recipe.value) {
   const ogImage = recipe.value.imageKey
     ? recipe.value.imageKey.startsWith('http')
       ? recipe.value.imageKey
-      : `${siteUrl}/_hub/blob/${recipe.value.imageKey}`
+      : `${siteUrl}/api/images/${recipe.value.imageKey}`
     : `${siteUrl}/og-default.svg`
 
   useServerSeoMeta({
@@ -290,14 +290,12 @@ onMounted(() => {
         fetchpriority="high"
         class="w-full h-full object-cover"
       />
-      <NuxtImg
+      <img
         v-else-if="recipe.imageKey"
-        :src="`/_hub/blob/${recipe.imageKey}`"
+        :src="`/api/images/${recipe.imageKey}`"
         :alt="recipe.title"
         loading="eager"
         fetchpriority="high"
-        format="webp"
-        sizes="sm:100vw md:100vw lg:800px"
         class="w-full h-full object-cover"
       />
       <!-- No image: placeholder with generate button for AI recipes -->
