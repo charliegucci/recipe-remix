@@ -20,7 +20,7 @@ export const authClient = createAuthClient({
   baseURL:
     typeof window !== 'undefined' && window.location?.origin
       ? `${window.location.origin}/api/auth`
-      : (process.env.NUXT_PUBLIC_AUTH_URL || 'http://localhost:3000/api/auth'),
+      : (process.env.NUXT_PUBLIC_AUTH_URL || 'https://remix-recipe.com/api/auth'),
   plugins: [
     anonymousClient()
   ]
