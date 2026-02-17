@@ -39,7 +39,7 @@
 **Milestone Goal:** Make CI/CD pipelines fully operational, enforce PR-based workflow with branch protection, verify production URL migration, and display actual recipe images in the hero slider.
 
 - [x] **Phase 11: CI/CD Pipeline** — All GitHub Actions workflows running and succeeding end-to-end (completed 2026-02-13)
-- [ ] **Phase 12: Branching & Production URL** — Branch protection enforced, PR workflow established, production domain verified
+- [x] **Phase 12: Branching & Production URL** — Branch protection enforced, PR workflow established, production domain verified (completed 2026-02-13)
 - [ ] **Phase 13: Hero Slider Images** — Hero slider displays actual recipe images from blob storage
 
 ## Phase Details
@@ -74,8 +74,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — Branch protection, PR template, and issue templates
-- [ ] 12-02-PLAN.md — Production URL verification and Better Auth domain config
+- [x] 12-01-PLAN.md — Branch protection, PR template, and issue templates
+- [x] 12-02-PLAN.md — Production URL verification and Better Auth domain config
 
 ### Phase 13: Hero Slider Images
 **Goal**: The homepage hero slider showcases actual recipe images instead of placeholders, with graceful fallback handling
@@ -109,8 +109,8 @@ Phases execute in numeric order: 11 → 12 → 13
 | 9. UI/UX Polish | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 10. Performance Optimization | v1.1 | 3/3 | Complete | 2026-02-13 |
 | 11. CI/CD Pipeline | v1.2 | 4/4 | Complete | 2026-02-13 |
-| 12. Branching & Production URL | v1.2 | 0/2 | Planned | - |
+| 12. Branching & Production URL | v1.2 | 2/2 | Complete | 2026-02-13 |
 | 13. Hero Slider Images | v1.2 | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-13 — Phase 11 complete*
+*Last updated: 2026-02-17 — Phase 12 complete*
