@@ -15,11 +15,19 @@ const props = defineProps<{
 
 const isAiGenerated = computed(() => props.recipe.source === 'ai_generated')
 
+const imageLoadFailed = ref(false)
+
 const imageUrl = computed(() => {
   if (!props.recipe.imageKey) return null
   if (props.recipe.imageKey.startsWith('http')) return props.recipe.imageKey
   return `/_hub/blob/${props.recipe.imageKey}`
 })
+
+const showImage = computed(() => !!imageUrl.value && !imageLoadFailed.value)
+
+const onImageError = () => {
+  imageLoadFailed.value = true
+}
 
 const difficultyColor = computed(() => {
   switch (props.recipe.difficulty) {
@@ -45,20 +53,23 @@ onMounted(() => {
     <!-- Image Section -->
     <div class="relative aspect-[4/3] overflow-hidden">
       <NuxtImg
-        v-if="imageUrl"
-        :src="imageUrl"
+        v-if="showImage"
+        :src="imageUrl!"
         :alt="recipe.title"
         loading="lazy"
         format="webp"
         sizes="sm:100vw md:50vw lg:400px"
         class="w-full h-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
+        @error="onImageError"
       />
       <div
         v-else
-        class="w-full h-full bg-gray-200 flex items-center justify-center"
+        class="w-full h-full bg-gradient-to-br from-amber-600 via-orange-500 to-red-500 flex flex-col items-center justify-center gap-2"
       >
-        <span v-if="isAiGenerated" class="text-gray-400 text-sm">Image generating...</span>
-        <span v-else class="text-gray-400 text-sm">No image</span>
+        <svg class="w-10 h-10 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+        </svg>
+        <span v-if="isAiGenerated" class="text-white/70 text-xs font-medium">Image generating...</span>
       </div>
 
       <!-- AI Badge -->
