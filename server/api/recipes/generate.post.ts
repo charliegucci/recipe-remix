@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
   const auth = getAuth()
   const session = await auth.api.getSession({ headers: event.headers })
 
-  if (!session?.user || session.user.isAnonymous) {
+  if (!session?.user || (session.user as any).isAnonymous) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Authentication required. Please sign in to generate recipes.'
@@ -144,7 +144,7 @@ export default defineEventHandler(async (event) => {
   while (retryCount <= MAX_RETRIES) {
     try {
       const ai = hubAI()
-      const result = await ai.run('@cf/meta/llama-3.1-70b-instruct', {
+      const result = await ai.run('@cf/meta/llama-3.1-70b-instruct' as any, {
         messages: [
           { role: 'user', content: retryCount === 0 ? prompt : `Your previous response was not valid JSON. Please return ONLY the JSON object with no markdown or extra text.\n\n${prompt}` }
         ],
@@ -152,9 +152,10 @@ export default defineEventHandler(async (event) => {
       })
 
       // Extract response text
-      llmResponse = typeof result.response === 'string'
-        ? result.response
-        : result.response?.response || JSON.stringify(result)
+      const resultAny = result as any
+      llmResponse = typeof resultAny.response === 'string'
+        ? resultAny.response
+        : resultAny.response?.response || JSON.stringify(result)
 
       // === 7. Parse response ===
       const parseResult = parseRecipeResponse(llmResponse)
@@ -174,7 +175,7 @@ export default defineEventHandler(async (event) => {
               errorMessage: `Unverified ingredients: ${validationResult.unresolved.join(', ')}`,
               completedAt: new Date()
             })
-            .where(schema.generationHistory.id.eq(generationId))
+            .where(eq(schema.generationHistory.id, generationId))
 
           logAnalyticsEvent(db, {
             eventType: 'recipe_generation_failed',
@@ -201,7 +202,7 @@ export default defineEventHandler(async (event) => {
                 errorMessage: `Dietary violations: ${dietaryCheck.violations.map(v => `${v.ingredient} (${v.restriction})`).join(', ')}`,
                 completedAt: new Date()
               })
-              .where(schema.generationHistory.id.eq(generationId))
+              .where(eq(schema.generationHistory.id, generationId))
 
             logAnalyticsEvent(db, {
               eventType: 'recipe_generation_failed',
@@ -222,12 +223,14 @@ export default defineEventHandler(async (event) => {
 
         // === 11. Save recipe to D1 ===
         const recipeId = crypto.randomUUID()
+        const recipeSlug = `${recipe.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${recipeId.slice(0, 8)}`
 
         try {
           await retryD1Write(() =>
             executeMonitoredQuery(db, 'insert_recipe', () =>
               db.insert(schema.recipes).values({
                 id: recipeId,
+                slug: recipeSlug,
                 title: recipe.title,
                 description: recipe.description,
                 ingredients: JSON.stringify(recipe.ingredients),
@@ -253,7 +256,7 @@ export default defineEventHandler(async (event) => {
               errorMessage: 'Failed to save recipe to database',
               completedAt: new Date()
             })
-            .where(schema.generationHistory.id.eq(generationId))
+            .where(eq(schema.generationHistory.id, generationId))
 
           logAnalyticsEvent(db, {
             eventType: 'recipe_generation_failed',
@@ -276,7 +279,7 @@ export default defineEventHandler(async (event) => {
                 recipeId,
                 completedAt: new Date()
               })
-              .where(schema.generationHistory.id.eq(generationId))
+              .where(eq(schema.generationHistory.id, generationId))
           )
         )
 
@@ -353,7 +356,7 @@ export default defineEventHandler(async (event) => {
               errorMessage: `Parse error: ${parseResult.error}`,
               completedAt: new Date()
             })
-            .where(schema.generationHistory.id.eq(generationId))
+            .where(eq(schema.generationHistory.id, generationId))
 
           logAnalyticsEvent(db, {
             eventType: 'recipe_generation_failed',
@@ -382,7 +385,7 @@ export default defineEventHandler(async (event) => {
           errorMessage: error instanceof Error ? error.message : 'Unknown AI error',
           completedAt: new Date()
         })
-        .where(schema.generationHistory.id.eq(generationId))
+        .where(eq(schema.generationHistory.id, generationId))
 
       logAnalyticsEvent(db, {
         eventType: 'recipe_generation_failed',

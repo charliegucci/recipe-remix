@@ -13,8 +13,8 @@ export function buildImagePrompt(
   cuisineTags: string[]
 ): string {
   // Extract 1-2 key descriptors from description (first sentence or first 50 chars)
-  const descSnippet = description
-    .split('.')[0]
+  const descSnippet = (description
+    .split('.')[0] ?? '')
     .substring(0, 50)
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, '')

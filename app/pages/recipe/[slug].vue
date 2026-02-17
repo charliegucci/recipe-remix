@@ -93,7 +93,7 @@ if (recipe.value) {
         position: i + 1,
         text: step
       })),
-      keywords: [...(recipe.value.cuisineTags || []), ...(recipe.value.dietaryTags || [])].filter(Boolean).join(', '),
+      keywords: ([...( recipe.value.cuisineTags || []), ...(recipe.value.dietaryTags || [])].filter(Boolean) as string[]),
       aggregateRating: recipe.value.avgRating ? {
         '@type': 'AggregateRating',
         ratingValue: recipe.value.avgRating,
@@ -106,6 +106,14 @@ if (recipe.value) {
     title: 'Recipe Not Found | Recipe Remix',
     description: 'The requested recipe could not be found'
   })
+}
+
+// Handle retry for error state
+async function handleRetry() {
+  fetchError.value = null
+  await refresh()
+  const err = error.value as any
+  if (err) fetchError.value = err?.statusMessage || err?.message || 'Recipe not found'
 }
 
 // Helper function to format cook time
@@ -141,9 +149,11 @@ const { data: session } = await useSession(useFetch)
 const userId = computed(() => session.value?.user?.id)
 
 const { data: existingReview, refresh: refreshExistingReview } = await useFetch<{ rating: number; review: string | null } | null>(
-  () => userId.value && recipeId.value ? `/api/user/reviews/${recipeId.value}` : null,
+  () => `/api/user/reviews/${recipeId.value}` as `/api/user/reviews/${string}`,
   {
     key: `user-review-${slug}`,
+    watch: false,
+    immediate: !!(userId.value && recipeId.value),
     transform: (data: any) => {
       // Find the current user's review from the list
       const userReview = data.reviews?.find((r: any) => r.userId === userId.value)
@@ -272,7 +282,7 @@ onMounted(() => {
         title="Recipe Not Found"
         :message="fetchError"
         retry-label="Try Again"
-        @retry="async () => { fetchError = null; await refresh(); if (error.value) fetchError = error.value.statusMessage || 'Recipe not found' }"
+        @retry="handleRetry"
       />
     </div>
   </div>
@@ -478,7 +488,7 @@ onMounted(() => {
         <div class="mb-8">
           <LazyReviewForm
             :recipe-id="recipeId"
-            :existing-review="existingReview || undefined"
+            :existing-review="(existingReview as any) || undefined"
             @submitted="handleReviewSubmitted"
             hydrate-on-visible
           />

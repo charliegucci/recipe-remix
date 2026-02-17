@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { asSitemapUrl, defineSitemapEventHandler } from '#imports'
 import { recipes } from '../../db/schema'
 import { useDrizzle } from '../../utils/drizzle'

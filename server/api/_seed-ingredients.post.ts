@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   // Check if ingredients already exist
   const result = await db.select({ count: count() }).from(ingredients)
-  const existingCount = result[0].count
+  const existingCount = result[0]!.count
 
   if (existingCount > 0) {
     return {

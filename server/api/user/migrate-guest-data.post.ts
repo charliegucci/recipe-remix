@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  if (session.user.isAnonymous) {
+  if ((session.user as any).isAnonymous) {
     throw createError({
       statusCode: 403,
       statusMessage: 'Anonymous users cannot migrate data'

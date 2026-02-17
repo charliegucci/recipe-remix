@@ -126,7 +126,7 @@ function selectIngredient(ingredient: Ingredient) {
 // Select the first result when Enter is pressed
 function selectFirst() {
   if (results.value && results.value.length > 0) {
-    selectIngredient(results.value[0])
+    selectIngredient(results.value[0]!)
   }
 }
 

@@ -6,7 +6,7 @@ export function useHistory() {
     const session = await authClient.getSession()
 
     // Only record if user is authenticated and not anonymous
-    if (!session?.user || session.user.isAnonymous) {
+    if (!session?.data?.user || (session.data.user as any).isAnonymous) {
       return
     }
 

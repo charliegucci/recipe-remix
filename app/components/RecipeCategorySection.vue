@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { useInfiniteScroll } from '@vueuse/core'
 
+interface RecipeItem {
+  id: string
+  title: string
+  slug: string
+  description: string
+  cookTime: number
+  difficulty: 'easy' | 'medium' | 'hard'
+  cuisineTags: string[]
+  imageKey: string | null
+  source?: string
+}
+
 const props = defineProps<{
   category: string
   categoryLabel: string
-  initialRecipes: Array<{
-    id: string
-    title: string
-    description: string
-    cookTime: number
-    difficulty: 'easy' | 'medium' | 'hard'
-    cuisineTags: string[]
-    imageKey: string | null
-  }>
+  initialRecipes: RecipeItem[]
 }>()
 
 const recipes = ref([...props.initialRecipes])
@@ -26,7 +30,7 @@ const loadMore = async () => {
   loading.value = true
   try {
     page.value += 1
-    const newRecipes = await $fetch(`/api/recipes?category=${props.category}&page=${page.value}`)
+    const newRecipes = await $fetch<RecipeItem[]>(`/api/recipes?category=${props.category}&page=${page.value}`)
 
     if (!newRecipes || newRecipes.length === 0) {
       hasMore.value = false

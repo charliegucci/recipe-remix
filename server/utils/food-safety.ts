@@ -96,7 +96,7 @@ export function injectSafetyTemps(
     for (const proteinKeyword of sortedKeys) {
       if (ingredientNameLower.includes(proteinKeyword)) {
         const safetyTemp = PROTEIN_SAFETY_MAP[proteinKeyword]
-        if (!addedProteins.has(safetyTemp.protein)) {
+        if (safetyTemp && !addedProteins.has(safetyTemp.protein)) {
           detectedProteins.push(safetyTemp)
           addedProteins.add(safetyTemp.protein)
         }
@@ -123,7 +123,7 @@ export function injectSafetyTemps(
 
     // First, try to find a step mentioning the specific protein
     for (let i = 0; i < modifiedInstructions.length; i++) {
-      const stepLower = modifiedInstructions[i].toLowerCase()
+      const stepLower = modifiedInstructions[i]!.toLowerCase()
       if (stepLower.includes(proteinLower)) {
         targetStepIndex = i
         break
@@ -133,7 +133,7 @@ export function injectSafetyTemps(
     // If no specific mention, find the first step with a cooking verb
     if (targetStepIndex === -1) {
       for (let i = 0; i < modifiedInstructions.length; i++) {
-        const stepLower = modifiedInstructions[i].toLowerCase()
+        const stepLower = modifiedInstructions[i]!.toLowerCase()
         for (const verb of cookingVerbs) {
           if (stepLower.includes(verb)) {
             targetStepIndex = i
