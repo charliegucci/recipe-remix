@@ -3,12 +3,12 @@
 ## Current Position
 
 - **Milestone:** v1.2 CI/CD, Branching & Production Polish
-- **Phase:** 12 of 13 (Branching & Production URL) — COMPLETE
-- **Plan:** 2 of 2 in current phase
-- **Status:** Phase 12 complete, ready to plan Phase 13
-- **Last activity:** 2026-02-17 — Phase 12 closed out with summaries
+- **Phase:** 13 of 13 (Hero Slider Images) — In Progress
+- **Plan:** 1 of 3 complete in current phase
+- **Status:** Plan 13-01 complete — seed-images endpoint created, featured recipes use null imageKeys
+- **Last activity:** 2026-02-17 — 13-01 executed: seed-images endpoint + null imageKeys in seed data
 
-Progress: [█████████░] 66% (2/3 phases in v1.2)
+Progress: [██████████] 80% (Phase 13 in progress — 1/3 plans complete)
 
 ## Project Reference
 
@@ -47,6 +47,8 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 - [11-verify]: Removed lighthouse:recommended preset — too strict for remote URL testing
 - [12-close]: Branch protection confirmed active via API (required checks: Bundle Size Check, Lighthouse CI)
 - [12-close]: remix-recipe.com resolves with HTTP 200, Cloudflare SSL active
+- [13-01]: Featured recipes use null imageKey in seed data; _seed-images endpoint is authoritative source for blob paths
+- [13-01]: R2 blob path pattern for featured recipes: recipes/featured/{recipeId}.jpg (UUID-based)
 
 ### Quick Tasks Completed
 
@@ -69,13 +71,14 @@ See: .planning/PROJECT.md (updated 2026-02-13)
 | 11-04 | ~25min | 2 | 0 (validation) | 2026-02-13 |
 | 12-01 | executed 2026-02-13 | 2 | 3 | 2026-02-13 |
 | 12-02 | executed 2026-02-13 | 2 | 2 | 2026-02-13 |
+| 13-01 | ~5min | 2 | 2 | 2026-02-17 |
 
 ## Session Continuity
 
 - **Last session:** 2026-02-17
-- **Stopped at:** Phase 12 complete
+- **Stopped at:** Completed 13-01-PLAN.md
 - **Resume file:** None
-- **Next step:** `/gsd:plan-phase 13`
+- **Next step:** Execute 13-02-PLAN.md
 
 ---
-*Last updated: 2026-02-17*
+*Last updated: 2026-02-17 (13-01 complete)*
