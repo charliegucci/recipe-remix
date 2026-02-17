@@ -21,6 +21,9 @@ jobs:
         run: npm ci
 
       - name: Build application
+        env:
+          NUXT_PUBLIC_AUTH_URL: https://remix-recipe.com/api/auth
+          BETTER_AUTH_URL: https://remix-recipe.com
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
