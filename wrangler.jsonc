@@ -18,7 +18,7 @@
   ],
   "kv_namespaces": [
     {
-      "binding": "CACHE",
+      "binding": "KV",
       "id": "e5f67970ee6446f18f55151b2e5358c1"
     }
   ]
