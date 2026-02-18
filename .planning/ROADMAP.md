@@ -145,7 +145,7 @@ Plans:
 | 12. Branching & Production URL | v1.2 | 2/2 | Complete | 2026-02-13 |
 | 13. Hero Slider Images | v1.2 | 2/2 | Complete | 2026-02-18 |
 | 14. Recipe Images | 2/2 | Complete   | 2026-02-18 | - |
-| 15. Pantry UX | 1/1 | Complete   | 2026-02-18 | - |
+| 15. Pantry UX | 1/1 | Complete    | 2026-02-18 | - |
 | 16. Generation UX | v1.3 | 0/1 | Not started | - |
 | 17. Ingredient Highlighting | v1.3 | 0/2 | Not started | - |
 | 18. Favorites Polish | v1.3 | 0/2 | Not started | - |
