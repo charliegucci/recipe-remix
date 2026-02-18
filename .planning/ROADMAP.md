@@ -65,11 +65,11 @@
   2. Recipe cards on /recipes display real recipe images instead of gradient fallbacks
   3. Hero slider shows actual recipe photos (no more placeholder images)
   4. When an image fails to load or is missing, a graceful gradient fallback renders (no broken img tags)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 14-01: Generate AI images for all 27 seeded recipes via flux-1-schnell and store in R2
-- [ ] 14-02: Wire recipe cards and hero slider to display real images with graceful fallback
+- [ ] 14-01-PLAN.md — Create _seed-recipe-images endpoint for 22 non-featured recipes + null out imageKeys in seed data
+- [ ] 14-02-PLAN.md — Audit and harden image display pipeline, human verify real photos in cards and hero slider
 
 ### Phase 15: Pantry UX
 **Goal**: Ingredient list and search feel visual and tactile — each ingredient has a recognizable thumbnail
