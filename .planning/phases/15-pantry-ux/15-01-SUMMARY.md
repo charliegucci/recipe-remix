@@ -67,7 +67,7 @@ Each task was committed atomically:
 1. **Task 1: Create ingredient emoji mapping utility** - `cb276a8` (feat)
 2. **Task 2: Add emoji thumbnails to PantryList and IngredientAutocomplete** - `2a2367b` (feat)
 
-**Plan metadata:** `[pending]` (docs: complete plan)
+**Plan metadata:** `c203485` (docs: complete plan)
 
 ## Files Created/Modified
 - `app/utils/ingredientEmoji.ts` - getIngredientEmoji(name, category?) and getCategoryEmoji(category) with full ingredient + category fallback maps
