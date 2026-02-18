@@ -10,24 +10,24 @@ See: .planning/PROJECT.md (updated 2026-02-18)
 ## Current Position
 
 Phase: 14 of 18 (Recipe Images)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-02-18 — v1.3 roadmap created (phases 14-18)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-18 — Completed 14-01 (seed-recipe-images endpoint + seed data cleanup)
 
-Progress: [░░░░░░░░░░] 0% (v1.3)
+Progress: [█░░░░░░░░░] 13% (v1.3)
 
 ## Performance Metrics
 
-**Velocity (v1.2 reference):**
-- Plans completed this milestone: 0
-- Average duration (v1.2): ~7 min/plan
-- Total execution time (v1.2): ~56 min across 8 plans
+**Velocity (v1.3 reference):**
+- Plans completed this milestone: 1
+- Duration (14-01): 3 min
+- Total execution time (v1.3 so far): ~3 min
 
 **By Phase (v1.3):**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 14. Recipe Images | 0/2 | - | - |
+| 14. Recipe Images | 1/2 | 3 min | 3 min |
 | 15. Pantry UX | 0/1 | - | - |
 | 16. Generation UX | 0/1 | - | - |
 | 17. Ingredient Highlighting | 0/2 | - | - |
@@ -41,6 +41,8 @@ Progress: [░░░░░░░░░░] 0% (v1.3)
 - [13-02]: Plain img tags for blob images — NuxtImg (IPX) can't resolve blob storage paths
 - [13-01]: R2 blob path pattern for featured recipes: recipes/featured/{recipeId}.jpg (UUID-based)
 - [v1.3 roadmap]: Phase 14 generates AI images for all 27 seeded recipes using existing flux-1-schnell + _seed-images endpoint pattern
+- [14-01]: Inline hubAI call in _seed-recipe-images instead of reusing generateAndStoreImage — avoids ai-generated blob path override, uses recipes/curated/{id}.png
+- [14-01]: All 27 seeded recipes now start with imageKey null; 3-step seeding: POST /_seed → POST /_seed-images → POST /_seed-recipe-images
 
 ### Pending Todos
 
@@ -48,16 +50,15 @@ None.
 
 ### Blockers/Concerns
 
-- flux-1-schnell image generation for 27 recipes may be slow/rate-limited — batch carefully in Phase 14
 - Ingredient thumbnail source not yet chosen (external food API vs icon set) — decide in Phase 15
 - Favorites backend exists from v1.0 but UX is incomplete — audit API before Phase 18
 
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: v1.3 roadmap written, ready to plan Phase 14
+Stopped at: Completed 14-01-PLAN.md (_seed-recipe-images endpoint)
 Resume file: None
-Next step: `/gsd:plan-phase 14`
+Next step: Execute 14-02-PLAN.md (recipe card image display)
 
 ---
 *Last updated: 2026-02-18*
