@@ -61,29 +61,29 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| IMG-01 | — | Pending |
-| IMG-02 | — | Pending |
-| IMG-03 | — | Pending |
-| IMG-04 | — | Pending |
-| PNTR-01 | — | Pending |
-| PNTR-02 | — | Pending |
-| GENX-01 | — | Pending |
-| GENX-02 | — | Pending |
-| GENX-03 | — | Pending |
-| INGR-01 | — | Pending |
-| INGR-02 | — | Pending |
-| INGR-03 | — | Pending |
-| INGR-04 | — | Pending |
-| FAV-01 | — | Pending |
-| FAV-02 | — | Pending |
-| FAV-03 | — | Pending |
-| FAV-04 | — | Pending |
+| IMG-01 | Phase 14 | Pending |
+| IMG-02 | Phase 14 | Pending |
+| IMG-03 | Phase 14 | Pending |
+| IMG-04 | Phase 14 | Pending |
+| PNTR-01 | Phase 15 | Pending |
+| PNTR-02 | Phase 15 | Pending |
+| GENX-01 | Phase 16 | Pending |
+| GENX-02 | Phase 16 | Pending |
+| GENX-03 | Phase 16 | Pending |
+| INGR-01 | Phase 17 | Pending |
+| INGR-02 | Phase 17 | Pending |
+| INGR-03 | Phase 17 | Pending |
+| INGR-04 | Phase 17 | Pending |
+| FAV-01 | Phase 18 | Pending |
+| FAV-02 | Phase 18 | Pending |
+| FAV-03 | Phase 18 | Pending |
+| FAV-04 | Phase 18 | Pending |
 
 **Coverage:**
 - v1.3 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17 ⚠️
+- Mapped to phases: 17
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-18*
-*Last updated: 2026-02-18 after initial definition*
+*Last updated: 2026-02-18 — traceability mapped to phases 14-18*
