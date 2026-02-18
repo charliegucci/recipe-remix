@@ -10,9 +10,9 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 ### Recipe Images
 
 - [x] **IMG-01**: All 27 seeded recipes have AI-generated food photos stored in R2
-- [ ] **IMG-02**: Recipe cards on the browse page (/recipes) display real recipe images
-- [ ] **IMG-03**: Hero slider displays actual recipe images (not placeholders)
-- [ ] **IMG-04**: Graceful fallback when image is missing or fails to load
+- [x] **IMG-02**: Recipe cards on the browse page (/recipes) display real recipe images
+- [x] **IMG-03**: Hero slider displays actual recipe images (not placeholders)
+- [x] **IMG-04**: Graceful fallback when image is missing or fails to load
 
 ### Pantry UX
 
@@ -62,9 +62,9 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | IMG-01 | Phase 14 | Complete |
-| IMG-02 | Phase 14 | Pending |
-| IMG-03 | Phase 14 | Pending |
-| IMG-04 | Phase 14 | Pending |
+| IMG-02 | Phase 14 | Complete |
+| IMG-03 | Phase 14 | Complete |
+| IMG-04 | Phase 14 | Complete |
 | PNTR-01 | Phase 15 | Pending |
 | PNTR-02 | Phase 15 | Pending |
 | GENX-01 | Phase 16 | Pending |
