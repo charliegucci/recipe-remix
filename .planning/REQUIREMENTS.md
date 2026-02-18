@@ -16,8 +16,8 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 
 ### Pantry UX
 
-- [ ] **PNTR-01**: Each ingredient in My Pantry displays a thumbnail image
-- [ ] **PNTR-02**: Ingredient search results show thumbnail images alongside names
+- [x] **PNTR-01**: Each ingredient in My Pantry displays a thumbnail image
+- [x] **PNTR-02**: Ingredient search results show thumbnail images alongside names
 
 ### Generation UX
 
@@ -65,8 +65,8 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 | IMG-02 | Phase 14 | Complete |
 | IMG-03 | Phase 14 | Complete |
 | IMG-04 | Phase 14 | Complete |
-| PNTR-01 | Phase 15 | Pending |
-| PNTR-02 | Phase 15 | Pending |
+| PNTR-01 | Phase 15 | Complete |
+| PNTR-02 | Phase 15 | Complete |
 | GENX-01 | Phase 16 | Pending |
 | GENX-02 | Phase 16 | Pending |
 | GENX-03 | Phase 16 | Pending |
