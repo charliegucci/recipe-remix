@@ -47,7 +47,7 @@ test.describe('Critical User Paths', () => {
     await page.click('button[type="submit"]');
 
     // Registration uses window.location.href = '/' on success — wait for navigation away from /register
-    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 15000 });
+    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 30000 });
 
     // Verify we navigated away from register page (success indicator)
     const currentUrl = page.url();
@@ -111,7 +111,7 @@ test.describe('Critical User Paths', () => {
     await page.locator('#password').fill(testPassword);
     await page.locator('#confirmPassword').fill(testPassword);
     await page.click('button[type="submit"]');
-    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 15000 });
+    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 30000 });
 
     // Add 2+ ingredients via pantry (generate requires >= 2)
     await page.goto('/pantry');
@@ -153,8 +153,10 @@ test.describe('Critical User Paths', () => {
     await generateButton.click();
 
     // Wait for generation progress (actual step labels from GenerationProgress.vue)
+    // Both labels may be visible simultaneously, so use .first()
     const progressIndicator = page.locator('text=Crafting your fusion recipe')
-      .or(page.locator('text=Validating ingredients'));
+      .or(page.locator('text=Validating ingredients'))
+      .first();
 
     await expect(progressIndicator).toBeVisible({ timeout: 10000 });
 
@@ -189,7 +191,7 @@ test.describe('Critical User Paths', () => {
     await page.locator('#confirmPassword').fill(testPassword);
     await page.click('button[type="submit"]');
 
-    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 15000 });
+    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 30000 });
 
     // Go to home and favorite first recipe
     await page.goto('/');

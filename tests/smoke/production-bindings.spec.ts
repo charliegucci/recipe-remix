@@ -1,16 +1,22 @@
 import { test, expect } from '@playwright/test';
 
+// Use page.evaluate(fetch(...)) instead of the standalone request fixture
+// because Cloudflare bot protection blocks raw HTTP clients with 403.
+
 test.describe('Production Bindings Health', () => {
 
-  test('D1 database is accessible', async ({ request }) => {
+  test('D1 database is accessible', async ({ page }) => {
     // PROD-02: D1 binding verification
-    const response = await request.get('/api/recipes?limit=1');
+    await page.goto('/');
+    const result = await page.evaluate(async () => {
+      const res = await fetch('/api/recipes?limit=1');
+      return { ok: res.ok, status: res.status, data: await res.json() };
+    });
 
-    expect(response.ok()).toBeTruthy();
-    const data = await response.json();
+    expect(result.ok).toBeTruthy();
 
     // API may return { recipes: [...] } or { data: [...] } - check both patterns
-    const recipes = data.recipes || data.data || data;
+    const recipes = result.data.recipes || result.data.data || result.data;
     expect(Array.isArray(recipes)).toBe(true);
 
     // If recipes exist, verify structure
@@ -22,80 +28,88 @@ test.describe('Production Bindings Health', () => {
     }
   });
 
-  test('KV caching works', async ({ request }) => {
+  test('KV caching works', async ({ page }) => {
     // PROD-02: KV binding verification via featured recipes endpoint
-    const response1 = await request.get('/api/recipes/featured');
-    expect(response1.ok()).toBeTruthy();
+    await page.goto('/');
+    const result = await page.evaluate(async () => {
+      const t1 = Date.now();
+      const res1 = await fetch('/api/recipes/featured');
+      const data1 = await res1.json();
+      const duration1 = Date.now() - t1;
 
-    const time1 = Date.now();
-    await response1.json();
-    const duration1 = Date.now() - time1;
+      const t2 = Date.now();
+      const res2 = await fetch('/api/recipes/featured');
+      await res2.json();
+      const duration2 = Date.now() - t2;
 
-    // Second request should be faster (cached)
-    const time2 = Date.now();
-    const response2 = await request.get('/api/recipes/featured');
-    const duration2 = Date.now() - time2;
+      return { ok1: res1.ok, ok2: res2.ok, duration1, duration2 };
+    });
 
-    expect(response2.ok()).toBeTruthy();
-
-    // Cache hit should be at least 50% faster (rough heuristic)
-    // Note: This is environment-dependent, may need adjustment
-    console.log(`First request: ${duration1}ms, Second request: ${duration2}ms`);
+    expect(result.ok1).toBeTruthy();
+    expect(result.ok2).toBeTruthy();
+    console.log(`First request: ${result.duration1}ms, Second request: ${result.duration2}ms`);
   });
 
-  test('environment variables are set', async ({ request }) => {
+  test('environment variables are set', async ({ page }) => {
     // PROD-02: Verify critical env vars via API responses
-    // Note: We can't directly check env vars, but can verify their effects
+    await page.goto('/');
+    const status = await page.evaluate(async () => {
+      const res = await fetch('/api/auth/session');
+      return res.status;
+    });
 
-    // Test that auth endpoints exist (proves BETTER_AUTH_URL is set)
-    const authResponse = await request.get('/api/auth/session');
-    expect(authResponse.status()).not.toBe(500); // Not a server error
-
+    // Not a server error
+    expect(status).not.toBe(500);
     // 200 (with session) or 401 (no session) are both valid
-    expect([200, 401]).toContain(authResponse.status());
+    expect([200, 401]).toContain(status);
   });
 
-  test('Workers AI is accessible', async ({ request }) => {
-    // PROD-02: AI binding verification
-    // This is tested via generation in critical-paths.spec.ts
-    // Here we just verify the endpoint exists and doesn't 500
-
-    // Note: We can't easily test AI without full generation flow
-    // This test just ensures the endpoint is reachable
-    const response = await request.post('/api/recipes/generate', {
-      data: {
-        ingredients: ['invalid-test'],
-        cuisinePreferences: ['italian']
-      },
-      failOnStatusCode: false
+  test('Workers AI is accessible', async ({ page }) => {
+    // PROD-02: AI binding verification — just ensure the endpoint exists and doesn't 500
+    await page.goto('/');
+    const status = await page.evaluate(async () => {
+      const res = await fetch('/api/recipes/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ingredients: ['invalid-test'],
+          cuisinePreferences: ['italian']
+        })
+      });
+      return res.status;
     });
 
-    // Should fail validation (invalid ingredient) but not with 500
-    // 400 (validation error) is expected, 500 would indicate binding issue
-    expect(response.status()).not.toBe(500);
+    // Should fail validation but not with 500 (which would indicate binding issue)
+    expect(status).not.toBe(500);
   });
 
-  test('CORS headers are correct', async ({ request }) => {
-    // PROD-02: Verify CORS isn't blocking legitimate requests
-    const response = await request.get('/api/recipes');
+  test('CORS headers are correct', async ({ page }) => {
+    // PROD-02: Verify API is accessible from the browser
+    await page.goto('/');
+    const ok = await page.evaluate(async () => {
+      const res = await fetch('/api/recipes');
+      return res.ok;
+    });
 
-    // Check that response allows same-origin requests
-    // Cloudflare Pages should handle this automatically
-    expect(response.ok()).toBeTruthy();
+    expect(ok).toBeTruthy();
   });
 
-  test('API error handling returns proper status codes', async ({ request }) => {
+  test('API error handling returns proper status codes', async ({ page }) => {
     // PROD-02: Verify production error handling
-
-    // Test 404 or 400 for non-existent recipe (both are acceptable error responses)
-    const notFoundResponse = await request.get('/api/recipes/non-existent-id-123');
-    expect([404, 400]).toContain(notFoundResponse.status());
-
-    // Test 400 for invalid request
-    const invalidResponse = await request.post('/api/pantry', {
-      data: { invalid: 'data' },
-      failOnStatusCode: false
+    await page.goto('/');
+    const results = await page.evaluate(async () => {
+      const notFoundRes = await fetch('/api/recipes/non-existent-id-123');
+      const invalidRes = await fetch('/api/pantry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ invalid: 'data' })
+      });
+      return { notFoundStatus: notFoundRes.status, invalidStatus: invalidRes.status };
     });
-    expect([400, 401]).toContain(invalidResponse.status()); // 400 or 401 (needs auth)
+
+    // 404 or 400 for non-existent recipe
+    expect([404, 400]).toContain(results.notFoundStatus);
+    // 400 or 401 (needs auth) for invalid request
+    expect([400, 401]).toContain(results.invalidStatus);
   });
 });
