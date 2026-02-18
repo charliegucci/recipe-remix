@@ -53,9 +53,18 @@ export async function generateAndStoreImage(
     })
 
     // Convert response to Uint8Array
+    // flux-1-schnell returns { image: "base64string" }
     let imageBytes: Uint8Array
-    if (aiResponse instanceof ReadableStream) {
-      // Convert stream to bytes
+    const responseAny = aiResponse as any
+    if (typeof responseAny?.image === 'string') {
+      // Base64-encoded image from Workers AI
+      const binaryString = atob(responseAny.image)
+      imageBytes = new Uint8Array(binaryString.length)
+      for (let i = 0; i < binaryString.length; i++) {
+        imageBytes[i] = binaryString.charCodeAt(i)
+      }
+    } else if (aiResponse instanceof ReadableStream) {
+      // Stream response (legacy fallback)
       const reader = aiResponse.getReader()
       const chunks: Uint8Array[] = []
       let totalLength = 0
@@ -67,7 +76,6 @@ export async function generateAndStoreImage(
         totalLength += value.length
       }
 
-      // Concatenate all chunks
       imageBytes = new Uint8Array(totalLength)
       let position = 0
       for (const chunk of chunks) {
