@@ -79,10 +79,10 @@ Plans:
   1. Every ingredient in My Pantry displays a small thumbnail image next to its name
   2. Ingredient search results show a thumbnail image alongside each result before the user adds it
   3. Thumbnails load without breaking the pantry layout on mobile or desktop
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 15-01: Integrate ingredient thumbnail source (external food API or icon set) and display in pantry + search
+- [ ] 15-01-PLAN.md — Add emoji-based ingredient thumbnails to pantry list and search autocomplete
 
 ### Phase 16: Generation UX
 **Goal**: Recipe generation feels alive and informative — users see exactly what's happening and how long it will take
@@ -145,7 +145,7 @@ Plans:
 | 12. Branching & Production URL | v1.2 | 2/2 | Complete | 2026-02-13 |
 | 13. Hero Slider Images | v1.2 | 2/2 | Complete | 2026-02-18 |
 | 14. Recipe Images | 2/2 | Complete   | 2026-02-18 | - |
-| 15. Pantry UX | v1.3 | 0/1 | Not started | - |
+| 15. Pantry UX | v1.3 | 0/1 | Planned | - |
 | 16. Generation UX | v1.3 | 0/1 | Not started | - |
 | 17. Ingredient Highlighting | v1.3 | 0/2 | Not started | - |
 | 18. Favorites Polish | v1.3 | 0/2 | Not started | - |
