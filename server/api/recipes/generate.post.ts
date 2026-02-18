@@ -165,28 +165,14 @@ export default defineEventHandler(async (event) => {
         const recipe = parseResult.recipe
 
         // === 8. Validate ingredients (SAFE-01, SAFE-04) ===
+        // Warn about unverified ingredients but allow the recipe through
         const validationResult = await validateIngredients(db, recipe.ingredients)
 
         if (!validationResult.valid) {
-          // Update history to failed
-          await db.update(schema.generationHistory)
-            .set({
-              status: 'failed',
-              errorMessage: `Unverified ingredients: ${validationResult.unresolved.join(', ')}`,
-              completedAt: new Date()
-            })
-            .where(eq(schema.generationHistory.id, generationId))
-
           logAnalyticsEvent(db, {
-            eventType: 'recipe_generation_failed',
+            eventType: 'recipe_unverified_ingredients',
             userId,
-            metadata: { error: 'unverified_ingredients', unresolved: validationResult.unresolved, cuisines: selectedCuisines }
-          })
-
-          throw createError({
-            statusCode: 422,
-            statusMessage: 'Recipe contains unverified ingredients',
-            data: { unresolved: validationResult.unresolved }
+            metadata: { unresolved: validationResult.unresolved, cuisines: selectedCuisines }
           })
         }
 
