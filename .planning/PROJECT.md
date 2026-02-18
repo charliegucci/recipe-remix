@@ -58,7 +58,16 @@ Users can make delicious, creative meals from ingredients they already have — 
 
 ### Active
 
-(No active milestone — ready for v1.3 planning)
+## Current Milestone: v1.3 UX/UI Polish
+
+**Goal:** Polish the visual experience with real recipe images, engaging generation animations, smart ingredient highlighting with substitution, pantry thumbnails, and working favorites.
+
+**Target features:**
+- AI-generated images for all 27 seeded recipes (replace placeholders)
+- Enhanced generation progress animations (multi-step with visual flair)
+- Missing ingredient highlighting with AI + manual substitution
+- Ingredient thumbnail images in My Pantry
+- Fully functional Favorites save/remove with clear CTAs
 
 ### Out of Scope
 
