@@ -956,10 +956,18 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Invalidate featured cache so carousel shows new imageKeys immediately
+  // Invalidate KV caches so updated imageKeys appear immediately without stale data
   try {
     const kv = hubKV()
+    // Featured carousel cache
     await kv.del('recipes:featured')
+    // Recipe list page caches (per-category, page 1) — invalidate so /recipes shows updated imageKeys
+    await kv.del('recipes:list:all:1')
+    await kv.del('recipes:list:italian:1')
+    await kv.del('recipes:list:mexican:1')
+    await kv.del('recipes:list:asian:1')
+    await kv.del('recipes:list:american:1')
+    await kv.del('recipes:list:mediterranean:1')
   } catch {
     // KV not available in some environments; non-fatal
   }
