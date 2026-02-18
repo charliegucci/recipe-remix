@@ -8,8 +8,9 @@
       <div
         v-for="item in items"
         :key="item.id"
-        class="flex items-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-900 rounded-full border border-emerald-200"
+        class="flex items-center gap-1.5 px-3 py-2 bg-emerald-50 text-emerald-900 rounded-full border border-emerald-200"
       >
+        <span class="text-lg leading-none" aria-hidden="true">{{ getIngredientEmoji(item.name) }}</span>
         <span class="text-sm font-medium">{{ item.name }}</span>
         <button
           type="button"
@@ -45,6 +46,8 @@
 </template>
 
 <script setup lang="ts">
+import { getIngredientEmoji } from '~/utils/ingredientEmoji'
+
 interface PantryItem {
   id: string
   name: string

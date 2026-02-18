@@ -54,7 +54,10 @@
           class="w-full px-4 py-3 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors flex items-center justify-between min-h-[44px]"
           @mousedown="selectIngredient(ingredient)"
         >
-          <span class="text-base font-medium text-gray-900">{{ ingredient.name }}</span>
+          <span class="flex items-center">
+            <span class="text-lg leading-none mr-1.5" aria-hidden="true">{{ getIngredientEmoji(ingredient.name, ingredient.category) }}</span>
+            <span class="text-base font-medium text-gray-900">{{ ingredient.name }}</span>
+          </span>
           <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 capitalize">
             {{ ingredient.category }}
           </span>
@@ -74,6 +77,7 @@
 
 <script setup lang="ts">
 import { refDebounced } from '@vueuse/core'
+import { getIngredientEmoji } from '~/utils/ingredientEmoji'
 
 interface Ingredient {
   id: string
