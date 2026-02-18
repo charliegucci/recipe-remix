@@ -102,7 +102,7 @@ Users can make delicious, creative meals from ingredients they already have — 
 - Workers fire-and-forget may not complete (standalone endpoint fallback)
 - Ingredient substitutions are session-local only
 - k6 load test not automated in CI
-- Smoke test selectors don't match production DOM — tests trigger but fail on assertions
+- AI binding was missing from wrangler.jsonc — fixed, needs redeploy
 
 ## Constraints
 

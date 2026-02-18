@@ -61,7 +61,7 @@ See: .planning/PROJECT.md (updated 2026-02-18)
 
 ### Blockers/Concerns
 
-- Smoke test selectors don't match production DOM — tests trigger but fail on assertions
+(None)
 
 ### Performance Metrics
 
