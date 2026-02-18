@@ -92,10 +92,10 @@ Plans:
   1. During generation, users see at least three named steps (Crafting recipe, Validating ingredients, Generating photo) with the active step highlighted
   2. Each step transition has a distinct visual animation (not just a text change)
   3. Each active step shows an estimated time remaining (e.g., "~8s remaining")
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 16-01: Build multi-step generation progress component with animations and per-step time estimates
+- [ ] 16-01-PLAN.md — Multi-step generation progress with per-step animations and countdown timers
 
 ### Phase 17: Ingredient Highlighting
 **Goal**: After generation, users immediately know which ingredients they're missing and can swap them out without leaving the recipe
