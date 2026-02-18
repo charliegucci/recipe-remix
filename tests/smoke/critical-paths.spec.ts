@@ -163,17 +163,18 @@ test.describe('Critical User Paths', () => {
     // Wait for recipe result (very long timeout for AI generation)
     await page.waitForLoadState('networkidle', { timeout: 120000 });
 
-    // Verify recipe has required elements
-    await expect(page.locator('h1')).toBeVisible({ timeout: 10000 }); // Recipe title
+    // Verify recipe result is rendered (inline on /generate page)
+    // Use expect().toBeVisible() with timeout since Vue rendering is async after networkidle
+    await expect(page.locator('h1')).toBeVisible({ timeout: 30000 }); // Recipe title
 
-    // Look for ingredients and instructions sections
-    const hasIngredients = await page.locator('h2:has-text("Ingredients"), h3:has-text("Ingredients")')
-      .isVisible().catch(() => false);
-    expect(hasIngredients).toBeTruthy();
+    // Generated recipe shows h3 "Ingredients" and h3 "Instructions" inline
+    await expect(
+      page.locator('h3:has-text("Ingredients")')
+    ).toBeVisible({ timeout: 10000 });
 
-    const hasInstructions = await page.locator('h2:has-text("Instructions"), h3:has-text("Instructions"), h2:has-text("Steps"), h3:has-text("Steps")')
-      .isVisible().catch(() => false);
-    expect(hasInstructions).toBeTruthy();
+    await expect(
+      page.locator('h3:has-text("Instructions")')
+    ).toBeVisible({ timeout: 10000 });
   });
 
   test('user can favorite recipes', async ({ page, context }) => {
@@ -209,16 +210,16 @@ test.describe('Critical User Paths', () => {
 
     await favoriteButton.click();
 
-    // Verify optimistic update (button state changes or visual feedback)
-    await page.waitForTimeout(1000); // Brief wait for optimistic UI update
+    // Wait for favorite API call to complete
+    await page.waitForTimeout(2000);
 
-    // Go to favorites page
+    // Go to favorites page and wait for data to load
     await page.goto('/favorites');
     await page.waitForLoadState('networkidle');
 
-    // Verify at least one recipe appears in favorites (look for recipe links)
-    const favoriteRecipes = page.locator('a[href*="/recipe/"]');
-    const favCount = await favoriteRecipes.count();
-    expect(favCount).toBeGreaterThanOrEqual(1);
+    // Wait for at least one recipe link to appear (SSR data loading may take time)
+    await expect(
+      page.locator('a[href*="/recipe/"]').first()
+    ).toBeVisible({ timeout: 10000 });
   });
 });

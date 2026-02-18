@@ -24,7 +24,7 @@ test.describe('Production Bindings Health', () => {
       const recipe = recipes[0];
       expect(recipe).toHaveProperty('id');
       expect(recipe).toHaveProperty('title');
-      expect(recipe).toHaveProperty('cuisine');
+      expect(recipe).toHaveProperty('cuisineTags');
     }
   });
 
@@ -54,14 +54,14 @@ test.describe('Production Bindings Health', () => {
     // PROD-02: Verify critical env vars via API responses
     await page.goto('/');
     const status = await page.evaluate(async () => {
-      const res = await fetch('/api/auth/session');
+      const res = await fetch('/api/auth/get-session');
       return res.status;
     });
 
     // Not a server error
     expect(status).not.toBe(500);
-    // 200 (with session) or 401 (no session) are both valid
-    expect([200, 401]).toContain(status);
+    // 200 (with or without session) is the expected Better Auth response
+    expect([200]).toContain(status);
   });
 
   test('Workers AI is accessible', async ({ page }) => {
@@ -99,7 +99,7 @@ test.describe('Production Bindings Health', () => {
     await page.goto('/');
     const results = await page.evaluate(async () => {
       const notFoundRes = await fetch('/api/recipes/non-existent-id-123');
-      const invalidRes = await fetch('/api/pantry', {
+      const invalidRes = await fetch('/api/user/pantry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ invalid: 'data' })
@@ -109,7 +109,7 @@ test.describe('Production Bindings Health', () => {
 
     // 404 or 400 for non-existent recipe
     expect([404, 400]).toContain(results.notFoundStatus);
-    // 400 or 401 (needs auth) for invalid request
+    // 400 or 401 (needs auth) for invalid pantry request
     expect([400, 401]).toContain(results.invalidStatus);
   });
 });
