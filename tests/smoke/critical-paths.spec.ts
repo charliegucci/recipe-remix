@@ -87,10 +87,8 @@ test.describe('Critical User Paths', () => {
     await searchInput.fill('tomato');
     await page.waitForTimeout(1000); // Wait for autocomplete to populate
 
-    // Click autocomplete suggestion
-    const autocompleteItem = page.locator('li:has-text("tomato")').first()
-      .or(page.locator('[role="option"]:has-text("tomato")').first())
-      .or(page.locator('[data-testid="autocomplete-item"]:has-text("tomato")'));
+    // Click autocomplete suggestion (rendered as <button> elements in dropdown)
+    const autocompleteItem = page.locator('.absolute button:has-text("tomato")').first();
 
     await autocompleteItem.click();
 
@@ -122,22 +120,26 @@ test.describe('Critical User Paths', () => {
       }
     }
 
-    // Add ingredients to pantry (if empty)
-    const searchInput = page.locator('input[placeholder*="ingredient"]')
-      .or(page.locator('input[type="search"]').first())
-      .or(page.locator('input[placeholder*="Search"]'));
+    // /generate doesn't have an ingredient autocomplete — add via pantry first
+    await page.goto('/pantry');
+    await page.waitForLoadState('networkidle');
+
+    const searchInput = page.locator('input[placeholder*="Search"]')
+      .or(page.locator('input[placeholder*="ingredient"]'))
+      .or(page.locator('input[placeholder*="Add"]'));
 
     await searchInput.click();
     await searchInput.fill('chicken');
     await page.waitForTimeout(1000);
 
-    // Click autocomplete item
-    const autocompleteItem = page.locator('li:has-text("chicken")').first()
-      .or(page.locator('[role="option"]').first())
-      .or(page.locator('[data-testid="autocomplete-item"]'));
-
-    await autocompleteItem.click({ force: true });
+    // Click autocomplete suggestion (rendered as <button> elements in dropdown)
+    const autocompleteItem = page.locator('.absolute button:has-text("chicken")').first();
+    await autocompleteItem.click();
     await page.waitForTimeout(500);
+
+    // Now navigate to generate page
+    await page.goto('/generate');
+    await page.waitForLoadState('networkidle');
 
     // Select cuisines - use flexible selectors
     const italianCuisine = page.locator('label:has-text("Italian")')
@@ -153,10 +155,9 @@ test.describe('Critical User Paths', () => {
 
     await generateButton.click();
 
-    // Wait for generation (can take 30-60 seconds)
-    const progressIndicator = page.locator('text=Generating')
-      .or(page.locator('[role="progressbar"]'))
-      .or(page.locator('[data-testid="generation-progress"]'));
+    // Wait for generation progress (actual step labels from GenerationProgress.vue)
+    const progressIndicator = page.locator('text=Crafting your fusion recipe')
+      .or(page.locator('text=Validating ingredients'));
 
     await expect(progressIndicator).toBeVisible({ timeout: 10000 });
 
