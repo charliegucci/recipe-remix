@@ -39,18 +39,17 @@ test.describe('Critical User Paths', () => {
     const testEmail = `test-${Date.now()}@example.com`;
     const testPassword = 'TestPassword123!';
 
-    // Fill registration form - use flexible selectors
-    const emailInput = page.locator('input[name="email"]').or(page.locator('input[type="email"]'));
-    const passwordInput = page.locator('input[name="password"]').or(page.locator('input[type="password"]').first());
-
-    await emailInput.fill(testEmail);
-    await passwordInput.fill(testPassword);
+    // Fill all registration fields (name, email, password, confirmPassword)
+    await page.locator('#name').fill('Smoke Test');
+    await page.locator('#email').fill(testEmail);
+    await page.locator('#password').fill(testPassword);
+    await page.locator('#confirmPassword').fill(testPassword);
     await page.click('button[type="submit"]');
 
-    // Verify redirect to home, login, dashboard, or recipes (flexible redirect handling)
-    await page.waitForURL(/\/(|login|dashboard|recipes)/, { timeout: 15000 });
+    // Registration uses window.location.href = '/' on success — wait for navigation away from /register
+    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 15000 });
 
-    // Simply verify we navigated away from register page (success indicator)
+    // Verify we navigated away from register page (success indicator)
     const currentUrl = page.url();
     expect(currentUrl).not.toContain('/register');
   });
@@ -102,25 +101,19 @@ test.describe('Critical User Paths', () => {
     test.slow(); // AI generation takes 60-90 seconds, needs 3x timeout
 
     // PROD-01: AI generation (most critical - tests D1, KV, Workers AI, R2)
-    await page.goto('/generate');
-    await page.waitForLoadState('networkidle');
+    // Generate requires authentication — register first
+    const testEmail = `gen-test-${Date.now()}@example.com`;
+    const testPassword = 'TestPassword123!';
 
-    // Handle auth requirement
-    const needsAuth = await page.locator('text=Sign In').or(page.locator('text=Log In')).isVisible().catch(() => false);
-    if (needsAuth) {
-      const guestButton = page.locator('button:has-text("Continue as Guest")').or(page.locator('button:has-text("Guest")'));
-      const hasGuest = await guestButton.isVisible().catch(() => false);
+    await page.goto('/register');
+    await page.locator('#name').fill('Gen Test');
+    await page.locator('#email').fill(testEmail);
+    await page.locator('#password').fill(testPassword);
+    await page.locator('#confirmPassword').fill(testPassword);
+    await page.click('button[type="submit"]');
+    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 15000 });
 
-      if (hasGuest) {
-        await guestButton.click();
-        await page.goto('/generate');
-        await page.waitForLoadState('networkidle');
-      } else {
-        test.skip();
-      }
-    }
-
-    // /generate doesn't have an ingredient autocomplete — add via pantry first
+    // Add 2+ ingredients via pantry (generate requires >= 2)
     await page.goto('/pantry');
     await page.waitForLoadState('networkidle');
 
@@ -128,30 +121,34 @@ test.describe('Critical User Paths', () => {
       .or(page.locator('input[placeholder*="ingredient"]'))
       .or(page.locator('input[placeholder*="Add"]'));
 
+    // Add first ingredient
     await searchInput.click();
     await searchInput.fill('chicken');
     await page.waitForTimeout(1000);
+    await page.locator('.absolute button:has-text("chicken")').first().click();
+    await page.waitForTimeout(500);
 
-    // Click autocomplete suggestion (rendered as <button> elements in dropdown)
-    const autocompleteItem = page.locator('.absolute button:has-text("chicken")').first();
-    await autocompleteItem.click();
+    // Add second ingredient
+    await searchInput.click();
+    await searchInput.fill('rice');
+    await page.waitForTimeout(1000);
+    await page.locator('.absolute button:has-text("rice")').first().click();
     await page.waitForTimeout(500);
 
     // Now navigate to generate page
     await page.goto('/generate');
     await page.waitForLoadState('networkidle');
 
-    // Select cuisines - use flexible selectors
+    // Select cuisine
     const italianCuisine = page.locator('label:has-text("Italian")')
       .or(page.locator('button:has-text("Italian")')
       .or(page.locator('[data-testid="cuisine-italian"]')));
 
     await italianCuisine.click();
 
-    // Generate recipe
-    const generateButton = page.locator('button:has-text("Generate Recipe")')
-      .or(page.locator('button:has-text("Generate")'))
-      .or(page.locator('button[type="submit"]:has-text("Recipe")'));
+    // Generate recipe — button only visible when authenticated
+    const generateButton = page.locator('button:has-text("Generate Fusion Recipe")')
+      .or(page.locator('button:has-text("Generate")'));
 
     await generateButton.click();
 
@@ -183,16 +180,16 @@ test.describe('Critical User Paths', () => {
     // PROD-01: Favorites feature
     // This test requires authentication - create account first
     const testEmail = `fav-test-${Date.now()}@example.com`;
+    const testPassword = 'TestPassword123!';
     await page.goto('/register');
 
-    const emailInput = page.locator('input[name="email"]').or(page.locator('input[type="email"]'));
-    const passwordInput = page.locator('input[name="password"]').or(page.locator('input[type="password"]').first());
-
-    await emailInput.fill(testEmail);
-    await passwordInput.fill('TestPassword123!');
+    await page.locator('#name').fill('Fav Test');
+    await page.locator('#email').fill(testEmail);
+    await page.locator('#password').fill(testPassword);
+    await page.locator('#confirmPassword').fill(testPassword);
     await page.click('button[type="submit"]');
 
-    await page.waitForURL(/\/(|dashboard|recipes|login)/, { timeout: 15000 });
+    await page.waitForURL((url) => !url.pathname.includes('/register'), { timeout: 15000 });
 
     // Go to home and favorite first recipe
     await page.goto('/');
