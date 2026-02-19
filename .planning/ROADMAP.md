@@ -50,7 +50,7 @@
 
 - [x] **Phase 14: Recipe Images** - Generate and display AI food photos for all 27 seeded recipes (completed 2026-02-18)
 - [x] **Phase 15: Pantry UX** - Add ingredient thumbnail images to pantry list and search results (completed 2026-02-18)
-- [ ] **Phase 16: Generation UX** - Multi-step progress animation with transitions and time estimates
+- [x] **Phase 16: Generation UX** - Multi-step progress animation with transitions and time estimates (completed 2026-02-19)
 - [ ] **Phase 17: Ingredient Highlighting** - Visual distinction and substitution flow for missing ingredients
 - [ ] **Phase 18: Favorites Polish** - Functional save/remove CTA, favorites page, and session persistence
 
@@ -146,7 +146,7 @@ Plans:
 | 13. Hero Slider Images | v1.2 | 2/2 | Complete | 2026-02-18 |
 | 14. Recipe Images | 2/2 | Complete   | 2026-02-18 | - |
 | 15. Pantry UX | 1/1 | Complete    | 2026-02-18 | - |
-| 16. Generation UX | v1.3 | 0/1 | Not started | - |
+| 16. Generation UX | 1/1 | Complete   | 2026-02-19 | - |
 | 17. Ingredient Highlighting | v1.3 | 0/2 | Not started | - |
 | 18. Favorites Polish | v1.3 | 0/2 | Not started | - |
 

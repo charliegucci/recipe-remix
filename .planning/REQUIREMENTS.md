@@ -21,9 +21,9 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 
 ### Generation UX
 
-- [ ] **GENX-01**: Multi-step progress animation during recipe generation (Crafting recipe → Validating ingredients → Generating photo)
-- [ ] **GENX-02**: Each progress step has distinct visual transition/animation
-- [ ] **GENX-03**: Progress steps show estimated time remaining per step
+- [x] **GENX-01**: Multi-step progress animation during recipe generation (Crafting recipe → Validating ingredients → Generating photo)
+- [x] **GENX-02**: Each progress step has distinct visual transition/animation
+- [x] **GENX-03**: Progress steps show estimated time remaining per step
 
 ### Ingredient Highlighting
 
@@ -67,9 +67,9 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 | IMG-04 | Phase 14 | Complete |
 | PNTR-01 | Phase 15 | Complete |
 | PNTR-02 | Phase 15 | Complete |
-| GENX-01 | Phase 16 | Pending |
-| GENX-02 | Phase 16 | Pending |
-| GENX-03 | Phase 16 | Pending |
+| GENX-01 | Phase 16 | Complete |
+| GENX-02 | Phase 16 | Complete |
+| GENX-03 | Phase 16 | Complete |
 | INGR-01 | Phase 17 | Pending |
 | INGR-02 | Phase 17 | Pending |
 | INGR-03 | Phase 17 | Pending |

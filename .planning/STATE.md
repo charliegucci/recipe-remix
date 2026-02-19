@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-18)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** v1.3 UX/UI Polish — Phase 15: Pantry UX (complete)
+**Current focus:** v1.3 UX/UI Polish — Phase 16: Generation UX (complete)
 
 ## Current Position
 
-Phase: 15 of 18 (Pantry UX)
+Phase: 16 of 18 (Generation UX)
 Plan: 1 of 1 in current phase
 Status: Phase complete
-Last activity: 2026-02-18 — Completed 15-01 (emoji thumbnails for pantry and ingredient autocomplete)
+Last activity: 2026-02-19 — Completed 16-01 (multi-step generation progress with per-step animations and countdown)
 
-Progress: [███░░░░░░░] 37% (v1.3)
+Progress: [████░░░░░░] 50% (v1.3)
 
 ## Performance Metrics
 
@@ -29,7 +29,7 @@ Progress: [███░░░░░░░] 37% (v1.3)
 |-------|-------|-------|----------|
 | 14. Recipe Images | 2/2 | ~8 min | ~4 min |
 | 15. Pantry UX | 1/1 | 2 min | 2 min |
-| 16. Generation UX | 0/1 | - | - |
+| 16. Generation UX | 1/1 | 2 min | 2 min |
 | 17. Ingredient Highlighting | 0/2 | - | - |
 | 18. Favorites Polish | 0/2 | - | - |
 
@@ -47,6 +47,9 @@ Progress: [███░░░░░░░] 37% (v1.3)
 - [14-02]: KV invalidation extended to 6 recipe list keys (recipes:list:{category}:1) in _seed.post.ts
 - [15-01]: Emoji thumbnails use shared utility ~/utils/ingredientEmoji.ts — emoji spans aria-hidden, ingredient name text carries accessible label
 - [15-01]: PantryList Option B chosen — getIngredientEmoji(name) without category, no composable changes needed
+- [16-01]: Client-side step simulation via setTimeout timers (generating->validating->imaging) cancelled on API resolve — matches rough server timing without blocking
+- [16-01]: stepStartTimes not populated in resumeGeneration() — countdown unavailable for page-refresh edge case, acceptable tradeoff
+- [16-01]: Pure CSS keyframes per step (sparkle/spin-slow/flash) — no external animation library
 
 ### Pending Todos
 
@@ -58,10 +61,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-18
-Stopped at: Completed 15-01-PLAN.md (emoji thumbnails for pantry and ingredient autocomplete)
+Last session: 2026-02-19
+Stopped at: Completed 16-01-PLAN.md (multi-step generation progress with per-step animations and countdown)
 Resume file: None
-Next step: Execute Phase 16 (Generation UX)
+Next step: Execute Phase 17 (Ingredient Highlighting)
 
 ---
-*Last updated: 2026-02-18*
+*Last updated: 2026-02-19*
