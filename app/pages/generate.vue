@@ -77,15 +77,50 @@
             <!-- Ingredients -->
             <div class="mb-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-3">Ingredients</h3>
+
+              <!-- Pantry summary line -->
+              <div class="flex items-center gap-2 mb-3 text-sm text-gray-600">
+                <span class="font-medium text-gray-900">
+                  {{ generatedRecipe.ingredients.filter(i => pantryState.isInPantryByName(i.name)).length }}
+                  of {{ generatedRecipe.ingredients.length }}
+                </span>
+                <span>ingredients in your pantry</span>
+                <span class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden ml-1">
+                  <span
+                    class="block h-full bg-green-400 rounded-full transition-all"
+                    :style="{
+                      width: generatedRecipe.ingredients.length
+                        ? (generatedRecipe.ingredients.filter(i => pantryState.isInPantryByName(i.name)).length / generatedRecipe.ingredients.length * 100) + '%'
+                        : '0%'
+                    }"
+                  ></span>
+                </span>
+              </div>
+
               <ul class="space-y-2">
                 <li
                   v-for="(ingredient, idx) in generatedRecipe.ingredients"
                   :key="idx"
                   class="flex items-start gap-2 text-gray-700"
                 >
-                  <span class="text-orange-600 mt-1">•</span>
-                  <span>
+                  <span
+                    class="mt-1 font-bold leading-none"
+                    :class="pantryState.isInPantryByName(ingredient.name) ? 'text-green-600' : 'text-amber-600'"
+                  >•</span>
+                  <span class="flex-1">
                     {{ ingredient.quantity }}{{ ingredient.unit ? ' ' + ingredient.unit : '' }} {{ ingredient.name }}
+                  </span>
+                  <span
+                    v-if="pantryState.isInPantryByName(ingredient.name)"
+                    class="text-xs px-1.5 py-0.5 bg-green-100 text-green-700 rounded-full font-medium whitespace-nowrap"
+                  >
+                    Have it
+                  </span>
+                  <span
+                    v-else
+                    class="text-xs px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-full font-medium whitespace-nowrap"
+                  >
+                    Missing
                   </span>
                 </li>
               </ul>
