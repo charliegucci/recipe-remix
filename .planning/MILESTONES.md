@@ -65,3 +65,25 @@
 
 ---
 
+
+## v1.3 UX/UI Polish (Shipped: 2026-02-19)
+
+**Phases:** 14-18 | **Plans:** 8 | **LOC:** ~12,200
+**Timeline:** 2 days (2026-02-18 → 2026-02-19)
+**Git range:** `ac34ec8` → `77ed63d`
+
+**Delivered:** Polished visual experience with AI-generated recipe images, engaging generation animations, pantry-aware ingredient highlighting with substitution, emoji thumbnails, and fully functional favorites.
+
+**Key accomplishments:**
+1. AI-generated food photos for all 27 seeded recipes via flux-1-schnell, stored in R2 with graceful gradient fallbacks
+2. Emoji-based ingredient thumbnails in My Pantry list and search autocomplete (120+ mappings)
+3. Multi-step generation progress animation with per-step CSS keyframes and countdown timers
+4. Pantry-aware ingredient highlighting with green "In Pantry" / amber "Missing" badges on recipe pages
+5. Two-mode substitution dialog: AI-suggested replacements biased toward pantry items + manual pantry pick
+6. Prominent favorite heart CTA on recipe detail with size variants and inline remove on favorites page with fade transitions
+
+**Requirements:** 17/17 satisfied (100%)
+**Archives:** `milestones/v1.3-ROADMAP.md`, `milestones/v1.3-REQUIREMENTS.md`
+
+---
+

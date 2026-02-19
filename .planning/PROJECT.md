@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A full-stack web app that generates creative AI fusion recipes from ingredients you already have. Users input their pantry, dietary restrictions, and cuisine preferences, and the app creates unexpected cross-cuisine mashups — validated for food safety and explained with culinary reasoning. Live at remix-recipe.com with CI/CD pipelines, branch protection, and real recipe images in the hero slider. Built on Nuxt 4 + Cloudflare edge infrastructure.
+A full-stack web app that generates creative AI fusion recipes from ingredients you already have. Users input their pantry, dietary restrictions, and cuisine preferences, and the app creates unexpected cross-cuisine mashups — validated for food safety and explained with culinary reasoning. Live at remix-recipe.com with AI-generated recipe photos, pantry-aware ingredient highlighting with substitution, engaging generation animations, and polished favorites management. Built on Nuxt 4 + Cloudflare edge infrastructure.
 
 ## Core Value
 
@@ -55,19 +55,19 @@ Users can make delicious, creative meals from ingredients they already have — 
 - Production URL fully migrated to https://remix-recipe.com — v1.2
 - Hero slider displaying actual recipe images from blob storage — v1.2
 - Graceful gradient fallback for missing/failed recipe images — v1.2
+- AI-generated food photos for all 27 seeded recipes in R2 — v1.3
+- Recipe cards and hero slider display real recipe images — v1.3
+- Emoji thumbnails for ingredients in pantry list and search — v1.3
+- Multi-step generation progress with per-step animations and countdown — v1.3
+- Pantry-aware ingredient highlighting (In Pantry / Missing badges) — v1.3
+- AI-suggested substitutions biased toward user's pantry contents — v1.3
+- Manual pantry-pick substitution for missing ingredients — v1.3
+- Prominent favorite heart CTA on recipe detail page with size variants — v1.3
+- Inline remove from favorites page with fade-out transitions — v1.3
 
 ### Active
 
-## Current Milestone: v1.3 UX/UI Polish
-
-**Goal:** Polish the visual experience with real recipe images, engaging generation animations, smart ingredient highlighting with substitution, pantry thumbnails, and working favorites.
-
-**Target features:**
-- AI-generated images for all 27 seeded recipes (replace placeholders)
-- Enhanced generation progress animations (multi-step with visual flair)
-- Missing ingredient highlighting with AI + manual substitution
-- Ingredient thumbnail images in My Pantry
-- Fully functional Favorites save/remove with clear CTAs
+(No active milestone — all v1.0-v1.3 requirements shipped)
 
 ### Out of Scope
 
@@ -84,7 +84,7 @@ Users can make delicious, creative meals from ingredients they already have — 
 
 ## Context
 
-**Shipped v1.2 CI/CD, Branching & Production Polish** with ~11,000+ LOC (TypeScript/Vue/JS/CSS).
+**Shipped v1.3 UX/UI Polish** with ~12,200 LOC (TypeScript/Vue/JS/CSS).
 **Production URL:** https://remix-recipe.com
 
 **Tech stack:** Nuxt 4 (compat layer) + NuxtHub + Cloudflare D1/R2/KV + Drizzle ORM + Better Auth + Tailwind v4 + Workers AI (Llama 3.1 70B + flux-1-schnell) + @nuxt/image.
@@ -143,6 +143,11 @@ Users can make delicious, creative meals from ingredients they already have — 
 | wrangler pages deploy for CI | NuxtHub CLI doesn't support headless CI | ✓ Good — config-based deploys via wrangler.jsonc |
 | Public /api/images/ route for blob serving | /_hub/blob/ requires NuxtHub authorization | ✓ Good — simple hubBlob().serve() wrapper |
 | Plain img tags for blob images | NuxtImg (IPX) can't resolve blob storage paths | ✓ Good — avoids IPX routing issues |
+| Emoji thumbnails over real images for ingredients | Zero network requests, instant render, 120+ mappings | ✓ Good — lightweight and recognizable |
+| Client-side step simulation for generation progress | Avoids SSE/WebSocket complexity, setTimeout cancelled on API resolve | ✓ Good — feels responsive without server changes |
+| Bidirectional substring matching for pantry detection | Consistent with Phase 3 pantry-to-recipe matching | ✓ Good — catches partial matches both ways |
+| Two-tab substitution dialog (AI Suggest + Manual Pick) | Different user intents: "suggest something" vs "I know what I want" | ✓ Good — covers both workflows |
+| FavoriteButton size variants (sm/lg) | sm for RecipeCard overlay, lg for detail page with text label | ✓ Good — single component, two contexts |
 
 ---
-*Last updated: 2026-02-18 after v1.2 milestone*
+*Last updated: 2026-02-19 after v1.3 milestone*
