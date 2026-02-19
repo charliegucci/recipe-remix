@@ -96,6 +96,14 @@ None - no external service configuration required.
 - Phase 18 Plan 02 (favorites page improvements) can proceed — `favorites.vue` has uncommitted enhancements (inline remove + TransitionGroup animation) ready for that plan
 - Pre-existing TypeScript errors in GenerationProgress.vue and generate.post.ts should be addressed in a future cleanup plan
 
+## Self-Check: PASSED
+
+- FOUND: app/components/FavoriteButton.vue
+- FOUND: app/pages/recipe/[slug].vue
+- FOUND: .planning/phases/18-favorites-polish/18-01-SUMMARY.md
+- FOUND: commit bf483d7 (feat(18-01): add size variant to FavoriteButton and prominent CTA on recipe detail)
+- FOUND: commit 8eccfd5 (docs(18-01): complete FavoriteButton size variants + recipe detail heart CTA plan)
+
 ---
 *Phase: 18-favorites-polish*
 *Completed: 2026-02-19*

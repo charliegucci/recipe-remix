@@ -35,8 +35,8 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 ### Favorites
 
 - [x] **FAV-01**: Recipe detail page has a clear save/remove favorite CTA (heart/bookmark)
-- [ ] **FAV-02**: Favorites page lists all saved recipes with recipe cards
-- [ ] **FAV-03**: User can remove a recipe from favorites on the Favorites page
+- [x] **FAV-02**: Favorites page lists all saved recipes with recipe cards
+- [x] **FAV-03**: User can remove a recipe from favorites on the Favorites page
 - [x] **FAV-04**: Favorite state persists across sessions (synced with server for logged-in users)
 
 ## Future Requirements
@@ -75,8 +75,8 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 | INGR-03 | Phase 17 | Complete |
 | INGR-04 | Phase 17 | Complete |
 | FAV-01 | Phase 18 | Complete |
-| FAV-02 | Phase 18 | Pending |
-| FAV-03 | Phase 18 | Pending |
+| FAV-02 | Phase 18 | Complete |
+| FAV-03 | Phase 18 | Complete |
 | FAV-04 | Phase 18 | Complete |
 
 **Coverage:**

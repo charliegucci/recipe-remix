@@ -128,7 +128,7 @@ Plans:
 
 Plans:
 - [x] 18-01-PLAN.md — Add prominent favorite CTA to recipe detail page with size-variant FavoriteButton
-- [ ] 18-02-PLAN.md — Enhance Favorites page with inline remove button and fade-out transitions
+- [x] 18-02-PLAN.md — Enhance Favorites page with inline remove button and fade-out transitions
 
 ## Progress
 
@@ -151,7 +151,7 @@ Plans:
 | 15. Pantry UX | 1/1 | Complete    | 2026-02-18 | - |
 | 16. Generation UX | 1/1 | Complete    | 2026-02-19 | - |
 | 17. Ingredient Highlighting | 2/2 | Complete    | 2026-02-19 | - |
-| 18. Favorites Polish | v1.3 | 1/2 | In progress | - |
+| 18. Favorites Polish | v1.3 | 2/2 | Complete | 2026-02-19 |
 
 ---
-*Last updated: 2026-02-19 — 18-01 complete*
+*Last updated: 2026-02-19 — v1.3 milestone complete (18-02 done)*
