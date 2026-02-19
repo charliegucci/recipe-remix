@@ -147,7 +147,7 @@ Plans:
 | 14. Recipe Images | 2/2 | Complete   | 2026-02-18 | - |
 | 15. Pantry UX | 1/1 | Complete    | 2026-02-18 | - |
 | 16. Generation UX | 1/1 | Complete    | 2026-02-19 | - |
-| 17. Ingredient Highlighting | 2/2 | Complete   | 2026-02-19 | - |
+| 17. Ingredient Highlighting | 2/2 | Complete    | 2026-02-19 | - |
 | 18. Favorites Polish | v1.3 | 0/2 | Not started | - |
 
 ---
