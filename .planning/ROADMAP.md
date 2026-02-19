@@ -121,11 +121,11 @@ Plans:
   2. The Favorites page lists all saved recipes as recipe cards with titles and images
   3. User can remove a recipe from the Favorites page without navigating to the recipe detail
   4. Favorite state is the same whether the user refreshes or returns in a new session (server-synced for logged-in users)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 18-01: Add prominent favorite CTA to recipe detail and wire to existing favorites API with optimistic UI
-- [ ] 18-02: Build Favorites page with recipe card grid and inline remove functionality
+- [ ] 18-01-PLAN.md — Add prominent favorite CTA to recipe detail page with size-variant FavoriteButton
+- [ ] 18-02-PLAN.md — Enhance Favorites page with inline remove button and fade-out transitions
 
 ## Progress
 
