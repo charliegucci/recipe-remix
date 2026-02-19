@@ -22,6 +22,15 @@ const { data: favorites, pending, error, refresh } = await useAsyncData(
 const isAuthenticated = computed(() => session.value?.user && !(session.value.user as any).isAnonymous)
 const recipes = computed(() => favorites.value?.recipes || [])
 
+// Use useFavorites composable for inline remove action
+const { toggleFavorite } = useFavorites()
+
+async function removeRecipe(recipeId: string) {
+  await toggleFavorite(recipeId)
+  // Refresh the favorites list from server to stay in sync
+  await refresh()
+}
+
 // SEO meta tags
 useServerSeoMeta({
   title: 'Your Favorite Recipes | Recipe Remix',
@@ -79,14 +88,43 @@ useHead({
         </NuxtLink>
       </div>
 
-      <!-- Recipe Grid -->
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <RecipeCard
+      <!-- Recipe Grid with transition for smooth removal animation -->
+      <TransitionGroup
+        v-else
+        name="favorites-fade"
+        tag="div"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <div
           v-for="recipe in recipes"
           :key="recipe.id"
-          :recipe="(recipe as any)"
-        />
-      </div>
+          class="relative group"
+        >
+          <RecipeCard
+            :recipe="(recipe as any)"
+          />
+          <!-- Inline Remove Button -->
+          <button
+            class="absolute top-3 right-3 z-20 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-sm hover:bg-red-50 hover:text-red-600 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+            aria-label="Remove from favorites"
+            @click.prevent.stop="removeRecipe(recipe.id)"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </TransitionGroup>
     </div>
   </div>
 </template>
+
+<style scoped>
+.favorites-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.favorites-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+</style>
