@@ -9,7 +9,7 @@
 - ✅ **v1.0 MVP** — Phases 1-6 (shipped 2026-02-11) | [Archive](milestones/v1.0-ROADMAP.md)
 - ✅ **v1.1 Test on Production** — Phases 7-10 (shipped 2026-02-13) | [Archive](milestones/v1.1-ROADMAP.md)
 - ✅ **v1.2 CI/CD, Branching & Production Polish** — Phases 11-13 (shipped 2026-02-18) | [Archive](milestones/v1.2-ROADMAP.md)
-- 🚧 **v1.3 UX/UI Polish** — Phases 14-18 (in progress)
+- ✅ **v1.3 UX/UI Polish** — Phases 14-18 (shipped 2026-02-19)
 
 ## Phases
 
@@ -44,7 +44,8 @@
 
 </details>
 
-### 🚧 v1.3 UX/UI Polish (In Progress)
+<details>
+<summary>✅ v1.3 UX/UI Polish (Phases 14-18) — SHIPPED 2026-02-19</summary>
 
 **Milestone Goal:** Polish the visual experience with real recipe images, engaging generation animations, smart ingredient highlighting with substitution, pantry thumbnails, and working favorites.
 
@@ -52,7 +53,9 @@
 - [x] **Phase 15: Pantry UX** - Add ingredient thumbnail images to pantry list and search results (completed 2026-02-18)
 - [x] **Phase 16: Generation UX** - Multi-step progress animation with transitions and time estimates (completed 2026-02-19)
 - [x] **Phase 17: Ingredient Highlighting** - Visual distinction and substitution flow for missing ingredients (completed 2026-02-19)
-- [ ] **Phase 18: Favorites Polish** - Functional save/remove CTA, favorites page, and session persistence
+- [x] **Phase 18: Favorites Polish** - Functional save/remove CTA, favorites page, and session persistence (completed 2026-02-19)
+
+</details>
 
 ## Phase Details
 
@@ -124,7 +127,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 18-01-PLAN.md — Add prominent favorite CTA to recipe detail page with size-variant FavoriteButton
+- [x] 18-01-PLAN.md — Add prominent favorite CTA to recipe detail page with size-variant FavoriteButton
 - [ ] 18-02-PLAN.md — Enhance Favorites page with inline remove button and fade-out transitions
 
 ## Progress
@@ -148,7 +151,7 @@ Plans:
 | 15. Pantry UX | 1/1 | Complete    | 2026-02-18 | - |
 | 16. Generation UX | 1/1 | Complete    | 2026-02-19 | - |
 | 17. Ingredient Highlighting | 2/2 | Complete    | 2026-02-19 | - |
-| 18. Favorites Polish | v1.3 | 0/2 | Not started | - |
+| 18. Favorites Polish | v1.3 | 1/2 | In progress | - |
 
 ---
-*Last updated: 2026-02-18 — v1.3 roadmap created*
+*Last updated: 2026-02-19 — 18-01 complete*

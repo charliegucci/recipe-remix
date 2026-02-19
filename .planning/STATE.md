@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-18)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** v1.3 UX/UI Polish — Phase 17: Ingredient Highlighting (complete)
+**Current focus:** v1.3 UX/UI Polish — Phase 18: Favorites Polish (complete)
 
 ## Current Position
 
 Phase: 18 of 18 (Favorites Polish)
-Plan: 0 of 2 in current phase
-Status: Phase 17 complete, Phase 18 pending
-Last activity: 2026-02-19 — Completed 17-02 (pantry-aware substitution dialog with AI suggest and manual pantry pick)
+Plan: 2 of 2 in current phase
+Status: Phase 18 complete — v1.3 milestone complete
+Last activity: 2026-02-19 — Completed 18-02 (favorites page inline remove button with fade-out transitions)
 
-Progress: [██████░░░░] 65% (v1.3)
+Progress: [████████░░] 80% (v1.3 complete)
 
 ## Performance Metrics
 
 **Velocity (v1.3 reference):**
-- Plans completed this milestone: 3
+- Plans completed this milestone: 5
 - Duration (14-01): 3 min, Duration (14-02): ~5 min, Duration (15-01): 2 min
-- Total execution time (v1.3 so far): ~10 min
+- Total execution time (v1.3 so far): ~13 min
 
 **By Phase (v1.3):**
 
@@ -31,7 +31,7 @@ Progress: [██████░░░░] 65% (v1.3)
 | 15. Pantry UX | 1/1 | 2 min | 2 min |
 | 16. Generation UX | 1/1 | 2 min | 2 min |
 | 17. Ingredient Highlighting | 2/2 | ~5 min | ~2.5 min |
-| 18. Favorites Polish | 0/2 | - | - |
+| 18. Favorites Polish | 2/2 | ~3 min | ~1.5 min |
 
 ## Accumulated Context
 
@@ -56,6 +56,11 @@ Progress: [██████░░░░] 65% (v1.3)
 - [17-02]: Pass pantryItems as optional string array to substitute API; fromPantry defaults to false in parser for backward compatibility
 - [17-02]: Manual pantry pick emits empty updatedInstructions; [slug].vue handler already skips instruction replacement when empty — no handler changes needed
 - [17-02]: Two-tab dialog: AI Suggest (default, pantry-biased) + Pick from Pantry (immediate, no AI call)
+- [18-01]: FavoriteButton lg variant uses v-if/v-else on sizeVariant to keep sm template byte-for-byte identical — avoids RecipeCard regressions
+- [18-01]: ClientOnly wraps FavoriteButton on detail page — requiresAuth is client-only auth state, SSR would render wrong initial state
+- [18-02]: Inline remove button positioned as absolute overlay on card wrapper (z-20) rather than modifying RecipeCard — preserves component boundary
+- [18-02]: @click.prevent.stop on remove button blocks NuxtLink navigation while triggering removal
+- [18-02]: After toggleFavorite(), call refresh() to sync server state — optimistic removal + server confirmation
 
 ### Pending Todos
 
@@ -63,14 +68,14 @@ None.
 
 ### Blockers/Concerns
 
-- Favorites backend exists from v1.0 but UX is incomplete — audit API before Phase 18
+None.
 
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 17-02-PLAN.md (pantry-aware substitution dialog with AI suggest and manual pantry pick)
+Stopped at: Completed 18-02-PLAN.md (favorites page inline remove button with fade-out transitions)
 Resume file: None
-Next step: Execute Phase 18 Plan 01 (favorites polish)
+Next step: v1.3 milestone complete — tag v1.3 and plan next milestone
 
 ---
-*Last updated: 2026-02-19 (17-02 complete)*
+*Last updated: 2026-02-19 (18-02 complete — v1.3 milestone done)*
