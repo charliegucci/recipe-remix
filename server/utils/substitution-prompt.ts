@@ -13,6 +13,7 @@ interface SubstitutionPromptParams {
   explanation: string | null
   ingredientToReplace: string
   reason: 'allergy' | 'unavailable' | 'preference'
+  pantryItems?: string[]
 }
 
 export function buildSubstitutionPrompt(params: SubstitutionPromptParams): string {
@@ -23,7 +24,8 @@ export function buildSubstitutionPrompt(params: SubstitutionPromptParams): strin
     instructions,
     explanation,
     ingredientToReplace,
-    reason
+    reason,
+    pantryItems
   } = params
 
   const reasonText = {
@@ -44,13 +46,17 @@ export function buildSubstitutionPrompt(params: SubstitutionPromptParams): strin
     ? `\nFusion explanation: ${explanation}`
     : ''
 
+  const pantrySection = pantryItems && pantryItems.length > 0
+    ? `\nThe user has the following items in their pantry:\n${pantryItems.map(item => `- ${item}`).join('\n')}\nSTRONGLY PREFER suggesting a substitute from the user's pantry items above. If a good match exists in the pantry, use it. If no pantry item is suitable, suggest the best general substitute and note it's not in the user's pantry.\n`
+    : ''
+
   const systemPrompt = 'You are a professional chef specializing in ingredient substitutions. You understand how ingredients interact in recipes and can suggest accurate replacements that maintain the dish\'s flavor profile and structure.'
 
   const userPrompt = `I need to substitute "${ingredientToReplace}" in the following recipe ${reasonText}.
 
 Recipe: ${recipeTitle}
 Description: ${recipeDescription}${explanationSection}
-
+${pantrySection}
 Current ingredients:
 ${ingredientsList}
 
@@ -71,7 +77,8 @@ Return your response as a JSON object with EXACTLY this structure:
     "Step 2 (string)"
   ],
   "updatedExplanation": "Updated 2-3 sentence explanation of why this fusion works with the substitution (string)",
-  "substitutionNote": "Brief note about why this substitute works well here (string)"
+  "substitutionNote": "Brief note about why this substitute works well here (string)",
+  "fromPantry": true
 }
 
 Requirements:
@@ -79,6 +86,7 @@ Requirements:
 - updatedInstructions must have the same number of steps as the original
 - Only modify instructions that reference the replaced ingredient
 - The substitutionNote should explain the flavor/texture tradeoffs
+- Set "fromPantry" to true if the substitute was chosen from the user's pantry items, false otherwise
 ${reason === 'allergy' ? '- CRITICAL: The substitute must be safe for someone with an allergy to ' + ingredientToReplace : ''}
 
 Return ONLY valid JSON. No markdown, no code blocks, no extra text.`

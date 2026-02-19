@@ -13,6 +13,7 @@ export interface ParsedSubstitution {
   updatedInstructions: string[]
   updatedExplanation: string
   substitutionNote: string
+  fromPantry?: boolean
 }
 
 interface ParseResult {
@@ -80,6 +81,9 @@ export function parseSubstitutionResponse(raw: string): ParseResult {
     }
   }
 
+  // fromPantry: optional boolean, default false if missing
+  const fromPantry = typeof parsed.fromPantry === 'boolean' ? parsed.fromPantry : false
+
   return {
     success: true,
     substitution: {
@@ -90,7 +94,8 @@ export function parseSubstitutionResponse(raw: string): ParseResult {
       },
       updatedInstructions: parsed.updatedInstructions,
       updatedExplanation,
-      substitutionNote: parsed.substitutionNote.trim()
+      substitutionNote: parsed.substitutionNote.trim(),
+      fromPantry
     }
   }
 }

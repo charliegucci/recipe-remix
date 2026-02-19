@@ -17,6 +17,7 @@ import { logAnalyticsEvent } from '../../../utils/analytics'
 interface SubstituteRequest {
   ingredientName: string
   reason: 'allergy' | 'unavailable' | 'preference'
+  pantryItems?: string[]
 }
 
 export default defineEventHandler(async (event) => {
@@ -40,7 +41,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody<SubstituteRequest>(event)
-  const { ingredientName, reason } = body
+  const { ingredientName, reason, pantryItems } = body
 
   if (!ingredientName || typeof ingredientName !== 'string') {
     throw createError({
@@ -95,7 +96,8 @@ export default defineEventHandler(async (event) => {
     instructions,
     explanation: recipe.explanation || null,
     ingredientToReplace: ingredientName,
-    reason
+    reason,
+    pantryItems: Array.isArray(pantryItems) ? pantryItems : undefined
   })
 
   // Call Workers AI
