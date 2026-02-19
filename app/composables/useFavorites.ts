@@ -23,7 +23,7 @@ export function useFavorites() {
   if (!session && process.client) {
     // Use getSession instead of useSession for composables
     authClient.getSession().then(s => {
-      session = s
+      session = s?.data || s
     })
   }
 
@@ -34,7 +34,8 @@ export function useFavorites() {
 
     // Get session if not already loaded
     if (!session) {
-      session = await authClient.getSession()
+      const sessionResult = await authClient.getSession()
+      session = sessionResult?.data || sessionResult
     }
 
     // Check if user is authenticated and not anonymous
