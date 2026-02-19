@@ -217,9 +217,19 @@ export function usePantry() {
     }
   }
 
-  // Check if ingredient is in pantry
+  // Check if ingredient is in pantry by ID
   function isInPantry(ingredientId: string): boolean {
     return pantry.value.some(item => item.ingredientId === ingredientId)
+  }
+
+  // Check if ingredient is in pantry by name (case-insensitive substring matching)
+  // Checks both directions: pantry item name includes ingredient name OR ingredient name includes pantry item name
+  function isInPantryByName(ingredientName: string): boolean {
+    const lowerName = ingredientName.toLowerCase()
+    return pantry.value.some(item => {
+      const lowerItem = (item.name || '').toLowerCase()
+      return lowerItem.includes(lowerName) || lowerName.includes(lowerItem)
+    })
   }
 
   return {
@@ -230,6 +240,7 @@ export function usePantry() {
     removeIngredient,
     toggleRestriction,
     isInPantry,
+    isInPantryByName,
     isAuthenticated
   }
 }

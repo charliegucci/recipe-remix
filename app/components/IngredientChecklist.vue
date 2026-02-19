@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
+import { usePantry } from '~/composables/usePantry'
 
 interface Ingredient {
   name: string
@@ -21,6 +22,9 @@ const emit = defineEmits<{
 
 // Initialize as empty object, hydrate from localStorage on client mount
 const checked = ref<Record<number, boolean>>({})
+
+// Pantry-aware highlighting
+const { isInPantryByName } = usePantry()
 
 // SSR-safe: Only access localStorage after component is mounted
 onMounted(() => {
@@ -62,6 +66,16 @@ function clearAll() {
     console.error('Failed to clear ingredient checklist:', error)
   }
 }
+
+function handleRowClick(index: number, ingredientName: string, inPantry: boolean) {
+  // For missing ingredients on AI recipes, tapping triggers substitution
+  if (!inPantry && props.isAiGenerated) {
+    emit('substitute', ingredientName)
+  } else {
+    // For pantry ingredients (or non-AI recipes), toggle the checklist
+    toggleIngredient(index)
+  }
+}
 </script>
 
 <template>
@@ -81,12 +95,15 @@ function clearAll() {
       <li
         v-for="(ingredient, index) in ingredients"
         :key="index"
-        @click="toggleIngredient(index)"
+        @click="handleRowClick(index, ingredient.name, isInPantryByName(ingredient.name))"
         class="flex items-center min-h-12 py-3 px-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors rounded"
-        :class="{ 'bg-gray-50': checked[index] }"
+        :class="[
+          checked[index] ? 'bg-gray-50' : '',
+          !isInPantryByName(ingredient.name) && !checked[index] ? 'border-l-4 border-amber-400 bg-amber-50/50' : ''
+        ]"
       >
         <!-- Custom checkbox -->
-        <div class="flex-shrink-0 mr-4">
+        <div class="flex-shrink-0 mr-4" @click.stop="toggleIngredient(index)">
           <div
             class="w-6 h-6 border-2 rounded flex items-center justify-center transition-all"
             :class="
@@ -114,7 +131,7 @@ function clearAll() {
 
         <!-- Ingredient text -->
         <div
-          class="flex-1 text-base"
+          class="flex-1 text-base min-w-0"
           :class="{
             'line-through text-gray-400': checked[index],
             'text-gray-900': !checked[index]
@@ -129,7 +146,25 @@ function clearAll() {
           <span>{{ ingredient.name }}</span>
         </div>
 
-        <!-- Swap icon for AI recipes -->
+        <!-- Pantry status badges -->
+        <div v-if="!checked[index]" class="flex-shrink-0 ml-2">
+          <!-- In Pantry badge -->
+          <span
+            v-if="isInPantryByName(ingredient.name)"
+            class="text-xs px-1.5 py-0.5 bg-green-100 text-green-700 rounded-full font-medium"
+          >
+            In Pantry
+          </span>
+          <!-- Missing badge -->
+          <span
+            v-else
+            class="text-xs px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-full font-medium"
+          >
+            Missing
+          </span>
+        </div>
+
+        <!-- Swap icon for AI recipes (existing behavior preserved) -->
         <button
           v-if="isAiGenerated"
           @click.stop="emit('substitute', ingredient.name)"
