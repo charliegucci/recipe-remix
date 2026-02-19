@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-18)
 
 **Core value:** Users can make delicious, creative meals from ingredients they already have
-**Current focus:** v1.3 UX/UI Polish — Phase 16: Generation UX (complete)
+**Current focus:** v1.3 UX/UI Polish — Phase 17: Ingredient Highlighting (complete)
 
 ## Current Position
 
-Phase: 17 of 18 (Ingredient Highlighting)
-Plan: 1 of 2 in current phase
-Status: Plan 1 complete, Plan 2 pending
-Last activity: 2026-02-19 — Completed 17-01 (pantry-aware ingredient highlighting in IngredientChecklist and generate result page)
+Phase: 18 of 18 (Favorites Polish)
+Plan: 0 of 2 in current phase
+Status: Phase 17 complete, Phase 18 pending
+Last activity: 2026-02-19 — Completed 17-02 (pantry-aware substitution dialog with AI suggest and manual pantry pick)
 
-Progress: [█████░░░░░] 55% (v1.3)
+Progress: [██████░░░░] 65% (v1.3)
 
 ## Performance Metrics
 
@@ -30,7 +30,7 @@ Progress: [█████░░░░░] 55% (v1.3)
 | 14. Recipe Images | 2/2 | ~8 min | ~4 min |
 | 15. Pantry UX | 1/1 | 2 min | 2 min |
 | 16. Generation UX | 1/1 | 2 min | 2 min |
-| 17. Ingredient Highlighting | 1/2 | 2 min | 2 min |
+| 17. Ingredient Highlighting | 2/2 | ~5 min | ~2.5 min |
 | 18. Favorites Polish | 0/2 | - | - |
 
 ## Accumulated Context
@@ -53,6 +53,9 @@ Progress: [█████░░░░░] 55% (v1.3)
 - [17-01]: isInPantryByName uses bidirectional substring matching (both directions) — consistent with Phase 3 pantry-to-recipe matching
 - [17-01]: Tapping missing ingredient row on AI recipes triggers substitute; tapping pantry/checked rows toggles checklist
 - [17-01]: Generate page ingredient highlighting is informational only — substitution accessible via View Full Recipe
+- [17-02]: Pass pantryItems as optional string array to substitute API; fromPantry defaults to false in parser for backward compatibility
+- [17-02]: Manual pantry pick emits empty updatedInstructions; [slug].vue handler already skips instruction replacement when empty — no handler changes needed
+- [17-02]: Two-tab dialog: AI Suggest (default, pantry-biased) + Pick from Pantry (immediate, no AI call)
 
 ### Pending Todos
 
@@ -65,9 +68,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 17-01-PLAN.md (pantry-aware ingredient highlighting in IngredientChecklist and generate result page)
+Stopped at: Completed 17-02-PLAN.md (pantry-aware substitution dialog with AI suggest and manual pantry pick)
 Resume file: None
-Next step: Execute Phase 17 Plan 02 (substitution dialog)
+Next step: Execute Phase 18 Plan 01 (favorites polish)
 
 ---
-*Last updated: 2026-02-19*
+*Last updated: 2026-02-19 (17-02 complete)*

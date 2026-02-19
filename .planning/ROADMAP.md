@@ -51,7 +51,7 @@
 - [x] **Phase 14: Recipe Images** - Generate and display AI food photos for all 27 seeded recipes (completed 2026-02-18)
 - [x] **Phase 15: Pantry UX** - Add ingredient thumbnail images to pantry list and search results (completed 2026-02-18)
 - [x] **Phase 16: Generation UX** - Multi-step progress animation with transitions and time estimates (completed 2026-02-19)
-- [ ] **Phase 17: Ingredient Highlighting** - Visual distinction and substitution flow for missing ingredients
+- [x] **Phase 17: Ingredient Highlighting** - Visual distinction and substitution flow for missing ingredients (completed 2026-02-19)
 - [ ] **Phase 18: Favorites Polish** - Functional save/remove CTA, favorites page, and session persistence
 
 ## Phase Details
@@ -147,7 +147,7 @@ Plans:
 | 14. Recipe Images | 2/2 | Complete   | 2026-02-18 | - |
 | 15. Pantry UX | 1/1 | Complete    | 2026-02-18 | - |
 | 16. Generation UX | 1/1 | Complete    | 2026-02-19 | - |
-| 17. Ingredient Highlighting | 1/2 | In Progress|  | - |
+| 17. Ingredient Highlighting | 2/2 | Complete   | 2026-02-19 | - |
 | 18. Favorites Polish | v1.3 | 0/2 | Not started | - |
 
 ---
