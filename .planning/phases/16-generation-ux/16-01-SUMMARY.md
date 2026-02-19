@@ -75,7 +75,7 @@ Each task was committed atomically:
 
 1. **Task 1: Add simulated step transitions and enhanced GenerationProgress with animations and per-step countdowns** - `5a51e86` (feat)
 
-**Plan metadata:** TBD (docs: complete plan)
+**Plan metadata:** `14f9386` (docs: complete plan)
 
 ## Files Created/Modified
 - `app/composables/useGenerate.ts` - Added stepStartTimes ref, setTimeout-based step simulation (generating->validating->imaging), timer cleanup on resolve/error
