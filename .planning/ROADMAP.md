@@ -106,11 +106,11 @@ Plans:
   2. Tapping a missing ingredient reveals a substitution panel or popover
   3. The substitution panel shows AI-suggested replacements sourced from the user's actual pantry contents
   4. User can select a pantry item as a manual replacement, updating the ingredient display on the recipe
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 17-01: Add missing-ingredient detection and visual highlighting to recipe result page
-- [ ] 17-02: Build substitution panel with AI suggestions and manual pantry-pick selection
+- [ ] 17-01-PLAN.md — Add missing-ingredient detection and visual highlighting to recipe detail and generate result pages
+- [ ] 17-02-PLAN.md — Build pantry-aware substitution panel with AI suggestions and manual pantry-pick selection
 
 ### Phase 18: Favorites Polish
 **Goal**: Saving and revisiting favorite recipes works reliably — users can build a personal collection and manage it
