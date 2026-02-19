@@ -11,7 +11,7 @@
     </div>
 
     <!-- Resume Detection - Show previous generation if exists -->
-    <div v-if="mounted && (status === 'complete' || status === 'generating' || status === 'validating')">
+    <div v-if="mounted && (status === 'complete' || status === 'generating' || status === 'validating' || status === 'imaging')">
       <!-- Result Section -->
       <div v-if="status === 'complete' && generatedRecipe" class="space-y-6">
         <!-- Recipe Card -->
@@ -128,9 +128,9 @@
       </div>
 
       <!-- Progress Section -->
-      <div v-else-if="status === 'generating' || status === 'validating'" class="space-y-6">
+      <div v-else-if="status === 'generating' || status === 'validating' || status === 'imaging'" class="space-y-6">
         <div class="bg-white border border-gray-200 rounded-lg p-6">
-          <LazyGenerationProgress :status="status" :error-message="errorMessage" :start-time="startTime" />
+          <LazyGenerationProgress :status="status" :error-message="errorMessage" :start-time="startTime" :step-start-times="stepStartTimes" />
         </div>
         <button
           @click="handleReset"
@@ -263,7 +263,7 @@ onMounted(() => {
 const pantryState = usePantry()
 
 // Generation state
-const { status, generatedRecipe, errorMessage, startTime, generate, reset, resumeGeneration } = useGenerate()
+const { status, generatedRecipe, errorMessage, startTime, stepStartTimes, generate, reset, resumeGeneration } = useGenerate()
 
 // Selected cuisines
 const selectedCuisines = ref<string[]>([])

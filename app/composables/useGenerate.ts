@@ -35,6 +35,9 @@ export function useGenerate() {
   const errorMessage = ref<string>('')
   const startTime = ref<number | null>(null)
 
+  // Step start timestamps for per-step countdown timers
+  const stepStartTimes = ref<Record<string, number>>({})
+
   // Persist generationId to localStorage (SSR-safe)
   const generationId = useLocalStorage<string | null>('lastGenerationId', null, {
     initOnMounted: true
@@ -52,6 +55,38 @@ export function useGenerate() {
     errorMessage.value = ''
     generatedRecipe.value = null
     startTime.value = Date.now()
+    stepStartTimes.value = { generating: Date.now() }
+
+    // Step transition timers for simulated multi-step progress
+    let validatingTimer: ReturnType<typeof setTimeout> | null = null
+    let imagingTimer: ReturnType<typeof setTimeout> | null = null
+
+    // Transition to 'validating' after ~5s
+    validatingTimer = setTimeout(() => {
+      if (status.value === 'generating') {
+        status.value = 'validating'
+        stepStartTimes.value = { ...stepStartTimes.value, validating: Date.now() }
+      }
+    }, 5000)
+
+    // Transition to 'imaging' after ~12s
+    imagingTimer = setTimeout(() => {
+      if (status.value === 'validating') {
+        status.value = 'imaging'
+        stepStartTimes.value = { ...stepStartTimes.value, imaging: Date.now() }
+      }
+    }, 12000)
+
+    function cancelTimers() {
+      if (validatingTimer !== null) {
+        clearTimeout(validatingTimer)
+        validatingTimer = null
+      }
+      if (imagingTimer !== null) {
+        clearTimeout(imagingTimer)
+        imagingTimer = null
+      }
+    }
 
     try {
       const response = await $fetch<{
@@ -62,6 +97,9 @@ export function useGenerate() {
         method: 'POST',
         body: { ingredients, cuisines, restrictions }
       })
+
+      // Cancel pending step timers — API resolved
+      cancelTimers()
 
       // Store generation ID for resume
       generationId.value = response.generationId
@@ -86,6 +124,9 @@ export function useGenerate() {
           })
       }
     } catch (error: any) {
+      // Cancel pending step timers on error
+      cancelTimers()
+
       status.value = 'error'
 
       // Parse error for user-friendly message
@@ -113,11 +154,14 @@ export function useGenerate() {
     errorMessage.value = ''
     generationId.value = null
     startTime.value = null
+    stepStartTimes.value = {}
   }
 
   /**
    * Resume a previous generation from localStorage
    * Called on page mount
+   * Note: stepStartTimes are NOT populated during resume — countdown is unavailable
+   * for resumed sessions (edge case: page refresh mid-generation).
    */
   async function resumeGeneration(): Promise<void> {
     const id = generationId.value
@@ -216,6 +260,7 @@ export function useGenerate() {
     errorMessage,
     generationId,
     startTime,
+    stepStartTimes,
     generate,
     reset,
     resumeGeneration,
