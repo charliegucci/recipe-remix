@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-02-18)
 
 ## Current Position
 
-Phase: 16 of 18 (Generation UX)
-Plan: 1 of 1 in current phase
-Status: Phase complete
-Last activity: 2026-02-19 — Completed 16-01 (multi-step generation progress with per-step animations and countdown)
+Phase: 17 of 18 (Ingredient Highlighting)
+Plan: 1 of 2 in current phase
+Status: Plan 1 complete, Plan 2 pending
+Last activity: 2026-02-19 — Completed 17-01 (pantry-aware ingredient highlighting in IngredientChecklist and generate result page)
 
-Progress: [████░░░░░░] 50% (v1.3)
+Progress: [█████░░░░░] 55% (v1.3)
 
 ## Performance Metrics
 
@@ -30,7 +30,7 @@ Progress: [████░░░░░░] 50% (v1.3)
 | 14. Recipe Images | 2/2 | ~8 min | ~4 min |
 | 15. Pantry UX | 1/1 | 2 min | 2 min |
 | 16. Generation UX | 1/1 | 2 min | 2 min |
-| 17. Ingredient Highlighting | 0/2 | - | - |
+| 17. Ingredient Highlighting | 1/2 | 2 min | 2 min |
 | 18. Favorites Polish | 0/2 | - | - |
 
 ## Accumulated Context
@@ -50,6 +50,9 @@ Progress: [████░░░░░░] 50% (v1.3)
 - [16-01]: Client-side step simulation via setTimeout timers (generating->validating->imaging) cancelled on API resolve — matches rough server timing without blocking
 - [16-01]: stepStartTimes not populated in resumeGeneration() — countdown unavailable for page-refresh edge case, acceptable tradeoff
 - [16-01]: Pure CSS keyframes per step (sparkle/spin-slow/flash) — no external animation library
+- [17-01]: isInPantryByName uses bidirectional substring matching (both directions) — consistent with Phase 3 pantry-to-recipe matching
+- [17-01]: Tapping missing ingredient row on AI recipes triggers substitute; tapping pantry/checked rows toggles checklist
+- [17-01]: Generate page ingredient highlighting is informational only — substitution accessible via View Full Recipe
 
 ### Pending Todos
 
@@ -62,9 +65,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 16-01-PLAN.md (multi-step generation progress with per-step animations and countdown)
+Stopped at: Completed 17-01-PLAN.md (pantry-aware ingredient highlighting in IngredientChecklist and generate result page)
 Resume file: None
-Next step: Execute Phase 17 (Ingredient Highlighting)
+Next step: Execute Phase 17 Plan 02 (substitution dialog)
 
 ---
 *Last updated: 2026-02-19*

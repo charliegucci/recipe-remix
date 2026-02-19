@@ -27,8 +27,8 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 
 ### Ingredient Highlighting
 
-- [ ] **INGR-01**: After generation, ingredients not in user's pantry are visually distinguished (color/badge)
-- [ ] **INGR-02**: User can tap a missing ingredient to see substitution options
+- [x] **INGR-01**: After generation, ingredients not in user's pantry are visually distinguished (color/badge)
+- [x] **INGR-02**: User can tap a missing ingredient to see substitution options
 - [ ] **INGR-03**: AI suggests substitute ingredients based on user's pantry contents
 - [ ] **INGR-04**: User can manually pick a replacement from their pantry items
 
@@ -70,8 +70,8 @@ Requirements for v1.3 UX/UI Polish. Each maps to roadmap phases.
 | GENX-01 | Phase 16 | Complete |
 | GENX-02 | Phase 16 | Complete |
 | GENX-03 | Phase 16 | Complete |
-| INGR-01 | Phase 17 | Pending |
-| INGR-02 | Phase 17 | Pending |
+| INGR-01 | Phase 17 | Complete |
+| INGR-02 | Phase 17 | Complete |
 | INGR-03 | Phase 17 | Pending |
 | INGR-04 | Phase 17 | Pending |
 | FAV-01 | Phase 18 | Pending |
