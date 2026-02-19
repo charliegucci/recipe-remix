@@ -377,8 +377,8 @@ onMounted(() => {
             </span>
           </div>
 
-          <!-- Metadata badges -->
-          <div class="flex flex-wrap gap-3">
+          <!-- Metadata badges + Favorite CTA -->
+          <div class="flex flex-wrap items-center gap-3">
             <!-- Cook Time -->
             <div
               v-if="recipe.cookTime"
@@ -416,6 +416,16 @@ onMounted(() => {
             >
               <span class="text-sm font-medium">{{ tag }}</span>
             </div>
+
+            <!-- Favorite CTA — right-aligned, client-only (requires auth state) -->
+            <ClientOnly>
+              <FavoriteButton
+                v-if="recipeId"
+                :recipe-id="recipeId"
+                size="lg"
+                class="ml-auto"
+              />
+            </ClientOnly>
           </div>
         </div>
       </div>
